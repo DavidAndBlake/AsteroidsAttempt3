@@ -196,9 +196,9 @@ public class AsteroidGameController extends JComponent
 					asteroidList.remove(i);
 					asteroidSpawner();
 				}
-			for (int i = 0; i < projectileList.size(); i++)
+			for (int j = 0; j < projectileList.size(); j++)
 			{
-				AsteroidDestroyingProjectile bullet = projectileList.get(i);
+				AsteroidDestroyingProjectile bullet = projectileList.get(j);
 				if(asteroid.asteroidShape.intersects(bullet.shotShape))
 				{
 					System.out.println("boom");
