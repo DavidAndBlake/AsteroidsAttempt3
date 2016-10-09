@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -187,22 +188,35 @@ public class AsteroidGameController extends JComponent
 			g2.setTransform(identity); // cleans up screen
 			asteroidList.get(i).paintAsteroid(g2); 
 			Asteroid asteroid = asteroidList.get(i);
+//			
+			Area asteroidArea = new Area(asteroid.asteroidShape);
+			AffineTransform asteroidAT = new AffineTransform();
+			asteroidAT.setToTranslation(asteroid.asteroidXPos, asteroid.asteroidYPos);
+			asteroidArea.transform(asteroidAT);
+			
 			if (asteroid.asteroidXPos > screenWidth + 50
 					|| asteroid.asteroidXPos < -50
 					|| asteroid.asteroidYPos > screenHeight + 50
-					|| asteroid.asteroidYPos < -50
-					)
+					|| asteroid.asteroidYPos < -50)
 				{
 					asteroidList.remove(i);
 					asteroidSpawner();
 				}
-			for (int j = 0; j < projectileList.size(); j++)
+			for (int j = 0; j < projectileList.size(); j++) //checking all bullets
 			{
 				AsteroidDestroyingProjectile shot = projectileList.get(j);
-				if(asteroid.asteroidShape.intersects(shot.shotShape))
+				Area shotArea = new Area(shot.shotShape);
+				AffineTransform shotAT = new AffineTransform();
+				shotAT.setToTranslation(shot.projectileXPos, shot.projectileYPos);
+				shotArea.transform(shotAT);
+				shotArea.intersect(asteroidArea);
+				if (!shotArea.isEmpty())
 				{
-					System.out.println("boom");
+					asteroidList.remove(i);
+					projectileList.remove(j);
 				}
+				
+				
 			}
 		}
 		for (int i = 0; i < projectileList.size(); i++)

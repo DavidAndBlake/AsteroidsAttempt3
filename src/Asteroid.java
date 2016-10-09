@@ -31,7 +31,7 @@ public class Asteroid extends Utilities
 		this.directionOfAsteroid = course;
 		this.scaleFactor = scaleFactor;
 		this.rotationSpeed = (rotationSpeed/rotationDirectionRandomizer(100));
-		this.asteroidColor = asteroidColor;
+//		this.asteroidColor = asteroidColor;
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
 		
 	}
