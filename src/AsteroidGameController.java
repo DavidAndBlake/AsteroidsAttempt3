@@ -67,7 +67,7 @@ public class AsteroidGameController extends JComponent
 		/*********************************************************
 		 * spawn asteroids
 		 *********************************************************/
-		for (int j = 0; j < 6; j++)
+		for (int j = 0; j < 14; j++)
 		{
 			asteroidSpawner();
 		}
@@ -215,15 +215,15 @@ public class AsteroidGameController extends JComponent
 					asteroidList.remove(i);
 					projectileList.remove(j);
 				}
-				
+				for (int k = 0; k < projectileList.size(); k++)
+				{
+					g2.setTransform(identity);
+					projectileList.get(k).paintProjectile(g2);
+				}
 				
 			}
 		}
-		for (int i = 0; i < projectileList.size(); i++)
-		{
-			g2.setTransform(identity);
-			projectileList.get(i).paintProjectile(g2);
-		}
+		
 		
 	}
 
