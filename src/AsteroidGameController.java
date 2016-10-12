@@ -204,27 +204,30 @@ public class AsteroidGameController extends JComponent
 				}
 			for (int j = 0; j < projectileList.size(); j++) //checking all bullets
 			{
+				
 				AsteroidDestroyingProjectile shot = projectileList.get(j);
 				Area shotArea = new Area(shot.shotShape);
 				AffineTransform shotAT = new AffineTransform();
 				shotAT.setToTranslation(shot.projectileXPos, shot.projectileYPos);
 				shotArea.transform(shotAT);
 				shotArea.intersect(asteroidArea);
+				if (shot.projectileXPos > screenWidth + 10
+						|| shot.projectileXPos < -10
+						|| shot.projectileYPos > screenHeight + 10
+						|| shot.projectileYPos < -10)
+				{
+					projectileList.remove(j);
+				}
 				if (!shotArea.isEmpty())
 				{
 					asteroidList.remove(i);
 					projectileList.remove(j);
+					System.out.println("bang");
 				}
-				for (int k = 0; k < projectileList.size(); k++)
-				{
 					g2.setTransform(identity);
-					projectileList.get(k).paintProjectile(g2);
-				}
-				
+					shot.paintProjectile(g2);
 			}
 		}
-		
-		
 	}
 
 	@Override
