@@ -29,14 +29,12 @@ public class AsteroidGameController extends JComponent
 			.getScreenSize().width;
 	int screenHeight = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().height;
-	public JPanel spaceImagePanel = new JPanel();
 	private Image spaceImage = new ImageIcon(getClass().getResource("spacePicture.jpg")).getImage();// Image spaceImage;
 	public Timer ticker = new Timer(30, this);
 	public int[] asteroid1XPoints =
 	{ 21, 16, 20, 15, 0, -19, -17, -21, -15 };
 	public int[] asteroid1YPoints =
 	{ 24, 19, 18, 16, 17, 24, 20, 17, 18 };
-	public JLabel spaceLabel = new JLabel();
 	private int speedOfShip = 0;
 	private int speedLimitOfShip = 10;
 	private int middleScreenXPos = screenWidth / 2;
@@ -83,13 +81,9 @@ public class AsteroidGameController extends JComponent
 		arwing.setScreenHeight(screenHeight);
 		arwing.setScreenWidth(screenWidth);
 		ticker.start();
-		spaceLabel.equals(spaceImage);
 		space.setSize(screenWidth, screenHeight);
 		space.setVisible(true);
 		space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
-		spaceImagePanel.add(spaceLabel);
-		spaceImagePanel.setVisible(true);
-		space.add(spaceImagePanel);
 		space.add(this);
 		space.setBackground(Color.BLACK);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
@@ -188,12 +182,10 @@ public class AsteroidGameController extends JComponent
 			g2.setTransform(identity); // cleans up screen
 			asteroidList.get(i).paintAsteroid(g2); 
 			Asteroid asteroid = asteroidList.get(i);
-//			
 			Area asteroidArea = new Area(asteroid.asteroidShape);
 			AffineTransform asteroidAT = new AffineTransform();
 			asteroidAT.setToTranslation(asteroid.asteroidXPos, asteroid.asteroidYPos);
 			asteroidArea.transform(asteroidAT);
-			
 			if (asteroid.asteroidXPos > screenWidth + 50
 					|| asteroid.asteroidXPos < -50
 					|| asteroid.asteroidYPos > screenHeight + 50
@@ -204,7 +196,6 @@ public class AsteroidGameController extends JComponent
 				}
 			for (int j = 0; j < projectileList.size(); j++) //checking all bullets
 			{
-				
 				AsteroidDestroyingProjectile shot = projectileList.get(j);
 				Area shotArea = new Area(shot.shotShape);
 				AffineTransform shotAT = new AffineTransform();
@@ -222,7 +213,6 @@ public class AsteroidGameController extends JComponent
 				{
 					asteroidList.remove(i);
 					projectileList.remove(j);
-					System.out.println("bang");
 				}
 					g2.setTransform(identity);
 					shot.paintProjectile(g2);

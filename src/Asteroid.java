@@ -59,12 +59,9 @@ public class Asteroid extends Utilities
 		g2.scale(1.5, 1.5);
 		accumulatedRotation = accumulatedRotation + rotationSpeed;
 		g2.rotate(accumulatedRotation);
-		g2.fill(asteroidShape);
 		g2.setColor(new Color(98,32,12));
+		g2.fill(asteroidShape);
 		scaleFactor = scaleFactor * 0.01;
-		//redo asteroids to be more random by plotting points for a circle, and altering the change degree
-		//change the color of the asteroids
-		
 	}
 
 	public void setSpeedOfAsteroid(int speedOfAsteroid)//How fast the ship is going
