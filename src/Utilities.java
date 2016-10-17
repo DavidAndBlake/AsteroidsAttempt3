@@ -19,4 +19,8 @@ public class Utilities
 	{
 		return deltaY;
 	}
+	public boolean isOffScreen(int tooFarRight, int tooFarDown, int tooFarLeft, int tooFarUp, int screenWidth, int screenHeight)
+	{
+		return true;
+	}
 }

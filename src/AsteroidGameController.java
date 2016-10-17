@@ -53,6 +53,7 @@ public class AsteroidGameController extends JComponent
 	public AffineTransform identity = new AffineTransform(); // identity transform
 	public Random r = new Random();
 	public int asteroidSpawnQuadrantPicker;
+	public Utilities util = new Utilities();
 	
 	public static void main(String[] args)
 	{
@@ -186,10 +187,11 @@ public class AsteroidGameController extends JComponent
 			AffineTransform asteroidAT = new AffineTransform();
 			asteroidAT.setToTranslation(asteroid.asteroidXPos, asteroid.asteroidYPos);
 			asteroidArea.transform(asteroidAT);
-			if (asteroid.asteroidXPos > screenWidth + 50
-					|| asteroid.asteroidXPos < -50
-					|| asteroid.asteroidYPos > screenHeight + 50
-					|| asteroid.asteroidYPos < -50)
+			if (asteroid.isOffScreen(i+50, i+50, -60, -60, i, i))
+//			if (asteroid.asteroidXPos > screenWidth + 50
+//					|| asteroid.asteroidXPos < -50
+//					|| asteroid.asteroidYPos > screenHeight + 50
+//					|| asteroid.asteroidYPos < -50)
 				{
 					asteroidList.remove(i);
 					asteroidSpawner();
