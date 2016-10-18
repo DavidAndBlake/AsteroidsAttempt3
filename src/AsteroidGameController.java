@@ -187,11 +187,8 @@ public class AsteroidGameController extends JComponent
 			AffineTransform asteroidAT = new AffineTransform();
 			asteroidAT.setToTranslation(asteroid.asteroidXPos, asteroid.asteroidYPos);
 			asteroidArea.transform(asteroidAT);
-			if (asteroid.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos, 0, 0))
-//			if (asteroid.asteroidXPos > screenWidth + 50
-//					|| asteroid.asteroidXPos < -50
-//					|| asteroid.asteroidYPos > screenHeight + 50
-//					|| asteroid.asteroidYPos < -50)
+			if (asteroid.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos, screenWidth, screenHeight))
+			
 				{
 					asteroidList.remove(i);
 					asteroidSpawner();
