@@ -201,10 +201,7 @@ public class AsteroidGameController extends JComponent
 				shotAT.setToTranslation(shot.projectileXPos, shot.projectileYPos);
 				shotArea.transform(shotAT);
 				shotArea.intersect(asteroidArea);
-				if (shot.projectileXPos > screenWidth + 10
-						|| shot.projectileXPos < -10
-						|| shot.projectileYPos > screenHeight + 10
-						|| shot.projectileYPos < -10)
+				if (shot.isOffScreen(shot.projectileXPos, shot.projectileYPos, screenWidth, screenHeight))
 				{
 					projectileList.remove(j);
 				}

@@ -1,10 +1,10 @@
 
-public class Utilities
+public class Utilities  
 {
 	private int deltaX;
 	private int deltaY;
-	public Asteroid asteroid;
 		
+	
 	public void convertCourseSpeedToDxDy(int course, int speed)
 	{
 		double cosine = Math.cos(Math.toRadians(course));
@@ -22,11 +22,16 @@ public class Utilities
 	}
 	public boolean isOffScreen(int xPos, int yPos, int screenWidth, int screenHeight)
 	{
-		if (asteroid.asteroidXPos > screenWidth + 50
-				|| asteroid.asteroidXPos < -50
-				|| asteroid.asteroidYPos > screenHeight + 50
-				|| asteroid.asteroidYPos < -50);
+		if (xPos > screenWidth + 50
+				|| xPos < -50
+				|| yPos > screenHeight + 50
+				|| yPos < -50)
+		{
 		return true;
-			}
-	
+		}
+		else
+		{
+			return false;
+		}
+	}	
 }
