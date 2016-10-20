@@ -187,7 +187,7 @@ public class AsteroidGameController extends JComponent
 			AffineTransform asteroidAT = new AffineTransform();
 			asteroidAT.setToTranslation(asteroid.asteroidXPos, asteroid.asteroidYPos);
 			asteroidArea.transform(asteroidAT);
-			if (asteroid.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos, screenWidth, screenHeight))
+			if (util.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos, screenWidth, screenHeight))
 			
 				{
 					asteroidList.remove(i);
@@ -201,7 +201,7 @@ public class AsteroidGameController extends JComponent
 				shotAT.setToTranslation(shot.projectileXPos, shot.projectileYPos);
 				shotArea.transform(shotAT);
 				shotArea.intersect(asteroidArea);
-				if (shot.isOffScreen(shot.projectileXPos, shot.projectileYPos, screenWidth, screenHeight))
+				if (util.isOffScreen(shot.projectileXPos, shot.projectileYPos, screenWidth, screenHeight))
 				{
 					projectileList.remove(j);
 				}
