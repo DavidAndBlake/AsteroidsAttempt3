@@ -94,7 +94,6 @@ public class AsteroidGameController extends JComponent
 
 	public void asteroidSpawner()
 	{
-		//try to figure out how to do collisions, and fix assimilating asteroid glitch
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
@@ -188,7 +187,6 @@ public class AsteroidGameController extends JComponent
 			asteroidAT.setToTranslation(asteroid.asteroidXPos, asteroid.asteroidYPos);
 			asteroidArea.transform(asteroidAT);
 			if (util.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos, screenWidth, screenHeight))
-			
 				{
 					asteroidList.remove(i);
 					asteroidSpawner();

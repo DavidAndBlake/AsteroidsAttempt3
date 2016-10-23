@@ -1,10 +1,9 @@
 
-public class Utilities  
+public class Utilities
 {
 	private int deltaX;
 	private int deltaY;
-		
-	
+
 	public void convertCourseSpeedToDxDy(int course, int speed)
 	{
 		double cosine = Math.cos(Math.toRadians(course));
@@ -20,18 +19,61 @@ public class Utilities
 	{
 		return deltaY;
 	}
-	public boolean isOffScreen(int xPos, int yPos, int screenWidth, int screenHeight)
+	public boolean isOffScreen(int xPos, int yPos, int screenWidth,
+			int screenHeight)
 	{
-		if (xPos > screenWidth + 50
-				|| xPos < -50
-				|| yPos > screenHeight + 50
+		if (xPos > screenWidth + 50 || xPos < -50 || yPos > screenHeight + 50
 				|| yPos < -50)
 		{
-		return true;
-		}
-		else
+			return true;
+		} else
 		{
 			return false;
 		}
-	}	
+	}
+	public void shipMovementRegulator(double rotationDegree, double directionOfHeadOfShip, boolean moveFaster, boolean turnRight, boolean turnLeft,
+			boolean slowDown, int speedOfShip, int speedLimitOfShip, double colorChangeController, Ship arwing)
+	{
+		rotationDegree = Math.toRadians(directionOfHeadOfShip);
+
+		rotationDegree = -directionOfHeadOfShip + 90;
+		if (moveFaster)
+		{
+			speedOfShip = speedOfShip + 1;
+			arwing.setMoveFaster(moveFaster);
+		}
+		if (turnRight)
+		{
+			directionOfHeadOfShip = directionOfHeadOfShip - 6;
+		}
+		if (turnLeft)
+		{
+			directionOfHeadOfShip = directionOfHeadOfShip + 6;
+			arwing.setTurnLeft(turnLeft);
+		}
+		if (directionOfHeadOfShip > 360)
+		{
+			directionOfHeadOfShip = directionOfHeadOfShip - 360;
+		}
+		if (directionOfHeadOfShip < 0)
+		{
+			directionOfHeadOfShip = directionOfHeadOfShip + 360;
+		}
+		if (slowDown)
+		{
+			speedOfShip = speedOfShip - 1;
+		}
+		if (speedOfShip > speedLimitOfShip)
+		{
+			speedOfShip = speedOfShip - 1;
+		}
+		if (speedOfShip < 0)
+		{
+			speedOfShip = speedOfShip + 1;
+		}
+		if (rotationDegree > 180)
+		{
+			colorChangeController = 360 - directionOfHeadOfShip;
+		}
+	}
 }
