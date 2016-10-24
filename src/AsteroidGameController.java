@@ -128,46 +128,7 @@ public class AsteroidGameController extends JComponent
 	public void shipMovementRegulator()
 	{
 		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
-
-		rotationDegree = -directionOfHeadOfShip + 90;
-		if (moveFaster)
-		{
-			speedOfShip = speedOfShip + 1;
-			arwing.setMoveFaster(moveFaster);
-		}
-		if (turnRight)
-		{
-			directionOfHeadOfShip = directionOfHeadOfShip - 6;
-		}
-		if (turnLeft)
-		{
-			directionOfHeadOfShip = directionOfHeadOfShip + 6;
-			arwing.setTurnLeft(turnLeft);
-		}
-		if (directionOfHeadOfShip > 360)
-		{
-			directionOfHeadOfShip = directionOfHeadOfShip - 360;
-		}
-		if (directionOfHeadOfShip < 0)
-		{
-			directionOfHeadOfShip = directionOfHeadOfShip + 360;
-		}
-		if (slowDown)
-		{
-			speedOfShip = speedOfShip - 1;
-		}
-		if (speedOfShip > speedLimitOfShip)
-		{
-			speedOfShip = speedOfShip - 1;
-		}
-		if (speedOfShip < 0)
-		{
-			speedOfShip = speedOfShip + 1;
-		}
-		if (rotationDegree > 180)
-		{
-			colorChangeController = 360 - directionOfHeadOfShip;
-		}
+		util.shipMovementRegulator(rotationDegree, rotationDegree, moveFaster, turnRight, turnLeft, slowDown, speedOfShip, speedLimitOfShip, rotationDegree, arwing);
 	}
 	public void paint(Graphics g)
 	{
