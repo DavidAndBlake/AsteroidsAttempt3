@@ -128,7 +128,9 @@ public class AsteroidGameController extends JComponent
 	public void shipMovementRegulator()
 	{
 		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
-		util.shipMovementRegulator(rotationDegree, rotationDegree, moveFaster, turnRight, turnLeft, slowDown, speedOfShip, speedLimitOfShip, rotationDegree, arwing);
+		util.shipMovementRegulator(rotationDegree, rotationDegree, moveFaster, turnRight, turnLeft, 
+				slowDown, speedOfShip, speedLimitOfShip, rotationDegree, arwing);
+		arwing.setMoveFaster(moveFaster);
 	}
 	public void paint(Graphics g)
 	{
