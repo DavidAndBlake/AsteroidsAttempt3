@@ -40,7 +40,7 @@ public class Utilities
 		if (moveFaster)
 		{
 			speedOfShip = speedOfShip + 1;
-			arwing.setMoveFaster(moveFaster);
+//			arwing.setMoveFaster(moveFaster);
 		}
 		if (turnRight)
 		{
@@ -49,7 +49,7 @@ public class Utilities
 		if (turnLeft)
 		{
 			directionOfHeadOfShip = directionOfHeadOfShip + 6;
-			arwing.setTurnLeft(turnLeft);
+//			arwing.setTurnLeft(turnLeft);
 		}
 		if (directionOfHeadOfShip > 360)
 		{
@@ -75,5 +75,7 @@ public class Utilities
 		{
 			colorChangeController = 360 - directionOfHeadOfShip;
 		}
+//		System.out.println("rotationDegree = " + rotationDegree + "\ndirectionOfHeadOfShip = " + directionOfHeadOfShip + "\n" + moveFaster + "\n" + turnRight + "\n" + turnLeft + "\n" + slowDown + "\n"
+//				+ speedOfShip + "\n" + speedLimitOfShip);
 	}
 }

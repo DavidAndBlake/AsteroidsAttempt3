@@ -89,7 +89,7 @@ public class AsteroidGameController extends JComponent
 		space.setBackground(Color.BLACK);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(this);
-		arwing.setRotationDegree(0);
+//		arwing.setRotationDegree(0);
 	}
 
 	public void asteroidSpawner()
@@ -119,19 +119,15 @@ public class AsteroidGameController extends JComponent
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		shipMovementRegulator();
+		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
+		util.shipMovementRegulator(rotationDegree, rotationDegree, moveFaster, turnRight, turnLeft, 
+				slowDown, speedOfShip, speedLimitOfShip, rotationDegree, arwing);
 		arwing.setDirectionOfHeadOfShip(directionOfHeadOfShip);
 		arwing.setSpeedOfShip(speedOfShip);
 		repaint();
 	}
 
-	public void shipMovementRegulator()
-	{
-		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
-		util.shipMovementRegulator(rotationDegree, rotationDegree, moveFaster, turnRight, turnLeft, 
-				slowDown, speedOfShip, speedLimitOfShip, rotationDegree, arwing);
-		arwing.setMoveFaster(moveFaster);
-	}
+	
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;

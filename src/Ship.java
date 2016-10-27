@@ -24,16 +24,11 @@ public class Ship extends Utilities
 	private int deltaX;
 	private int deltaY;
 	public int directionOfHeadOfShip = 90; // degrees
-	private double rotationDegree = Math.toRadians(directionOfHeadOfShip);
 	public int colorChangeController;
 	public int colorChangerRightSide;
 	public int colorChangerLeftSide;
 	private int speedOfShip = 0;
 	private int speedLimitOfShip = 10;
-	private boolean moveFaster = false;
-	private boolean turnLeft = false;
-	private boolean turnRight = false;
-	private boolean slowDown = false;
 	private Polygon shipLeftSide;
 	private Polygon shipRightSide;
 
@@ -92,14 +87,6 @@ public class Ship extends Utilities
 		
 	}
 
-	public void setTurnLeft(boolean turnLeft)
-	{
-		this.turnLeft = turnLeft;
-	}
-	public void setMoveFaster(boolean moveFaster)
-	{
-		this.moveFaster = moveFaster;
-	}
 	public void setScreenWidth(int screenWidth)
 	{
 		this.screenWidth = screenWidth;
@@ -107,11 +94,6 @@ public class Ship extends Utilities
 	public void setScreenHeight(int screenHeight)
 	{
 		this.screenHeight = screenHeight;
-	}
-	public void setRotationDegree(double rotationDegree)// angle the ship is
-														// pointing
-	{
-		this.rotationDegree = rotationDegree;
 	}
 	public void setSpeedOfShip(int speedOfShip)// How fast the ship is going
 	{
