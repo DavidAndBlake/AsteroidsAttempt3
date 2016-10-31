@@ -40,7 +40,6 @@ public class Utilities
 		if (moveFaster)
 		{
 			speedOfShip = speedOfShip + 1;
-//			arwing.setMoveFaster(moveFaster);
 		}
 		if (turnRight)
 		{
@@ -49,7 +48,6 @@ public class Utilities
 		if (turnLeft)
 		{
 			directionOfHeadOfShip = directionOfHeadOfShip + 6;
-//			arwing.setTurnLeft(turnLeft);
 		}
 		if (directionOfHeadOfShip > 360)
 		{

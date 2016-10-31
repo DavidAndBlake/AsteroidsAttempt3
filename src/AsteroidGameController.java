@@ -25,9 +25,9 @@ public class AsteroidGameController extends JComponent
 		implements ActionListener, KeyListener
 {
 	public JFrame space = new JFrame();
-	int screenWidth = java.awt.Toolkit.getDefaultToolkit()
+	int widthOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().width;
-	int screenHeight = java.awt.Toolkit.getDefaultToolkit()
+	int heightOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().height;
 	private Image spaceImage = new ImageIcon(getClass().getResource("spacePicture.jpg")).getImage();// Image spaceImage;
 	public Timer ticker = new Timer(30, this);
@@ -37,8 +37,8 @@ public class AsteroidGameController extends JComponent
 	{ 24, 19, 18, 16, 17, 24, 20, 17, 18 };
 	private int speedOfShip = 0;
 	private int speedLimitOfShip = 10;
-	private int middleScreenXPos = screenWidth / 2;
-	private int middleScreenYPos = screenHeight / 2;
+	private int middleScreenXPos = widthOfScreen / 2;
+	private int middleScreenYPos = heightOfScreen / 2;
 	private int directionOfHeadOfShip = 90; // degrees
 	public int colorChangeController;
 	public int colorChanger = (int) directionOfHeadOfShip - colorChangeController;
@@ -47,6 +47,7 @@ public class AsteroidGameController extends JComponent
 	private boolean turnRight;
 	private boolean slowDown;
 	public Ship arwing;
+	public Ship wolfen;
 	public AsteroidDestroyingProjectile shot;
 	public ArrayList<Asteroid> asteroidList = new ArrayList<>();
 	public ArrayList<AsteroidDestroyingProjectile> projectileList = new ArrayList<>();
@@ -79,10 +80,13 @@ public class AsteroidGameController extends JComponent
 		}
 		
 		arwing = new Ship(middleScreenXPos, middleScreenYPos);
-		arwing.setScreenHeight(screenHeight);
-		arwing.setScreenWidth(screenWidth);
+		arwing.setScreenHeight(heightOfScreen);
+		arwing.setScreenWidth(widthOfScreen);
+		wolfen = new Ship(400, 0);
+		wolfen.setScreenHeight(heightOfScreen);
+		wolfen.setScreenWidth(widthOfScreen);
 		ticker.start();
-		space.setSize(screenWidth, screenHeight);
+		space.setSize(widthOfScreen, heightOfScreen);
 		space.setVisible(true);
 		space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
 		space.add(this);
@@ -97,23 +101,23 @@ public class AsteroidGameController extends JComponent
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
-			asteroidList.add(new Asteroid(-50, r.nextInt(screenHeight),
+			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45, 3, Math.random() * 0.1, Math.random()));// xpos, ypos, course, speed, scale factor, rotation speed
 		}
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
-			asteroidList.add(new Asteroid(r.nextInt(screenWidth), -50,
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
 					r.nextInt(90) - 135, 3, Math.random() * 0.1, Math.random()));
 		}
 		if (asteroidSpawnQuadrantPicker == 2) // east
 		{
-			asteroidList.add(new Asteroid(screenWidth + 50,
-					r.nextInt(screenHeight), r.nextInt(90) - 225, 3, Math.random() * 0.1, Math.random()));
+			asteroidList.add(new Asteroid(widthOfScreen + 50,
+					r.nextInt(heightOfScreen), r.nextInt(90) - 225, 3, Math.random() * 0.1, Math.random()));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
-			asteroidList.add(new Asteroid(r.nextInt(screenWidth),
-					screenHeight + 50, r.nextInt(90) + 45, 3, Math.random() * 0.1, Math.random()));
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
+					heightOfScreen + 50, r.nextInt(90) + 45, 3, Math.random() * 0.1, Math.random()));
 		}
 	}
 	@Override
@@ -136,6 +140,7 @@ public class AsteroidGameController extends JComponent
 		g2.drawImage(spaceImage, 0, 0, null);
 		g2.setTransform(identity);
 		arwing.paintShip(g2);
+		wolfen.paintShip(g2);
 		for (int i = 0; i < asteroidList.size(); i++)
 		{
 			g2.setTransform(identity); // cleans up screen
@@ -145,7 +150,7 @@ public class AsteroidGameController extends JComponent
 			AffineTransform asteroidAT = new AffineTransform();
 			asteroidAT.setToTranslation(asteroid.asteroidXPos, asteroid.asteroidYPos);
 			asteroidArea.transform(asteroidAT);
-			if (util.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos, screenWidth, screenHeight))
+			if (util.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos, widthOfScreen, heightOfScreen))
 				{
 					asteroidList.remove(i);
 					asteroidSpawner();
@@ -158,7 +163,7 @@ public class AsteroidGameController extends JComponent
 				shotAT.setToTranslation(shot.projectileXPos, shot.projectileYPos);
 				shotArea.transform(shotAT);
 				shotArea.intersect(asteroidArea);
-				if (util.isOffScreen(shot.projectileXPos, shot.projectileYPos, screenWidth, screenHeight))
+				if (util.isOffScreen(shot.projectileXPos, shot.projectileYPos, widthOfScreen, heightOfScreen))
 				{
 					projectileList.remove(j);
 				}
