@@ -82,7 +82,7 @@ public class AsteroidGameController extends JComponent
 		arwing = new Ship(middleScreenXPos, middleScreenYPos);
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
-		wolfen = new Ship(400, 0);
+		wolfen = new Ship(300, 0);
 		wolfen.setScreenHeight(heightOfScreen);
 		wolfen.setScreenWidth(widthOfScreen);
 		ticker.start();
@@ -93,7 +93,6 @@ public class AsteroidGameController extends JComponent
 		space.setBackground(Color.BLACK);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(this);
-//		arwing.setRotationDegree(0);
 	}
 
 	public void asteroidSpawner()
@@ -124,10 +123,8 @@ public class AsteroidGameController extends JComponent
 	public void actionPerformed(ActionEvent e)
 	{
 		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
-		util.shipMovementRegulator(rotationDegree, rotationDegree, moveFaster, turnRight, turnLeft, 
-				slowDown, speedOfShip, speedLimitOfShip, rotationDegree, arwing);
-		arwing.setDirectionOfHeadOfShip(directionOfHeadOfShip);
-		arwing.setSpeedOfShip(speedOfShip);
+		arwing = util.shipMovementRegulator(rotationDegree, directionOfHeadOfShip, moveFaster, turnRight, turnLeft, 
+				slowDown, speedOfShip, speedLimitOfShip, colorChangeController, arwing);
 		repaint();
 	}
 

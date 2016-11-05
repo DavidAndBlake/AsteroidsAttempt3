@@ -31,7 +31,7 @@ public class Utilities
 			return false;
 		}
 	}
-	public void shipMovementRegulator(double rotationDegree, double directionOfHeadOfShip, boolean moveFaster, boolean turnRight, boolean turnLeft,
+	public Ship shipMovementRegulator(double rotationDegree, double directionOfHeadOfShip, boolean moveFaster, boolean turnRight, boolean turnLeft,
 			boolean slowDown, int speedOfShip, int speedLimitOfShip, double colorChangeController, Ship arwing)
 	{
 		rotationDegree = Math.toRadians(directionOfHeadOfShip);
@@ -43,7 +43,7 @@ public class Utilities
 		}
 		if (turnRight)
 		{
-			directionOfHeadOfShip = directionOfHeadOfShip - 6;
+			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip - 6;
 		}
 		if (turnLeft)
 		{
@@ -73,7 +73,7 @@ public class Utilities
 		{
 			colorChangeController = 360 - directionOfHeadOfShip;
 		}
-//		System.out.println("rotationDegree = " + rotationDegree + "\ndirectionOfHeadOfShip = " + directionOfHeadOfShip + "\n" + moveFaster + "\n" + turnRight + "\n" + turnLeft + "\n" + slowDown + "\n"
-//				+ speedOfShip + "\n" + speedLimitOfShip);
+		System.out.println(arwing.directionOfHeadOfShip);
+		return arwing;
 	}
 }
