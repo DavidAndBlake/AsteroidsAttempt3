@@ -40,6 +40,7 @@ public class Utilities
 		if (moveFaster)
 		{
 			speedOfShip = speedOfShip + 1;
+			System.out.println(speedOfShip);
 		}
 		if (turnRight)
 		{
@@ -47,7 +48,7 @@ public class Utilities
 		}
 		if (turnLeft)
 		{
-			directionOfHeadOfShip = directionOfHeadOfShip + 6;
+			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 6;
 		}
 		if (directionOfHeadOfShip > 360)
 		{
@@ -73,7 +74,6 @@ public class Utilities
 		{
 			colorChangeController = 360 - directionOfHeadOfShip;
 		}
-		System.out.println(arwing.directionOfHeadOfShip);
 		return arwing;
 	}
 }

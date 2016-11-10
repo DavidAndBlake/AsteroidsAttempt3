@@ -47,7 +47,6 @@ public class AsteroidGameController extends JComponent
 	private boolean turnRight;
 	private boolean slowDown;
 	public Ship arwing;
-	public Ship wolfen;
 	public AsteroidDestroyingProjectile shot;
 	public ArrayList<Asteroid> asteroidList = new ArrayList<>();
 	public ArrayList<AsteroidDestroyingProjectile> projectileList = new ArrayList<>();
@@ -82,9 +81,6 @@ public class AsteroidGameController extends JComponent
 		arwing = new Ship(middleScreenXPos, middleScreenYPos);
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
-		wolfen = new Ship(300, 0);
-		wolfen.setScreenHeight(heightOfScreen);
-		wolfen.setScreenWidth(widthOfScreen);
 		ticker.start();
 		space.setSize(widthOfScreen, heightOfScreen);
 		space.setVisible(true);
@@ -137,7 +133,6 @@ public class AsteroidGameController extends JComponent
 		g2.drawImage(spaceImage, 0, 0, null);
 		g2.setTransform(identity);
 		arwing.paintShip(g2);
-		wolfen.paintShip(g2);
 		for (int i = 0; i < asteroidList.size(); i++)
 		{
 			g2.setTransform(identity); // cleans up screen
