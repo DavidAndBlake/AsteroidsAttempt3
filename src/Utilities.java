@@ -19,6 +19,7 @@ public class Utilities
 	{
 		return deltaY;
 	}
+	
 	public boolean isOffScreen(int xPos, int yPos, int screenWidth,
 			int screenHeight)
 	{
@@ -76,4 +77,5 @@ public class Utilities
 		}
 		return arwing;
 	}
+	
 }
