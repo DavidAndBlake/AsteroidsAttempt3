@@ -4,7 +4,7 @@ public class Utilities
 	private int deltaX;
 	private int deltaY;
 
-	public void convertCourseSpeedToDxDy(int course, int speed)
+	public void convertCourseSpeedToDxDy(int course, double speed)
 	{
 		double cosine = Math.cos(Math.toRadians(course));
 		double sine = -Math.sin(Math.toRadians(course));
@@ -40,8 +40,7 @@ public class Utilities
 		rotationDegree = -directionOfHeadOfShip + 90;
 		if (moveFaster)
 		{
-			speedOfShip = speedOfShip + 1;
-			System.out.println(speedOfShip);
+			arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
 		}
 		if (turnRight)
 		{
@@ -50,26 +49,27 @@ public class Utilities
 		if (turnLeft)
 		{
 			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 6;
+			System.out.println(arwing.directionOfHeadOfShip);
 		}
-		if (directionOfHeadOfShip > 360)
+		if (arwing.directionOfHeadOfShip > 360)
 		{
-			directionOfHeadOfShip = directionOfHeadOfShip - 360;
+			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip - 360;
 		}
-		if (directionOfHeadOfShip < 0)
+		if (arwing.directionOfHeadOfShip < 0)
 		{
-			directionOfHeadOfShip = directionOfHeadOfShip + 360;
+			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 360;
 		}
 		if (slowDown)
 		{
-			speedOfShip = speedOfShip - 1;
+			arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
 		}
-		if (speedOfShip > speedLimitOfShip)
+		if (arwing.getSpeedOfShip() > arwing.getSpeedLimitOfShip())
 		{
-			speedOfShip = speedOfShip - 1;
+			arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
 		}
-		if (speedOfShip < 0)
+		if (arwing.getSpeedOfShip() < 0)
 		{
-			speedOfShip = speedOfShip + 1;
+			arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
 		}
 		if (rotationDegree > 180)
 		{

@@ -16,7 +16,7 @@ public class Asteroid extends Utilities
 	private int deltaX;
 	private int deltaY;
 	private int directionOfAsteroid = 90; // degrees
-	private int speedOfAsteroid = 1;
+	private double speedOfAsteroid = 1;
 	private double scaleFactor = 0.1;
 	private double rotationSpeed;
 	private double accumulatedRotation = 0;
@@ -30,7 +30,7 @@ public class Asteroid extends Utilities
 		this.speedOfAsteroid = speed;
 		this.directionOfAsteroid = course;
 		this.scaleFactor = scaleFactor;
-		this.rotationSpeed = (rotationSpeed/rotationDirectionRandomizer(100));
+		this.rotationSpeed = (rotationSpeed/rotationDirectionRandomizer(200));
 //		this.asteroidColor = asteroidColor;
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
 		
@@ -64,9 +64,9 @@ public class Asteroid extends Utilities
 		scaleFactor = scaleFactor * 0.01;
 	}
 
-	public void setSpeedOfAsteroid(int speedOfAsteroid)//How fast the ship is going
+	public void setSpeedOfAsteroid(double speedOfAsteroid)//How fast the ship is going
 	{
-		this.speedOfAsteroid = speedOfAsteroid;
+		this.speedOfAsteroid = Math.random()*speedOfAsteroid;
 	}
 	public void setDirectionOfAsteroid(double direction)
 	{

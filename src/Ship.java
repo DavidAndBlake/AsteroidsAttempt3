@@ -28,7 +28,7 @@ public class Ship extends Utilities
 	public int colorChangerRightSide;
 	public int colorChangerLeftSide;
 	private int speedOfShip = 0;
-	private int speedLimitOfShip = 10;
+	private int speedLimitOfShip = 15;
 	private Polygon shipLeftSide;
 	private Polygon shipRightSide;
 
@@ -102,6 +102,14 @@ public class Ship extends Utilities
 	public void setDirectionOfHeadOfShip(double direction)
 	{
 		directionOfHeadOfShip = (int) direction;
+	}
+	public int getSpeedOfShip()
+	{
+		return speedOfShip;
+	}
+	public int getSpeedLimitOfShip()
+	{
+		return speedLimitOfShip;
 	}
 
 }
