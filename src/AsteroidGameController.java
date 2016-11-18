@@ -195,7 +195,7 @@ public class AsteroidGameController extends JComponent
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			projectileList.add(new AsteroidDestroyingProjectile(arwing.shipXPos, arwing.shipYPos, directionOfHeadOfShip, speedOfShip));
+			projectileList.add(new AsteroidDestroyingProjectile(arwing.shipXPos, arwing.shipYPos, arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
 		}
 	}
 
