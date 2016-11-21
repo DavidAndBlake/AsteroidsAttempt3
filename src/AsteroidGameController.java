@@ -54,6 +54,8 @@ public class AsteroidGameController extends JComponent
 	public Random r = new Random();
 	public int asteroidSpawnQuadrantPicker;
 	public Utilities util = new Utilities();
+	private JPanel scorePanel = new JPanel();
+	private int score;
 	
 	public static void main(String[] args)
 	{
@@ -77,7 +79,7 @@ public class AsteroidGameController extends JComponent
 		{
 			AsteroidDestroyingProjectile shot = projectileList.get(i);
 		}
-		
+		score = 0;
 		arwing = new Ship(middleScreenXPos, middleScreenYPos);
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
@@ -89,6 +91,8 @@ public class AsteroidGameController extends JComponent
 		space.setBackground(Color.BLACK);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(this);
+		scorePanel.setVisible(true);
+		scorePanel.setLocation(widthOfScreen-30, 0);
 	}
 
 	public void asteroidSpawner()
@@ -130,6 +134,7 @@ public class AsteroidGameController extends JComponent
 		g2.setTransform(identity);
 		g2.scale(1.25, 1);
 		g2.drawImage(spaceImage, 0, 0, null);
+		g2.drawString("" + (score), widthOfScreen/2, heightOfScreen/2);	
 		g2.setTransform(identity);
 		arwing.paintShip(g2);
 		for (int i = 0; i < asteroidList.size(); i++)
@@ -162,6 +167,7 @@ public class AsteroidGameController extends JComponent
 				{
 					asteroidList.remove(i);
 					projectileList.remove(j);
+					score = score + 1;
 				}
 					g2.setTransform(identity);
 					shot.paintProjectile(g2);
