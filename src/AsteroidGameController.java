@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -134,7 +135,11 @@ public class AsteroidGameController extends JComponent
 		g2.setTransform(identity);
 		g2.scale(1.25, 1);
 		g2.drawImage(spaceImage, 0, 0, null);
-		g2.drawString("" + (score), widthOfScreen/2, heightOfScreen/2);	
+		g2.setColor(Color.green);
+		g2.draw3DRect(widthOfScreen/2 + widthOfScreen/5, heightOfScreen/34, widthOfScreen/14, 35, true);
+		g2.setColor(Color.white);
+		g2.setFont(new Font("Sans", Font.PLAIN, 40));
+		g2.drawString("" + score, widthOfScreen/2 + widthOfScreen/5, heightOfScreen/15);	
 		g2.setTransform(identity);
 		arwing.paintShip(g2);
 		for (int i = 0; i < asteroidList.size(); i++)
