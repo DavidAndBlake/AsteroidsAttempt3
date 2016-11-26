@@ -1,9 +1,23 @@
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
-public class Utilities
+public class Utilities implements KeyListener
 {
 	private int deltaX;
 	private int deltaY;
-
+	private boolean moveFaster;
+	private boolean turnLeft;
+	private boolean turnRight;
+	private boolean slowDown;
+	private Ship arwing;
+	public ArrayList<AsteroidDestroyingProjectile> projectileList;
+	public Utilities(Ship arwing,  ArrayList<AsteroidDestroyingProjectile> projectileList)
+	{
+		this.arwing = arwing;
+		this.projectileList = projectileList;
+	}
+	
 	public void convertCourseSpeedToDxDy(int course, double speed)
 	{
 		double cosine = Math.cos(Math.toRadians(course));
@@ -77,5 +91,55 @@ public class Utilities
 		}
 		return arwing;
 	}
-	
+	@Override
+	public void keyTyped(KeyEvent e)
+	{
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			turnLeft = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP)
+		{
+			moveFaster = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
+		{
+			slowDown = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			turnRight = true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			projectileList.add(new AsteroidDestroyingProjectile(arwing.shipXPos, arwing.shipYPos, arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+		{
+			turnLeft = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP)
+		{
+			moveFaster = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN)
+		{
+			slowDown = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+		{
+			turnRight = false;
+		}
+	}
+
 }

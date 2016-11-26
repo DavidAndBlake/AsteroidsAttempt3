@@ -23,14 +23,16 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class AsteroidGameController extends JComponent
-		implements ActionListener, KeyListener
+		implements ActionListener
 {
 	public JFrame space = new JFrame();
 	int widthOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().width;
 	int heightOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().height;
-	private Image spaceImage = new ImageIcon(getClass().getResource("spacePicture.jpg")).getImage();// Image spaceImage;
+	private Image spaceImage = new ImageIcon(
+			getClass().getResource("spacePicture.jpg")).getImage();// Image
+																	// spaceImage;
 	public Timer ticker = new Timer(30, this);
 	public int[] asteroid1XPoints =
 	{ 21, 16, 20, 15, 0, -19, -17, -21, -15 };
@@ -42,22 +44,24 @@ public class AsteroidGameController extends JComponent
 	private int middleScreenYPos = heightOfScreen / 2;
 	private int directionOfHeadOfShip = 90; // degrees
 	public int colorChangeController;
-	public int colorChanger = (int) directionOfHeadOfShip - colorChangeController;
+	public int colorChanger = (int) directionOfHeadOfShip
+			- colorChangeController;
 	private boolean moveFaster;
 	private boolean turnLeft;
 	private boolean turnRight;
 	private boolean slowDown;
-	public Ship arwing;
 	public AsteroidDestroyingProjectile shot;
 	public ArrayList<Asteroid> asteroidList = new ArrayList<>();
 	public ArrayList<AsteroidDestroyingProjectile> projectileList = new ArrayList<>();
-	public AffineTransform identity = new AffineTransform(); // identity transform
+	public AffineTransform identity = new AffineTransform(); // identity
+																// transform
 	public Random r = new Random();
 	public int asteroidSpawnQuadrantPicker;
-	public Utilities util = new Utilities();
+	public Ship arwing = new Ship(middleScreenXPos, middleScreenYPos);
+	public Utilities util = new Utilities(arwing, projectileList);
 	private JPanel scorePanel = new JPanel();
 	private int score;
-	
+
 	public static void main(String[] args)
 	{
 		new AsteroidGameController().getGoing();
@@ -65,7 +69,7 @@ public class AsteroidGameController extends JComponent
 
 	void getGoing()
 	{
-		
+
 		/*********************************************************
 		 * spawn asteroids
 		 *********************************************************/
@@ -81,7 +85,6 @@ public class AsteroidGameController extends JComponent
 			AsteroidDestroyingProjectile shot = projectileList.get(i);
 		}
 		score = 0;
-		arwing = new Ship(middleScreenXPos, middleScreenYPos);
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
 		ticker.start();
@@ -91,9 +94,9 @@ public class AsteroidGameController extends JComponent
 		space.add(this);
 		space.setBackground(Color.BLACK);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
-		space.addKeyListener(this);
+		space.addKeyListener(util);
 		scorePanel.setVisible(true);
-		scorePanel.setLocation(widthOfScreen-30, 0);
+		scorePanel.setLocation(widthOfScreen - 30, 0);
 	}
 
 	public void asteroidSpawner()
@@ -102,30 +105,42 @@ public class AsteroidGameController extends JComponent
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
-					r.nextInt(90) - 45, 3, Math.random() * 0.1, Math.random()));// xpos, ypos, course, speed, scale factor, rotation speed
+					r.nextInt(90) - 45, 3, Math.random() * 0.1, Math.random()));// xpos,
+																				// ypos,
+																				// course,
+																				// speed,
+																				// scale
+																				// factor,
+																				// rotation
+																				// speed
 		}
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
-					r.nextInt(90) - 135, 3, Math.random() * 0.1, Math.random()));
+					r.nextInt(90) - 135, 3, Math.random() * 0.1,
+					Math.random()));
 		}
 		if (asteroidSpawnQuadrantPicker == 2) // east
 		{
 			asteroidList.add(new Asteroid(widthOfScreen + 50,
-					r.nextInt(heightOfScreen), r.nextInt(90) - 225, 3, Math.random() * 0.1, Math.random()));
+					r.nextInt(heightOfScreen), r.nextInt(90) - 225, 3,
+					Math.random() * 0.1, Math.random()));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
-					heightOfScreen + 50, r.nextInt(90) + 45, 3, Math.random() * 0.1, Math.random()));
+					heightOfScreen + 50, r.nextInt(90) + 45, 3,
+					Math.random() * 0.1, Math.random()));
 		}
 	}
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
-		arwing = util.shipMovementRegulator(rotationDegree, directionOfHeadOfShip, moveFaster, turnRight, turnLeft, 
-				slowDown, speedOfShip, speedLimitOfShip, colorChangeController, arwing);
+		arwing = util.shipMovementRegulator(rotationDegree,
+				directionOfHeadOfShip, moveFaster, turnRight, turnLeft,
+				slowDown, speedOfShip, speedLimitOfShip, colorChangeController,
+				arwing);
 		repaint();
 	}
 
@@ -136,35 +151,42 @@ public class AsteroidGameController extends JComponent
 		g2.scale(1.25, 1);
 		g2.drawImage(spaceImage, 0, 0, null);
 		g2.setColor(Color.green);
-		g2.draw3DRect(widthOfScreen/2 + widthOfScreen/5, heightOfScreen/34, widthOfScreen/14, 35, true);
+		g2.draw3DRect(widthOfScreen / 2 + widthOfScreen / 5,
+				heightOfScreen / 34, widthOfScreen / 14, 35, true);
 		g2.setColor(Color.white);
 		g2.setFont(new Font("Sans", Font.PLAIN, 40));
-		g2.drawString("" + score, widthOfScreen/2 + widthOfScreen/5, heightOfScreen/15);	
+		g2.drawString("" + score, widthOfScreen / 2 + widthOfScreen / 5,
+				heightOfScreen / 15);
 		g2.setTransform(identity);
 		arwing.paintShip(g2);
 		for (int i = 0; i < asteroidList.size(); i++)
 		{
 			g2.setTransform(identity); // cleans up screen
-			asteroidList.get(i).paintAsteroid(g2); 
+			asteroidList.get(i).paintAsteroid(g2);
 			Asteroid asteroid = asteroidList.get(i);
 			Area asteroidArea = new Area(asteroid.asteroidShape);
 			AffineTransform asteroidAT = new AffineTransform();
-			asteroidAT.setToTranslation(asteroid.asteroidXPos, asteroid.asteroidYPos);
+			asteroidAT.setToTranslation(asteroid.asteroidXPos,
+					asteroid.asteroidYPos);
 			asteroidArea.transform(asteroidAT);
-			if (util.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos, widthOfScreen, heightOfScreen))
-				{
-					asteroidList.remove(i);
-					asteroidSpawner();
-				}
-			for (int j = 0; j < projectileList.size(); j++) //checking all bullets
+			if (util.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos,
+					widthOfScreen, heightOfScreen))
+			{
+				asteroidList.remove(i);
+				asteroidSpawner();
+			}
+			for (int j = 0; j < projectileList.size(); j++) // checking all
+															// bullets
 			{
 				AsteroidDestroyingProjectile shot = projectileList.get(j);
 				Area shotArea = new Area(shot.shotShape);
 				AffineTransform shotAT = new AffineTransform();
-				shotAT.setToTranslation(shot.projectileXPos, shot.projectileYPos);
+				shotAT.setToTranslation(shot.projectileXPos,
+						shot.projectileYPos);
 				shotArea.transform(shotAT);
 				shotArea.intersect(asteroidArea);
-				if (util.isOffScreen(shot.projectileXPos, shot.projectileYPos, widthOfScreen, heightOfScreen))
+				if (util.isOffScreen(shot.projectileXPos, shot.projectileYPos,
+						widthOfScreen, heightOfScreen))
 				{
 					projectileList.remove(j);
 				}
@@ -174,60 +196,10 @@ public class AsteroidGameController extends JComponent
 					projectileList.remove(j);
 					score = score + 1;
 				}
-					g2.setTransform(identity);
-					shot.paintProjectile(g2);
+				g2.setTransform(identity);
+				shot.paintProjectile(g2);
 			}
 		}
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e)
-	{
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e)
-	{
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-		{
-			turnLeft = true;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP)
-		{
-			moveFaster = true;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-		{
-			slowDown = true;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-		{
-			turnRight = true;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE)
-		{
-			projectileList.add(new AsteroidDestroyingProjectile(arwing.shipXPos, arwing.shipYPos, arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e)
-	{
-		if (e.getKeyCode() == KeyEvent.VK_LEFT)
-		{
-			turnLeft = false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP)
-		{
-			moveFaster = false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN)
-		{
-			slowDown = false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-		{
-			turnRight = false;
-		}
-	}
 }
