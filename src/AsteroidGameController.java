@@ -3,22 +3,16 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Polygon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -26,9 +20,9 @@ public class AsteroidGameController extends JComponent
 		implements ActionListener
 {
 	public JFrame space = new JFrame();
-	int widthOfScreen = java.awt.Toolkit.getDefaultToolkit()
+	private int widthOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().width;
-	int heightOfScreen = java.awt.Toolkit.getDefaultToolkit()
+	private int heightOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().height;
 	private Image spaceImage = new ImageIcon(
 			getClass().getResource("spacePicture.jpg")).getImage();// Image
@@ -54,10 +48,9 @@ public class AsteroidGameController extends JComponent
 	public ArrayList<Asteroid> asteroidList = new ArrayList<>();
 	public ArrayList<AsteroidDestroyingProjectile> projectileList = new ArrayList<>();
 	public AffineTransform identity = new AffineTransform(); // identity
-																// transform
 	public Random r = new Random();
 	public int asteroidSpawnQuadrantPicker;
-	public Ship arwing = new Ship(middleScreenXPos, middleScreenYPos);
+	public Ship arwing = new Ship(middleScreenXPos, middleScreenYPos, widthOfScreen, heightOfScreen);
 	public Utilities util = new Utilities(arwing, projectileList);
 	private JPanel scorePanel = new JPanel();
 	private int score;
@@ -138,9 +131,7 @@ public class AsteroidGameController extends JComponent
 	{
 		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
 		arwing = util.shipMovementRegulator(rotationDegree,
-				directionOfHeadOfShip, moveFaster, turnRight, turnLeft,
-				slowDown, speedOfShip, speedLimitOfShip, colorChangeController,
-				arwing);
+				directionOfHeadOfShip, speedOfShip, speedLimitOfShip, colorChangeController);
 		repaint();
 	}
 
@@ -149,6 +140,7 @@ public class AsteroidGameController extends JComponent
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setTransform(identity);
 		g2.scale(1.25, 1);
+		spaceImage.getScaledInstance(widthOfScreen, heightOfScreen, 0);
 		g2.drawImage(spaceImage, 0, 0, null);
 		g2.setColor(Color.green);
 		g2.draw3DRect(widthOfScreen / 2 + widthOfScreen / 5,
@@ -202,4 +194,4 @@ public class AsteroidGameController extends JComponent
 		}
 	}
 
-}
+} 

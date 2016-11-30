@@ -4,7 +4,7 @@ import java.awt.Polygon;
 
 import javax.swing.text.Segment;
 
-public class Asteroid extends Utilities
+public class Asteroid 
 {
 	private int[] asteroidXPoints =
 	{ sg(-48), sg(-36), sg(-13), sg(13), sg(36), sg(48), sg(48), sg(36), sg(13), sg(-13), sg(-36), sg(-48)};
@@ -20,7 +20,6 @@ public class Asteroid extends Utilities
 	private double scaleFactor = 0.1;
 	private double rotationSpeed;
 	private double accumulatedRotation = 0;
-	private Color asteroidColor;
 	public Polygon asteroidShape;
 	
 	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed) //asteroid constructor
@@ -31,9 +30,7 @@ public class Asteroid extends Utilities
 		this.directionOfAsteroid = course;
 		this.scaleFactor = scaleFactor;
 		this.rotationSpeed = (rotationSpeed/rotationDirectionRandomizer(200));
-//		this.asteroidColor = asteroidColor;
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
-		
 	}
 
 	private int sg(double nominalSegmentLength)
@@ -43,15 +40,15 @@ public class Asteroid extends Utilities
 	}
 	private double rotationDirectionRandomizer(double rotationSpeedAndDirection)
 	{
-		double x = (rotationSpeedAndDirection) - Math.random()*(rotationSpeedAndDirection * 2);
+		double x = (rotationSpeedAndDirection) - Math.random() * (rotationSpeedAndDirection * 2);
 		return (double)x;
 	}
 	
 	public void paintAsteroid(Graphics2D g2)
 	{
-		convertCourseSpeedToDxDy(directionOfAsteroid, speedOfAsteroid);
-		deltaX = getDeltaX();
-		deltaY = getDeltaY();
+		Utilities.convertCourseSpeedToDxDy(directionOfAsteroid, speedOfAsteroid);
+		deltaX = Utilities.getDeltaX();
+		deltaY = Utilities.getDeltaY();
 		asteroidXPos = (int) (asteroidXPos + deltaX);
 		asteroidYPos = (int) (asteroidYPos + deltaY);
 		g2.translate(asteroidXPos, asteroidYPos);

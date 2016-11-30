@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
-public class AsteroidDestroyingProjectile extends Utilities implements ActionListener 
+public class AsteroidDestroyingProjectile implements ActionListener 
 {
 	public Rectangle2D.Double shotShape = new Rectangle2D.Double(-4, -30, 9, 8);
 	private int projectileCourse;
@@ -28,17 +28,15 @@ public class AsteroidDestroyingProjectile extends Utilities implements ActionLis
 
 	public void paintProjectile(Graphics2D g2)
 	{
-		
-		convertCourseSpeedToDxDy(projectileCourse, projectileSpeed + 10);
-		deltaX = getDeltaX();
-		deltaY = getDeltaY();
+		Utilities.convertCourseSpeedToDxDy(projectileCourse, projectileSpeed + 10);
+		deltaX = Utilities.getDeltaX();
+		deltaY = Utilities.getDeltaY();
 		projectileXPos = (int) (projectileXPos + deltaX);
 		projectileYPos = (int) (projectileYPos + deltaY);
 		g2.translate(projectileXPos, projectileYPos);
 		g2.rotate(Math.toRadians(-projectileCourse + 90));
 		g2.setColor(new Color(colorChanger1, colorChanger2, colorChanger3));
 		g2.fill(shotShape);
-		
 	}
 
 	public void setProjectileCourse(int projectileCourse)

@@ -4,32 +4,34 @@ import java.util.ArrayList;
 
 public class Utilities implements KeyListener
 {
-	private int deltaX;
-	private int deltaY;
+	private static int deltaX;
+	private static int deltaY;
 	private boolean moveFaster;
 	private boolean turnLeft;
 	private boolean turnRight;
 	private boolean slowDown;
 	private Ship arwing;
 	public ArrayList<AsteroidDestroyingProjectile> projectileList;
+	private KeyEvent e;
+	
 	public Utilities(Ship arwing,  ArrayList<AsteroidDestroyingProjectile> projectileList)
 	{
 		this.arwing = arwing;
 		this.projectileList = projectileList;
 	}
 	
-	public void convertCourseSpeedToDxDy(int course, double speed)
+	public static void convertCourseSpeedToDxDy(int course, double speed)
 	{
 		double cosine = Math.cos(Math.toRadians(course));
 		double sine = -Math.sin(Math.toRadians(course));
 		deltaX = ((int) (cosine * speed));
 		deltaY = ((int) (sine * speed));
 	}
-	public int getDeltaX()
+	public static int getDeltaX()
 	{
 		return deltaX;
 	}
-	public int getDeltaY()
+	public static int getDeltaY()
 	{
 		return deltaY;
 	}
@@ -46,24 +48,22 @@ public class Utilities implements KeyListener
 			return false;
 		}
 	}
-	public Ship shipMovementRegulator(double rotationDegree, double directionOfHeadOfShip, boolean moveFaster, boolean turnRight, boolean turnLeft,
-			boolean slowDown, int speedOfShip, int speedLimitOfShip, double colorChangeController, Ship arwing)
+	public Ship shipMovementRegulator(double rotationDegree, double directionOfHeadOfShip, int speedOfShip, int speedLimitOfShip, double colorChangeController)
 	{
 		rotationDegree = Math.toRadians(directionOfHeadOfShip);
 
 		rotationDegree = -directionOfHeadOfShip + 90;
-		if (moveFaster)
+		if (this.moveFaster)
 		{
 			arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
 		}
-		if (turnRight)
+		if (this.turnRight)
 		{
 			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip - 6;
 		}
-		if (turnLeft)
+		if (this.turnLeft)
 		{
 			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 6;
-			System.out.println(arwing.directionOfHeadOfShip);
 		}
 		if (arwing.directionOfHeadOfShip > 360)
 		{
@@ -73,7 +73,7 @@ public class Utilities implements KeyListener
 		{
 			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 360;
 		}
-		if (slowDown)
+		if (this.slowDown)
 		{
 			arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
 		}
@@ -101,7 +101,7 @@ public class Utilities implements KeyListener
 	{
 		if (e.getKeyCode() == KeyEvent.VK_LEFT)
 		{
-			turnLeft = true;
+			this.turnLeft = true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP)
 		{
@@ -117,7 +117,7 @@ public class Utilities implements KeyListener
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			projectileList.add(new AsteroidDestroyingProjectile(arwing.shipXPos, arwing.shipYPos, arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
+			projectileList.add(new AsteroidDestroyingProjectile(arwing.getShipXPos(), arwing.getShipYPos(), arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
 		}
 	}
 
@@ -141,5 +141,4 @@ public class Utilities implements KeyListener
 			turnRight = false;
 		}
 	}
-
 }
