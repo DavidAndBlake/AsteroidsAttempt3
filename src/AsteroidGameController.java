@@ -62,6 +62,8 @@ public class AsteroidGameController extends JComponent
 
 	void getGoing()
 	{
+		System.out.println(widthOfScreen);
+		System.out.println(heightOfScreen);
 
 		/*********************************************************
 		 * spawn asteroids
@@ -91,7 +93,10 @@ public class AsteroidGameController extends JComponent
 		scorePanel.setVisible(true);
 		scorePanel.setLocation(widthOfScreen - 30, 0);
 	}
-
+	public void drawImage()
+	{	
+	}
+	
 	public void asteroidSpawner()
 	{
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
@@ -141,7 +146,7 @@ public class AsteroidGameController extends JComponent
 		g2.setTransform(identity);
 		g2.scale(1.25, 1);
 		spaceImage.getScaledInstance(widthOfScreen, heightOfScreen, 0);
-		g2.drawImage(spaceImage, 0, 0, null);
+		g2.drawImage(spaceImage, 0, 0, null, null);
 		g2.setColor(Color.green);
 		g2.draw3DRect(widthOfScreen / 2 + widthOfScreen / 5,
 				heightOfScreen / 34, widthOfScreen / 14, 35, true);
