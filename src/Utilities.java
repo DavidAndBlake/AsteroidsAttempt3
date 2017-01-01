@@ -1,6 +1,12 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class Utilities implements KeyListener
 {
@@ -13,13 +19,32 @@ public class Utilities implements KeyListener
 	private Ship arwing;
 	public ArrayList<AsteroidDestroyingProjectile> projectileList;
 	private KeyEvent e;
+	public URL shotSoundURL;
+	public URL gameMusicURL;
+
+//	private void playShotSound()
+//	{
+//		try{
+//		      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("270536__littlerobotsoundfactory__laser-09.wav"))
+//		    		  {
+//		     Clip clip = AudioSystem.getClip();
+//		     clip.open(audioInputStream);
+//		     FloatControl gainControl = 
+//		    		    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+//		    		gainControl.setValue(-8.0f);
+//		     clip.start( );
+//		    }
+//		   catch(Exception ex)
+//		   {  }
 	
-	public Utilities(Ship arwing,  ArrayList<AsteroidDestroyingProjectile> projectileList)
+//		}
+	public Utilities(Ship arwing,
+			ArrayList<AsteroidDestroyingProjectile> projectileList)
 	{
 		this.arwing = arwing;
 		this.projectileList = projectileList;
 	}
-	
+
 	public static void convertCourseSpeedToDxDy(int course, double speed)
 	{
 		double cosine = Math.cos(Math.toRadians(course));
@@ -35,7 +60,7 @@ public class Utilities implements KeyListener
 	{
 		return deltaY;
 	}
-	
+
 	public boolean isOffScreen(int xPos, int yPos, int screenWidth,
 			int screenHeight)
 	{
@@ -48,7 +73,9 @@ public class Utilities implements KeyListener
 			return false;
 		}
 	}
-	public Ship shipMovementRegulator(double rotationDegree, double directionOfHeadOfShip, int speedOfShip, int speedLimitOfShip, double colorChangeController)
+	public Ship shipMovementRegulator(double rotationDegree,
+			double directionOfHeadOfShip, int speedOfShip, int speedLimitOfShip,
+			double colorChangeController)
 	{
 		rotationDegree = Math.toRadians(directionOfHeadOfShip);
 
@@ -117,7 +144,11 @@ public class Utilities implements KeyListener
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			projectileList.add(new AsteroidDestroyingProjectile(arwing.getShipXPos(), arwing.getShipYPos(), arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
+//			playShotSound();
+			projectileList.add(new AsteroidDestroyingProjectile(
+					arwing.getShipXPos(), arwing.getShipYPos(),
+					arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
+
 		}
 	}
 

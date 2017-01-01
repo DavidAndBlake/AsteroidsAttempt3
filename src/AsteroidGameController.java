@@ -1,3 +1,4 @@
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -7,10 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JApplet;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,6 +57,8 @@ public class AsteroidGameController extends JComponent
 	public Utilities util = new Utilities(arwing, projectileList);
 	private JPanel scorePanel = new JPanel();
 	private int score;
+	public URL soundAddress;
+	public AudioClip soundFile;
 
 	public static void main(String[] args)
 	{
@@ -88,6 +93,8 @@ public class AsteroidGameController extends JComponent
 		space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
 		space.add(this);
 		space.setBackground(Color.BLACK);
+		soundAddress = getClass().getResource("270536__littlerobotsoundfactory__laser-09.wav");
+		soundFile = JApplet.newAudioClip(soundAddress);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(util);
 		scorePanel.setVisible(true);
