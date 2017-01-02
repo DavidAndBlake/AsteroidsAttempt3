@@ -26,33 +26,22 @@ public class Utilities implements KeyListener
 	public URL gameMusicURL;
 	public URL soundAddress;
 	public AudioClip soundFile;
-	public soundAddress = getClass().getResource("270536__littlerobotsoundfactory__laser-09.wav");
-	public soundFile = JApplet.newAudioClip(soundAddress);
 
-//	private void playShotSound()
-//	{
-//		try{
-//		      AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(getClass().getResource("270536__littlerobotsoundfactory__laser-09.wav"))
-//		    		  {
-//		     Clip clip = AudioSystem.getClip();
-//		     clip.open(audioInputStream);
-//		     FloatControl gainControl = 
-//		    		    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//		    		gainControl.setValue(-8.0f);
-//		     clip.start( );
-//		    }
-//		   catch(Exception ex)
-//		   {  }
-	
-//		}
-	
+	public void playShotSound()
+	{
+		soundAddress = getClass()
+				.getResource("270536__littlerobotsoundfactory__laser-09.wav");
+		soundFile = JApplet.newAudioClip(soundAddress);
+		soundFile.play();
+	}
+
 	public Utilities(Ship arwing,
 			ArrayList<AsteroidDestroyingProjectile> projectileList)
 	{
 		this.arwing = arwing;
 		this.projectileList = projectileList;
 	}
-	
+
 	public static void convertCourseSpeedToDxDy(int course, double speed)
 	{
 		double cosine = Math.cos(Math.toRadians(course));
@@ -152,9 +141,8 @@ public class Utilities implements KeyListener
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-//			playShotSound();
-		
-			AsteroidGameController.getDefaultLocale(soundFile.play());
+			 playShotSound();
+
 			projectileList.add(new AsteroidDestroyingProjectile(
 					arwing.getShipXPos(), arwing.getShipYPos(),
 					arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
