@@ -93,8 +93,8 @@ public class AsteroidGameController extends JComponent
 		space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
 		space.add(this);
 		space.setBackground(Color.BLACK);
-		soundAddress = getClass().getResource("270536__littlerobotsoundfactory__laser-09.wav");
-		soundFile = JApplet.newAudioClip(soundAddress);
+//		soundAddress = getClass().getResource("270536__littlerobotsoundfactory__laser-09.wav");
+//		soundFile = JApplet.newAudioClip(soundAddress);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(util);
 		scorePanel.setVisible(true);
