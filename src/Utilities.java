@@ -27,7 +27,7 @@ public class Utilities implements KeyListener
 	public URL soundAddress;
 	public AudioClip soundFile;
 
-	public void playShotSound()
+	private void playShotSound()
 	{
 		soundAddress = getClass()
 				.getResource("270536__littlerobotsoundfactory__laser-09.wav");

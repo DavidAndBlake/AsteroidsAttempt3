@@ -16,8 +16,8 @@ public class Ship
     { 7, 0, -7 };
     private int[] canopyYPoints =
     { 6, -9, 6 };
-    private int shipXPos;
-    private int shipYPos;
+    public int shipXPos;
+    public int shipYPos;
     private int deltaX;
     private int deltaY;
     public int directionOfHeadOfShip = 90; // degrees
@@ -26,8 +26,8 @@ public class Ship
     public int colorChangerLeftSide;
     private int speedOfShip = 0;
     private int speedLimitOfShip = 15;
-    private Polygon shipLeftSide;
-    private Polygon shipRightSide;
+    public Polygon shipLeftSide;
+    public Polygon shipRightSide;
     private int screenWidth;
     private int screenHeight;
 
