@@ -166,8 +166,8 @@ public class AsteroidGameController extends JComponent
 			Asteroid asteroid = asteroidList.get(i);
 			Area asteroidArea = new Area(asteroid.asteroidShape);
 			AffineTransform asteroidAT = new AffineTransform();
-			asteroidAT.setToTranslation(asteroid.asteroidXPos,
-					asteroid.asteroidYPos);
+			asteroidAT.setToTranslation(asteroidList.get(i).asteroidXPos,
+					asteroidList.get(i).asteroidYPos);
 			asteroidArea.transform(asteroidAT);
 			if (util.isOffScreen(asteroid.asteroidXPos, asteroid.asteroidYPos,
 					widthOfScreen, heightOfScreen))
@@ -205,7 +205,8 @@ public class AsteroidGameController extends JComponent
 				leftShipArea.transform(arwingAT);
 				leftShipArea.intersect(asteroidArea);
 				rightShipArea.intersect(asteroidArea);
-//				System.out.println(rightShipArea);
+				System.out.println(rightShipArea);
+//				System.out.println(asteroid.asteroidXPos, asteroid.asteroidYPos);
 				if (!leftShipArea.isEmpty())
 				{
 					System.out.println("MAYDAY!");
