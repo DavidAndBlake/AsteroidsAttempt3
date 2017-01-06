@@ -197,26 +197,25 @@ public class AsteroidGameController extends JComponent
 					projectileList.remove(j);
 					score = score + 1;
 				}
-				Area leftShipArea = new Area(arwing.shipLeftSide);
-				Area rightShipArea = new Area(arwing.shipRightSide);
-				AffineTransform arwingAT = new AffineTransform();
-				arwingAT.setToTranslation(arwing.shipXPos,
-						arwing.shipYPos);
-				leftShipArea.transform(arwingAT);
-				leftShipArea.intersect(asteroidArea);
-				rightShipArea.intersect(asteroidArea);
-				System.out.println(rightShipArea);
-//				System.out.println(asteroid.asteroidXPos, asteroid.asteroidYPos);
-				if (!leftShipArea.isEmpty())
-				{
-					System.out.println("MAYDAY!");
-				}
-				if (!rightShipArea.isEmpty())
-				{
-					System.out.println("MAYDAY!");
-				}
+			
 				g2.setTransform(identity);
 				shot.paintProjectile(g2);
+			}
+			Area leftShipArea = new Area(arwing.shipLeftSide);
+			Area rightShipArea = new Area(arwing.shipRightSide);
+			AffineTransform arwingAT = new AffineTransform();
+			arwingAT.setToTranslation(arwing.getShipXPos(),
+					arwing.getShipYPos());
+			leftShipArea.transform(arwingAT);
+			leftShipArea.intersect(asteroidArea);
+			rightShipArea.intersect(asteroidArea);
+			if (!leftShipArea.isEmpty())
+			{
+				System.out.println("MAYDAY!");
+			}
+			if (!rightShipArea.isEmpty())
+			{
+				System.out.println("MAYDAY!");
 			}
 		}
 	}
