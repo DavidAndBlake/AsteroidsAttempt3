@@ -4,10 +4,12 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -212,10 +214,16 @@ public class AsteroidGameController extends JComponent
 			if (!leftShipArea.isEmpty())
 			{
 				System.out.println("MAYDAY!");
+				arwing.shipRightSide.reset();
+				arwing.shipLeftSide.reset();
+				arwing.canopy.reset();
 			}
 			if (!rightShipArea.isEmpty())
 			{
 				System.out.println("MAYDAY!");
+//				arwing.shipRightSide.reset();
+//				arwing.shipLeftSide.reset();
+//				arwing.canopy.reset();
 			}
 		}
 	}

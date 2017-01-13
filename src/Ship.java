@@ -28,6 +28,7 @@ public class Ship
     private int speedLimitOfShip = 15;
     public Polygon shipLeftSide;
     public Polygon shipRightSide;
+    public Polygon canopy;
     private int screenWidth;
     private int screenHeight;
 
@@ -38,6 +39,7 @@ public class Ship
 	this.setShipYPos(shipYPos);
 	this.shipLeftSide = new Polygon(leftSideShipXPoints, leftSideShipYPoints, leftSideShipXPoints.length);
 	this.shipRightSide = new Polygon(rightSideShipXPoints, rightSideShipYPoints, rightSideShipXPoints.length);
+	this.canopy = new Polygon(canopyXPoints, canopyYPoints, canopyXPoints.length);
 	this.screenHeight = screenHeight;
 	this.screenWidth = screenWidth;
     }
@@ -69,7 +71,7 @@ public class Ship
 		Math.abs(colorChangerLeftSide % 255)));
 	g2.fill(shipRightSide);
 	g2.setColor(Color.BLUE);
-	g2.fillPolygon(canopyXPoints, canopyYPoints, canopyXPoints.length);
+	g2.fill(canopy);
 	g2.setColor(Color.black);
 	if (getShipYPos() > screenHeight)
 	{
