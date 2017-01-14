@@ -151,7 +151,6 @@ public class AsteroidGameController extends JComponent
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setTransform(identity);
 		g2.scale((double)widthOfScreen/spaceImage.getWidth(this), (double)heightOfScreen/spaceImage.getHeight(this));
-		System.out.println((double)widthOfScreen/spaceImage.getWidth(this));
 		g2.drawImage(spaceImage, 0, 0, null, null);
 		g2.setColor(Color.green);
 		g2.draw3DRect(widthOfScreen / 2 + widthOfScreen / 5,
