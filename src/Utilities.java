@@ -26,13 +26,23 @@ public class Utilities implements KeyListener
 	public URL gameMusicURL;
 	public URL soundAddress;
 	public AudioClip soundFile;
+	private boolean shipDestroyed;
 
-	private void playShotSound()
+	public void playShotSound()
 	{
-		soundAddress = getClass()
-				.getResource("270536__littlerobotsoundfactory__laser-09.wav");
-		soundFile = JApplet.newAudioClip(soundAddress);
-		soundFile.play();
+		try
+		{
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(getClass().getResource(
+							"270536__littlerobotsoundfactory__laser-09.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (Exception ex)
+		{
+			System.out.println("Error with playing sound.");
+			ex.printStackTrace();
+		}
 	}
 
 	public Utilities(Ship arwing,
@@ -74,46 +84,57 @@ public class Utilities implements KeyListener
 			double directionOfHeadOfShip, int speedOfShip, int speedLimitOfShip,
 			double colorChangeController)
 	{
-		rotationDegree = Math.toRadians(directionOfHeadOfShip);
 
-		rotationDegree = -directionOfHeadOfShip + 90;
-		if (this.moveFaster)
+		if (!shipDestroyed)
 		{
-			arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
+			rotationDegree = Math.toRadians(directionOfHeadOfShip);
+
+			rotationDegree = -directionOfHeadOfShip + 90;
+			if (this.moveFaster)
+			{
+				arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
+			}
+			if (this.turnRight)
+			{
+				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip - 6;
+			}
+			if (this.turnLeft)
+			{
+				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 6;
+			}
+			if (arwing.directionOfHeadOfShip > 360)
+			{
+				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip
+						- 360;
+			}
+			if (arwing.directionOfHeadOfShip < 0)
+			{
+				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip
+						+ 360;
+			}
+			if (this.slowDown)
+			{
+				arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
+			}
+			if (arwing.getSpeedOfShip() > arwing.getSpeedLimitOfShip())
+			{
+				arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
+			}
+			if (arwing.getSpeedOfShip() < 0)
+			{
+				arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
+			}
+			if (rotationDegree > 180)
+			{
+				colorChangeController = 360 - directionOfHeadOfShip;
+			}
 		}
-		if (this.turnRight)
+		if (shipDestroyed)
 		{
-			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip - 6;
-		}
-		if (this.turnLeft)
-		{
-			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 6;
-		}
-		if (arwing.directionOfHeadOfShip > 360)
-		{
-			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip - 360;
-		}
-		if (arwing.directionOfHeadOfShip < 0)
-		{
-			arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 360;
-		}
-		if (this.slowDown)
-		{
-			arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
-		}
-		if (arwing.getSpeedOfShip() > arwing.getSpeedLimitOfShip())
-		{
-			arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
-		}
-		if (arwing.getSpeedOfShip() < 0)
-		{
-			arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
-		}
-		if (rotationDegree > 180)
-		{
-			colorChangeController = 360 - directionOfHeadOfShip;
+			arwing.setSpeedOfShip(0);
 		}
 		return arwing;
+
 	}
 	@Override
 	public void keyTyped(KeyEvent e)
@@ -141,7 +162,7 @@ public class Utilities implements KeyListener
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			 playShotSound();
+			playShotSound();
 
 			projectileList.add(new AsteroidDestroyingProjectile(
 					arwing.getShipXPos(), arwing.getShipYPos(),
@@ -169,5 +190,9 @@ public class Utilities implements KeyListener
 		{
 			turnRight = false;
 		}
+	}
+	public void setShipDestroyed(boolean shipDestroyed)
+	{
+		this.shipDestroyed = shipDestroyed;
 	}
 }

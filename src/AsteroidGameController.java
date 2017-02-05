@@ -4,18 +4,15 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Shape;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.ImageIcon;
-import javax.swing.JApplet;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,8 +26,7 @@ public class AsteroidGameController extends JComponent
 			.getScreenSize().width;
 	private int heightOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().height;
-	private Image spaceImage = new ImageIcon(
-			getClass().getResource("spacePicture.jpg")).getImage();// Image
+	private Image spaceImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("spacePicture.jpg"));// Image
 																	// spaceImage;
 	public Timer ticker = new Timer(30, this);
 	public int[] asteroid1XPoints =
@@ -61,6 +57,7 @@ public class AsteroidGameController extends JComponent
 	private int score;
 	public URL soundAddress;
 	public AudioClip soundFile;
+	public boolean shipDestroyed;
 	
 	public static void main(String[] args)
 	{
@@ -149,8 +146,7 @@ public class AsteroidGameController extends JComponent
 	{
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setTransform(identity);
-		g2.scale(1.25, 1);
-		spaceImage.getScaledInstance(widthOfScreen, heightOfScreen, 0);
+		g2.scale((double)widthOfScreen/spaceImage.getWidth(this), (double)heightOfScreen/spaceImage.getHeight(this));
 		g2.drawImage(spaceImage, 0, 0, null, null);
 		g2.setColor(Color.green);
 		g2.draw3DRect(widthOfScreen / 2 + widthOfScreen / 5,
@@ -213,19 +209,12 @@ public class AsteroidGameController extends JComponent
 			rightShipArea.intersect(asteroidArea);
 			if (!leftShipArea.isEmpty())
 			{
-				System.out.println("MAYDAY!");
-				arwing.shipRightSide.reset();
-				arwing.shipLeftSide.reset();
 				arwing.canopy.reset();
-			}
-			if (!rightShipArea.isEmpty())
-			{
-				System.out.println("MAYDAY!");
-//				arwing.shipRightSide.reset();
-//				arwing.shipLeftSide.reset();
-//				arwing.canopy.reset();
+				arwing.shipLeftSide.reset();
+				arwing.shipRightSide.reset();
+				arwing.setShipDestroyed(true);
+				util.setShipDestroyed(true);
 			}
 		}
 	}
-
 } 
