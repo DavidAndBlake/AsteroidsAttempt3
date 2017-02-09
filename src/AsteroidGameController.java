@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,8 +27,7 @@ public class AsteroidGameController extends JComponent
 			.getScreenSize().width;
 	private int heightOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().height;
-	private Image spaceImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("spacePicture.jpg"));// Image
-																	// spaceImage;
+	private Image spaceImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("spacePicture.jpg"));
 	public Timer ticker = new Timer(30, this);
 	public int[] asteroid1XPoints =
 	{ 21, 16, 20, 15, 0, -19, -17, -21, -15 };

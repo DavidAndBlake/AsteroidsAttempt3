@@ -1,6 +1,7 @@
 import java.applet.AudioClip;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class Utilities implements KeyListener
 	public AudioClip soundFile;
 	private boolean shipDestroyed;
 
+//<<<<<<< HEAD
 	public void playShotSound()
 	{
 		try
@@ -42,8 +44,20 @@ public class Utilities implements KeyListener
 		{
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
-		}
-	}
+		}}
+//=======
+
+//>>>>>>> origin/master
+//	}
+//	private void playShotSound()
+//	{
+//		
+//		soundAddress = getClass()
+//				.getResource("270536__littlerobotsoundfactory__laser-09.wav");
+//		soundFile = JApplet.newAudioClip(soundAddress);
+//		soundFile.play();
+//		
+//	}
 
 	public Utilities(Ship arwing,
 			ArrayList<AsteroidDestroyingProjectile> projectileList)

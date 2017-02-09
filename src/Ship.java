@@ -1,9 +1,13 @@
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 
-public class Ship
+import javax.swing.Timer;
+
+public class Ship implements ActionListener
 {
 	private int[] leftSideShipXPoints =
 	{ 0, -16, -32, -16, -10, 0 };
@@ -34,8 +38,12 @@ public class Ship
 	private int screenHeight;
 	private int shipWreckHeight = 100;
 	private int shipWreckWidth = 100;
-	public Ellipse2D.Double shipWreck = new Ellipse2D.Double(shipXPos-shipWreckWidth/2, shipYPos-shipWreckHeight/2, shipWreckWidth, shipWreckHeight);
+	public Ellipse2D.Double shipWreck = new Ellipse2D.Double(
+			shipXPos - shipWreckWidth / 2, shipYPos - shipWreckHeight / 2,
+			shipWreckWidth, shipWreckHeight);
 	private boolean shipDestroyed = false;
+	private Timer ticker = new Timer(100, this);
+	private Graphics2D g2;
 
 	public Ship(int shipXPos, int shipYPos, int screenWidth, int screenHeight) // ship
 	// constructor
@@ -50,10 +58,12 @@ public class Ship
 				canopyXPoints.length);
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
+		ticker.start();
 	}
 
 	public void paintShip(Graphics2D g2)
 	{
+		this.g2 = g2;
 		// TODO: Figure out how to change sun position to top right
 		colorChangerRightSide = Math.abs((int) directionOfHeadOfShip - 180);
 		if (colorChangerRightSide > 180)
@@ -99,12 +109,7 @@ public class Ship
 		{
 			shipXPos = screenWidth + 20;
 		}
-		if (shipDestroyed == true)
-		{
-			shipWreckHeight = 30;
-			shipWreckWidth = 30;
-			g2.fill(shipWreck);
-		}
+
 	}
 
 	public void setScreenWidth(int screenWidth)
@@ -160,5 +165,24 @@ public class Ship
 	public void setShipDestroyed(boolean shipDestroyed)
 	{
 		this.shipDestroyed = shipDestroyed;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		if (shipDestroyed == true)
+		{
+			g2.setColor(Color.red);
+			g2.fillRect(500, 500, 200, 200);
+			for (int i = 0; i < 200; i++)
+			{
+				g2.fill(shipWreck);
+				shipWreck.width = 1000;
+				shipWreck.height = 1000;
+				shipWreck.x = shipXPos;
+				shipWreck.y = shipYPos;
+				speedOfShip = 0;
+			}
+		}
 	}
 }
