@@ -102,7 +102,6 @@ Ellipse2D.Double shipWreck = new Ellipse2D.Double(0 - shipWreckWidth/2,
 			shipWreckHeight = shipWreckHeight + 20;
 			shipWreck.x = shipXPos;
 			shipWreck.y = shipYPos;
-			System.out.println("boom");
 			ticker.getDelay();
 			delay = delay + 1;
 			if (delay > 25) {
