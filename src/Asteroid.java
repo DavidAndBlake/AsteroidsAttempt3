@@ -1,3 +1,4 @@
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -59,6 +60,7 @@ public class Asteroid
 		g2.setColor(new Color(98,32,12));
 		g2.fill(asteroidShape);
 		scaleFactor = scaleFactor * 0.01;
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0F));
 	}
 
 	public void setSpeedOfAsteroid(double speedOfAsteroid)//How fast the ship is going

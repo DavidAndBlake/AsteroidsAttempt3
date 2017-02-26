@@ -133,7 +133,7 @@ public class Ship implements ActionListener
 			shipWreck.y = shipYPos;
 			delay = delay + 1;
 			alpha = (float) (alpha - .03);
-			if (delay > 30)
+			if (delay > 32)
 			{
 				shipDestroyed = false;
 			}
