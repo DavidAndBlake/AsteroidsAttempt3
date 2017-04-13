@@ -73,13 +73,6 @@ public class AsteroidGameController extends JComponent
 		{
 			asteroidSpawner(j);
 		}
-		/*********************************************************
-		 * spawn projectiles
-		 *********************************************************/
-		for (int i = 0; i < projectileList.size(); i++)
-		{
-			AsteroidDestroyingProjectile shot = projectileList.get(i);
-		}
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
 		ticker.start();
@@ -93,9 +86,6 @@ public class AsteroidGameController extends JComponent
 		scorePanel.setVisible(true);
 		scorePanel.setLocation(widthOfScreen - 30, 0);
 		util.playMusic();
-	}
-	public void drawImage()
-	{	
 	}
 	
 	public void asteroidSpawner(int j)

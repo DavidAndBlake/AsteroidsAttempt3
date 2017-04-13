@@ -182,6 +182,7 @@ public class Utilities implements KeyListener
 			projectileList.add(new AsteroidDestroyingProjectile(
 					arwing.getShipXPos(), arwing.getShipYPos(),
 					arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
+			
 
 			
 		}
