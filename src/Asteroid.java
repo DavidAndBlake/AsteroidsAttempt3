@@ -22,8 +22,9 @@ public class Asteroid
 	private double rotationSpeed;
 	private double accumulatedRotation = 0;
 	public Polygon asteroidShape;
+	public int asteroidNumber;
 	
-	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed) //asteroid constructor
+	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed, int asteroidNumber) //asteroid constructor
 	{
 		this.asteroidXPos = asteroidXPos;
 		this.asteroidYPos = asteroidYPos;
@@ -32,6 +33,7 @@ public class Asteroid
 		this.scaleFactor = scaleFactor;
 		this.rotationSpeed = (rotationSpeed/rotationDirectionRandomizer(200));
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
+		this.asteroidNumber = asteroidNumber;
 	}
 
 	private int sg(double nominalSegmentLength)
@@ -52,6 +54,7 @@ public class Asteroid
 		deltaY = Utilities.getDeltaY();
 		asteroidXPos = (int) (asteroidXPos + deltaX);
 		asteroidYPos = (int) (asteroidYPos + deltaY);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0F));
 		g2.translate(asteroidXPos, asteroidYPos);
 		g2.rotate(Math.toRadians(-directionOfAsteroid + 90)); //asteroid course
 		g2.scale(1.5, 1.5);
@@ -59,8 +62,9 @@ public class Asteroid
 		g2.rotate(accumulatedRotation);
 		g2.setColor(new Color(98,32,12));
 		g2.fill(asteroidShape);
+		g2.setColor(Color.white);
+
 		scaleFactor = scaleFactor * 0.01;
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0F));
 	}
 
 	public void setSpeedOfAsteroid(double speedOfAsteroid)//How fast the ship is going

@@ -71,7 +71,7 @@ public class AsteroidGameController extends JComponent
 		 *********************************************************/
 		for (int j = 0; j < 14; j++)
 		{
-			asteroidSpawner();
+			asteroidSpawner(j);
 		}
 		/*********************************************************
 		 * spawn projectiles
@@ -80,7 +80,6 @@ public class AsteroidGameController extends JComponent
 		{
 			AsteroidDestroyingProjectile shot = projectileList.get(i);
 		}
-		score = 0;
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
 		ticker.start();
@@ -89,48 +88,47 @@ public class AsteroidGameController extends JComponent
 		space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
 		space.add(this);
 		space.setBackground(Color.BLACK);
-		
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(util);
 		scorePanel.setVisible(true);
 		scorePanel.setLocation(widthOfScreen - 30, 0);
+		util.playMusic();
 	}
 	public void drawImage()
 	{	
 	}
 	
-	public void asteroidSpawner()
+	public void asteroidSpawner(int j)
 	{
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
-					r.nextInt(90) - 45, 3, Math.random() * 0.1, Math.random()));// xpos,
+					r.nextInt(90) - 45, 3, Math.random() * 0.1, Math.random(), j));// xpos,
 																				// ypos,
 																				// course,
 																				// speed,
-																				// scale
-																				// factor,
-																				// rotation
-																				// speed
+																				// scale factor,
+																				// rotation speed
+																				// asteroid number
 		}
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
 					r.nextInt(90) - 135, 3, Math.random() * 0.1,
-					Math.random()));
+					Math.random(), j));
 		}
 		if (asteroidSpawnQuadrantPicker == 2) // east
 		{
 			asteroidList.add(new Asteroid(widthOfScreen + 50,
 					r.nextInt(heightOfScreen), r.nextInt(90) - 225, 3,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), j));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
 					heightOfScreen + 50, r.nextInt(90) + 45, 3,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), j));
 		}
 	}
 	@Override
@@ -141,10 +139,11 @@ public class AsteroidGameController extends JComponent
 				directionOfHeadOfShip, speedOfShip, speedLimitOfShip, colorChangeController);
 		repaint();
 	}
-
+	
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;
+		
 		g2.setTransform(identity);
 		g2.scale((double)widthOfScreen/spaceImage.getWidth(this), (double)heightOfScreen/spaceImage.getHeight(this));
 		g2.drawImage(spaceImage, 0, 0, null, null);
@@ -171,7 +170,7 @@ public class AsteroidGameController extends JComponent
 					widthOfScreen, heightOfScreen))
 			{
 				asteroidList.remove(i);
-				asteroidSpawner();
+				asteroidSpawner(30);
 			}
 			for (int j = 0; j < projectileList.size(); j++) // checking all
 															// bullets

@@ -51,6 +51,7 @@ public class Ship implements ActionListener
 	private Graphics2D g2;
 	private int colorChanger = 0;
 
+
 	public Ship(int shipXPos, int shipYPos, int screenWidth, int screenHeight) // ship
 	// constructor
 	{
@@ -119,9 +120,6 @@ public class Ship implements ActionListener
 				shipWreckHeight);
 		if (shipDestroyed == true)
 		{
-
-//			g2.setColor(new Color((120 + colorChanger) % 255,
-//					Math.abs(150 - colorChanger) % 255, 0));
 			g2.setColor(new Color(230, 120, 0));
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha)); // MAKES SHAPES TRANSPARENT
 			colorChanger = colorChanger + 15;

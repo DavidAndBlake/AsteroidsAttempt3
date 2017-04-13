@@ -22,11 +22,6 @@ public class Utilities implements KeyListener
 	private Ship arwing;
 	private AsteroidGameController controller;
 	public ArrayList<AsteroidDestroyingProjectile> projectileList;
-	private KeyEvent e;
-	public URL shotSoundURL;
-	public URL gameMusicURL;
-	public URL soundAddress;
-	public AudioClip soundFile;
 	private boolean shipDestroyed;
 
 	public void playShotSound()
@@ -38,12 +33,31 @@ public class Utilities implements KeyListener
 							"270536__littlerobotsoundfactory__laser-09.wav"));
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
+//			FloatControl gainControl = 
+//				    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+//				gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
 			clip.start();
 		} catch (Exception ex)
 		{
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
 		}}
+	public void playMusic()
+	{
+		try
+		{
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(getClass().getResource(
+							"195563__jacobalcook__spooky-scifi-fog-44k.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+			} catch (Exception ex)
+		{
+			System.out.println("Error with playing sound.");
+			ex.printStackTrace();
+		}
+	}
 
 	public Utilities(Ship arwing,
 			ArrayList<AsteroidDestroyingProjectile> projectileList)
