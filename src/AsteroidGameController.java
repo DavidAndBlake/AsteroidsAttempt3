@@ -194,9 +194,6 @@ public class AsteroidGameController extends JComponent
 					projectileList.remove(j);
 					score = score + 1;
 				}
-			
-				g2.setTransform(identity);
-				shot.paintProjectile(g2);
 			}
 			Area leftShipArea = new Area(arwing.shipLeftSide);
 			Area rightShipArea = new Area(arwing.shipRightSide);
@@ -215,5 +212,12 @@ public class AsteroidGameController extends JComponent
 				util.setShipDestroyed(true);
 			}
 		}
+		for (int j = 0; j < projectileList.size(); j++) // checking all
+			// bullets
+{
+AsteroidDestroyingProjectile shot = projectileList.get(j);
+g2.setTransform(identity);
+shot.paintProjectile(g2);
+}
 	}
 } 

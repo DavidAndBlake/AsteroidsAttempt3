@@ -24,7 +24,7 @@ public class AsteroidDestroyingProjectile implements ActionListener {
 	}
 
 	public void paintProjectile(Graphics2D g2) {
-		Utilities.convertCourseSpeedToDxDy(projectileCourse, projectileSpeed + 30);
+		Utilities.convertCourseSpeedToDxDy(projectileCourse, projectileSpeed + 70);
 		deltaX = Utilities.getDeltaX();
 		deltaY = Utilities.getDeltaY();
 		projectileXPos = (int) (projectileXPos + deltaX);
