@@ -182,7 +182,7 @@ public class Utilities implements KeyListener
 			playShotSound();
 			projectileList.add(new AsteroidDestroyingProjectile(
 					arwing.getShipXPos(), arwing.getShipYPos(),
-					arwing.directionOfHeadOfShip, arwing.getSpeedOfShip(), projectileSpeed));
+					arwing.directionOfHeadOfShip, arwing.getSpeedOfShip(), arwing.getSpeedOfShip() + 50));
 		}
 	}
 

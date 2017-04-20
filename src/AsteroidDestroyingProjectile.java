@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 
 public class AsteroidDestroyingProjectile implements ActionListener {
-	public Ellipse2D.Double shotShape = new Ellipse2D.Double(-4, -55, 9, 100);
+	public Ellipse2D.Double shotShape = new Ellipse2D.Double(-4, -80, 9, 100);
 	private int projectileCourse;
 	private int projectileSpeed;
 	public int projectileXPos;
