@@ -59,6 +59,24 @@ public class Utilities implements KeyListener
 			ex.printStackTrace();
 		}
 	}
+	public void playExplosionSound()
+	{
+		try
+		{
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(getClass().getResource(
+							"250712__aiwha__explosion.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+//			FloatControl gainControl = 
+//				    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+//				gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
+			clip.start();
+		} catch (Exception ex)
+		{
+			System.out.println("Error with playing sound.");
+			ex.printStackTrace();
+		}}
 
 	public Utilities(Ship arwing,
 			ArrayList<AsteroidDestroyingProjectile> projectileList)

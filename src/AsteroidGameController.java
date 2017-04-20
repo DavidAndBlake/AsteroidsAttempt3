@@ -183,6 +183,7 @@ public class AsteroidGameController extends JComponent
 					asteroidList.remove(i);
 					projectileList.remove(j);
 					score = score + 1;
+					j++;
 				}
 			}
 			Area leftShipArea = new Area(arwing.shipLeftSide);
@@ -200,6 +201,7 @@ public class AsteroidGameController extends JComponent
 				arwing.shipRightSide.reset();
 				arwing.setShipDestroyed(true);
 				util.setShipDestroyed(true);
+				util.playExplosionSound();
 			}
 		}
 		for (int j = 0; j < projectileList.size(); j++) // checking all
