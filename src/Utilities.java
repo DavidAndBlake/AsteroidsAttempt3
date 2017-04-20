@@ -173,7 +173,7 @@ public class Utilities implements KeyListener
 	@Override
 	public void keyTyped(KeyEvent e)
 	{
-		System.out.println("key typed");
+		System.out.println("Need to work on laser firing mechanics. Look at keyTyped in Utilites.");
 	}
 
 	@Override

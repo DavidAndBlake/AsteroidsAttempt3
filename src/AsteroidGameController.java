@@ -186,7 +186,6 @@ public class AsteroidGameController extends JComponent
 					score = score + 1;
 					asteroidSpawner(new Random().nextInt(4));
 					addAsteroid ++;
-					System.out.println(addAsteroid);
 				}
 				if(addAsteroid > 5){
 					asteroidSpawner(new Random().nextInt(4));
