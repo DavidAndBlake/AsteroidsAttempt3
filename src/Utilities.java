@@ -34,9 +34,9 @@ public class Utilities implements KeyListener
 							"270536__littlerobotsoundfactory__laser-09.wav"));
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
-//			FloatControl gainControl = 
+//			FloatControl volume = 
 //				    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//				gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
+//				volume.setValue(0.7f); // Reduce volume by 10 decibels.
 			clip.start();
 		} catch (Exception ex)
 		{

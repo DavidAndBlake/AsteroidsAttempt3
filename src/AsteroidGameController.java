@@ -59,6 +59,7 @@ public class AsteroidGameController extends JComponent
 	public AudioClip soundFile;
 	public boolean shipDestroyed;
 	private int projectileSpeed = 30;
+	private int addAsteroid;
 	
 	public static void main(String[] args)
 	{
@@ -183,7 +184,13 @@ public class AsteroidGameController extends JComponent
 					asteroidList.remove(i);
 					projectileList.remove(j);
 					score = score + 1;
-					j++;
+					asteroidSpawner(new Random().nextInt(4));
+					addAsteroid ++;
+					System.out.println(addAsteroid);
+				}
+				if(addAsteroid > 5){
+					asteroidSpawner(new Random().nextInt(4));
+					addAsteroid = 0;
 				}
 			}
 			Area leftShipArea = new Area(arwing.shipLeftSide);
