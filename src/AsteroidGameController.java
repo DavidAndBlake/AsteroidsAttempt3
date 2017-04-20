@@ -45,9 +45,9 @@ public class AsteroidGameController extends JComponent
 	private boolean turnLeft;
 	private boolean turnRight;
 	private boolean slowDown;
-	public AsteroidDestroyingProjectile shot;
 	public ArrayList<Asteroid> asteroidList = new ArrayList<>();
 	public ArrayList<AsteroidDestroyingProjectile> projectileList = new ArrayList<>();
+	private AsteroidDestroyingProjectile shot;
 	public AffineTransform identity = new AffineTransform(); // identity
 	public Random r = new Random();
 	public int asteroidSpawnQuadrantPicker;
@@ -58,6 +58,7 @@ public class AsteroidGameController extends JComponent
 	public URL soundAddress;
 	public AudioClip soundFile;
 	public boolean shipDestroyed;
+	private int projectileSpeed = 30;
 	
 	public static void main(String[] args)
 	{
@@ -133,7 +134,6 @@ public class AsteroidGameController extends JComponent
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;
-		
 		g2.setTransform(identity);
 		g2.scale((double)widthOfScreen/spaceImage.getWidth(this), (double)heightOfScreen/spaceImage.getHeight(this));
 		g2.drawImage(spaceImage, 0, 0, null, null);
@@ -165,7 +165,7 @@ public class AsteroidGameController extends JComponent
 			for (int j = 0; j < projectileList.size(); j++) // checking all
 															// bullets
 			{
-				AsteroidDestroyingProjectile shot = projectileList.get(j);
+				shot = projectileList.get(j);
 				Area shotArea = new Area(shot.shotShape);
 				AffineTransform shotAT = new AffineTransform();
 				shotAT.setToTranslation(shot.projectileXPos,

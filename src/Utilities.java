@@ -65,6 +65,7 @@ public class Utilities implements KeyListener
 	{
 		this.arwing = arwing;
 		this.projectileList = projectileList;
+//		this.projectileSpeed = projectileSpeed;
 	}
 
 	public static void convertCourseSpeedToDxDy(int course, double speed)
@@ -154,6 +155,7 @@ public class Utilities implements KeyListener
 	@Override
 	public void keyTyped(KeyEvent e)
 	{
+		System.out.println("key typed");
 	}
 
 	@Override
@@ -178,13 +180,9 @@ public class Utilities implements KeyListener
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
 			playShotSound();
-
 			projectileList.add(new AsteroidDestroyingProjectile(
 					arwing.getShipXPos(), arwing.getShipYPos(),
-					arwing.directionOfHeadOfShip, arwing.getSpeedOfShip()));
-			
-
-			
+					arwing.directionOfHeadOfShip, arwing.getSpeedOfShip(), projectileSpeed));
 		}
 	}
 
