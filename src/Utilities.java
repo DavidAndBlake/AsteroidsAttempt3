@@ -1,4 +1,5 @@
 import java.applet.AudioClip;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -11,6 +12,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.swing.JApplet;
+import javax.swing.Timer;
 
 public class Utilities implements KeyListener
 {
@@ -20,10 +22,14 @@ public class Utilities implements KeyListener
 	private boolean turnLeft;
 	private boolean turnRight;
 	private boolean slowDown;
+	private boolean shoot;
 	private Ship arwing;
 	private AsteroidGameController controller;
 	public ArrayList<AsteroidDestroyingProjectile> projectileList;
 	private boolean shipDestroyed;
+	private int projectileSpeed = 50;
+//	public Timer shotRegulator = new Timer(400, e);
+
 
 	public void playShotSound()
 	{
@@ -136,6 +142,18 @@ public class Utilities implements KeyListener
 			{
 				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 6;
 			}
+			if (this.slowDown)
+			{
+				arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
+			}
+			if (this.shoot)
+			{
+				playShotSound();
+				projectileList.add(new AsteroidDestroyingProjectile(
+						arwing.getShipXPos(), arwing.getShipYPos(),
+						arwing.directionOfHeadOfShip, arwing.getSpeedOfShip() + projectileSpeed));
+//				System.out.println("pressed");
+			}
 			if (arwing.directionOfHeadOfShip > 360)
 			{
 				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip
@@ -145,10 +163,6 @@ public class Utilities implements KeyListener
 			{
 				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip
 						+ 360;
-			}
-			if (this.slowDown)
-			{
-				arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
 			}
 			if (arwing.getSpeedOfShip() > arwing.getSpeedLimitOfShip())
 			{
@@ -173,7 +187,6 @@ public class Utilities implements KeyListener
 	@Override
 	public void keyTyped(KeyEvent e)
 	{
-		System.out.println("Need to work on laser firing mechanics. Look at keyTyped in Utilites.");
 	}
 
 	@Override
@@ -197,10 +210,7 @@ public class Utilities implements KeyListener
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
-			playShotSound();
-			projectileList.add(new AsteroidDestroyingProjectile(
-					arwing.getShipXPos(), arwing.getShipYPos(),
-					arwing.directionOfHeadOfShip, arwing.getSpeedOfShip(), arwing.getSpeedOfShip() + 50));
+			shoot = true;
 		}
 	}
 
@@ -222,6 +232,10 @@ public class Utilities implements KeyListener
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
 		{
 			turnRight = false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			shoot = false;
 		}
 	}
 	public void setShipDestroyed(boolean shipDestroyed)

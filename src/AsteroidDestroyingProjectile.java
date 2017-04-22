@@ -16,7 +16,7 @@ public class AsteroidDestroyingProjectile implements ActionListener {
 	private int colorChanger2 = (int) (Math.random() * 255);
 	private int colorChanger3 = (int) (Math.random() * 255);
 
-	public AsteroidDestroyingProjectile(int xPos, int yPos, int projectileCourse, int shipSpeed, int projectileSpeed) {
+	public AsteroidDestroyingProjectile(int xPos, int yPos, int projectileCourse, int projectileSpeed) {
 		projectileXPos = xPos;
 		projectileYPos = yPos;
 		this.projectileCourse = projectileCourse;

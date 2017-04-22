@@ -41,10 +41,6 @@ public class AsteroidGameController extends JComponent
 	public int colorChangeController;
 	public int colorChanger = (int) directionOfHeadOfShip
 			- colorChangeController;
-	private boolean moveFaster;
-	private boolean turnLeft;
-	private boolean turnRight;
-	private boolean slowDown;
 	public ArrayList<Asteroid> asteroidList = new ArrayList<>();
 	public ArrayList<AsteroidDestroyingProjectile> projectileList = new ArrayList<>();
 	private AsteroidDestroyingProjectile shot;
