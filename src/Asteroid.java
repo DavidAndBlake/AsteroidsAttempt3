@@ -34,6 +34,7 @@ public class Asteroid
 		this.rotationSpeed = (rotationSpeed/rotationDirectionRandomizer(200));
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
 		this.asteroidNumber = asteroidNumber;
+		System.out.println(speed);
 	}
 
 	private int sg(double nominalSegmentLength)
@@ -63,7 +64,6 @@ public class Asteroid
 		g2.setColor(new Color(98,32,12));
 		g2.fill(asteroidShape);
 		g2.setColor(Color.white);
-
 		scaleFactor = scaleFactor * 0.01;
 	}
 

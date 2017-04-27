@@ -96,7 +96,7 @@ public class AsteroidGameController extends JComponent
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
-					r.nextInt(90) - 45, 3, Math.random() * 0.1, Math.random(), j));// xpos,
+					r.nextInt(90) - 45, (int)(Math.random()*9)+2, Math.random() * 0.1, Math.random(), j));// xpos,
 																				// ypos,
 																				// course,
 																				// speed,
@@ -107,19 +107,19 @@ public class AsteroidGameController extends JComponent
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
-					r.nextInt(90) - 135, 3, Math.random() * 0.1,
+					r.nextInt(90) - 135, (int)(Math.random()*9)+2, Math.random() * 0.1,
 					Math.random(), j));
 		}
 		if (asteroidSpawnQuadrantPicker == 2) // east
 		{
 			asteroidList.add(new Asteroid(widthOfScreen + 50,
-					r.nextInt(heightOfScreen), r.nextInt(90) - 225, 3,
+					r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int)(Math.random()*9)+2,
 					Math.random() * 0.1, Math.random(), j));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
-					heightOfScreen + 50, r.nextInt(90) + 45, 3,
+					heightOfScreen + 50, r.nextInt(90) + 45, (int)(Math.random()*9)+2,
 					Math.random() * 0.1, Math.random(), j));
 		}
 	}
@@ -139,11 +139,11 @@ public class AsteroidGameController extends JComponent
 		g2.scale((double)widthOfScreen/spaceImage.getWidth(this), (double)heightOfScreen/spaceImage.getHeight(this));
 		g2.drawImage(spaceImage, 0, 0, null, null);
 		g2.setColor(Color.green);
-		g2.draw3DRect(widthOfScreen / 2 + widthOfScreen / 7,
+		g2.draw3DRect(widthOfScreen/3+widthOfScreen/6,
 				heightOfScreen / 28 /*controls how far from the top of the screen the box is*/, widthOfScreen / 14, 35, true);
 		g2.setColor(Color.white);
 		g2.setFont(new Font("Sans", Font.PLAIN, 40));
-		g2.drawString("" + score, widthOfScreen / 2 + widthOfScreen / 7,
+		g2.drawString("" + score, widthOfScreen/3+widthOfScreen/6,
 				heightOfScreen / 15);
 		g2.setTransform(identity);
 		arwing.paintShip(g2);
