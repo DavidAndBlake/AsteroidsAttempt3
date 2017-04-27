@@ -1,4 +1,5 @@
 import java.applet.AudioClip;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,7 +15,7 @@ import javax.sound.sampled.FloatControl;
 import javax.swing.JApplet;
 import javax.swing.Timer;
 
-public class Utilities implements KeyListener
+public class Utilities implements KeyListener, ActionListener
 {
 	private static int deltaX;
 	private static int deltaY;
@@ -25,11 +26,10 @@ public class Utilities implements KeyListener
 	private boolean shoot;
 	private Ship arwing;
 	private AsteroidGameController controller;
-	public ArrayList<AsteroidDestroyingProjectile> projectileList;
+	public ArrayList<Laser> projectileList;
 	private boolean shipDestroyed;
-	private int projectileSpeed = 50;
-//	public Timer shotRegulator = new Timer(400, e);
-
+	private int laserSpeed = 50;
+	// public Timer shotRegulator = new Timer(400, e);
 
 	public void playShotSound()
 	{
@@ -40,15 +40,16 @@ public class Utilities implements KeyListener
 							"270536__littlerobotsoundfactory__laser-09.wav"));
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
-//			FloatControl volume = 
-//				    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//				volume.setValue(0.7f); // Reduce volume by 10 decibels.
+			// FloatControl volume =
+			// (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			// volume.setValue(0.7f); // Reduce volume by 10 decibels.
 			clip.start();
 		} catch (Exception ex)
 		{
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
-		}}
+		}
+	}
 	public void playMusic()
 	{
 		try
@@ -59,7 +60,7 @@ public class Utilities implements KeyListener
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			} catch (Exception ex)
+		} catch (Exception ex)
 		{
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
@@ -69,27 +70,26 @@ public class Utilities implements KeyListener
 	{
 		try
 		{
-			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(getClass().getResource(
-							"250712__aiwha__explosion.wav"));
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+					getClass().getResource("250712__aiwha__explosion.wav"));
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
-//			FloatControl gainControl = 
-//				    (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-//				gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
+			// FloatControl gainControl =
+			// (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			// gainControl.setValue(-10.0f); // Reduce volume by 10 decibels.
 			clip.start();
 		} catch (Exception ex)
 		{
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
-		}}
+		}
+	}
 
-	public Utilities(Ship arwing,
-			ArrayList<AsteroidDestroyingProjectile> projectileList)
+	public Utilities(Ship arwing, ArrayList<Laser> projectileList)
 	{
 		this.arwing = arwing;
 		this.projectileList = projectileList;
-//		this.projectileSpeed = projectileSpeed;
+		// this.projectileSpeed = projectileSpeed;
 	}
 
 	public static void convertCourseSpeedToDxDy(int course, double speed)
@@ -146,14 +146,7 @@ public class Utilities implements KeyListener
 			{
 				arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
 			}
-			if (this.shoot)
-			{
-				playShotSound();
-				projectileList.add(new AsteroidDestroyingProjectile(
-						arwing.getShipXPos(), arwing.getShipYPos(),
-						arwing.directionOfHeadOfShip, arwing.getSpeedOfShip() + projectileSpeed));
-//				System.out.println("pressed");
-			}
+
 			if (arwing.directionOfHeadOfShip > 360)
 			{
 				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip
@@ -176,6 +169,7 @@ public class Utilities implements KeyListener
 			{
 				colorChangeController = 360 - directionOfHeadOfShip;
 			}
+
 		}
 		if (shipDestroyed)
 		{
@@ -241,5 +235,17 @@ public class Utilities implements KeyListener
 	public void setShipDestroyed(boolean shipDestroyed)
 	{
 		this.shipDestroyed = shipDestroyed;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		if (this.shoot)
+		{
+			playShotSound();
+			projectileList.add(new Laser(arwing.getShipXPos(),
+					arwing.getShipYPos(), arwing.directionOfHeadOfShip,
+					arwing.getSpeedOfShip() + laserSpeed));
+
+		}
 	}
 }

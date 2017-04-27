@@ -8,6 +8,7 @@ import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.net.URL;
@@ -28,7 +29,8 @@ public class AsteroidGameController extends JComponent
 	private int heightOfScreen = java.awt.Toolkit.getDefaultToolkit()
 			.getScreenSize().height;
 	private Image spaceImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("spacePicture.jpg"));
-	public Timer ticker = new Timer(30, this);
+	public Timer ticker = new Timer(30, this);// THIS IS THE TIMER
+	
 	public int[] asteroid1XPoints =
 	{ 21, 16, 20, 15, 0, -19, -17, -21, -15 };
 	public int[] asteroid1YPoints =
@@ -42,13 +44,14 @@ public class AsteroidGameController extends JComponent
 	public int colorChanger = (int) directionOfHeadOfShip
 			- colorChangeController;
 	public ArrayList<Asteroid> asteroidList = new ArrayList<>();
-	public ArrayList<AsteroidDestroyingProjectile> projectileList = new ArrayList<>();
-	private AsteroidDestroyingProjectile shot;
+	public ArrayList<Laser> projectileList = new ArrayList<>();
+	private Laser shot;
 	public AffineTransform identity = new AffineTransform(); // identity
 	public Random r = new Random();
 	public int asteroidSpawnQuadrantPicker;
 	public Ship arwing = new Ship(middleScreenXPos, middleScreenYPos, widthOfScreen, heightOfScreen);
 	public Utilities util = new Utilities(arwing, projectileList);
+	public Timer shotTicker = new Timer(300, util); 
 	private JPanel scorePanel = new JPanel();
 	private int score;
 	public URL soundAddress;
@@ -74,6 +77,7 @@ public class AsteroidGameController extends JComponent
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
 		ticker.start();
+		shotTicker.start();
 		space.setSize(widthOfScreen, heightOfScreen);
 		space.setVisible(true);
 		space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
@@ -135,11 +139,11 @@ public class AsteroidGameController extends JComponent
 		g2.scale((double)widthOfScreen/spaceImage.getWidth(this), (double)heightOfScreen/spaceImage.getHeight(this));
 		g2.drawImage(spaceImage, 0, 0, null, null);
 		g2.setColor(Color.green);
-		g2.draw3DRect(widthOfScreen / 2 + widthOfScreen / 5,
-				heightOfScreen / 34, widthOfScreen / 14, 35, true);
+		g2.draw3DRect(widthOfScreen / 2 + widthOfScreen / 7,
+				heightOfScreen / 28 /*controls how far from the top of the screen the box is*/, widthOfScreen / 14, 35, true);
 		g2.setColor(Color.white);
 		g2.setFont(new Font("Sans", Font.PLAIN, 40));
-		g2.drawString("" + score, widthOfScreen / 2 + widthOfScreen / 5,
+		g2.drawString("" + score, widthOfScreen / 2 + widthOfScreen / 7,
 				heightOfScreen / 15);
 		g2.setTransform(identity);
 		arwing.paintShip(g2);
@@ -165,12 +169,12 @@ public class AsteroidGameController extends JComponent
 				shot = projectileList.get(j);
 				Area shotArea = new Area(shot.shotShape);
 				AffineTransform shotAT = new AffineTransform();
-				shotAT.setToTranslation(shot.projectileXPos,
-						shot.projectileYPos);
+				shotAT.setToTranslation(shot.laserXPos,
+						shot.laserYPos);
 				shotArea.transform(shotAT);
 				shotArea.intersect(asteroidArea);
 			
-				if (util.isOffScreen(shot.projectileXPos, shot.projectileYPos,
+				if (util.isOffScreen(shot.laserXPos, shot.laserYPos,
 						widthOfScreen, heightOfScreen))
 				{
 					projectileList.remove(j);
@@ -209,7 +213,7 @@ public class AsteroidGameController extends JComponent
 		for (int j = 0; j < projectileList.size(); j++) // checking all
 			// bullets
 {
-AsteroidDestroyingProjectile shot = projectileList.get(j);
+Laser shot = projectileList.get(j);
 g2.setTransform(identity);
 shot.paintProjectile(g2);
 }
