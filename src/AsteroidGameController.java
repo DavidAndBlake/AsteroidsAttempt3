@@ -110,7 +110,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		}
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
-			fastAsteroidIndex = j % 10;
+			fastAsteroidIndex = j % 20;
+			j = 1;
 			if (fastAsteroidIndex == 0)
 			{
 				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
@@ -139,42 +140,42 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
 					Math.random() * 0.1, Math.random(), j));
 		}
-		if (asteroidSpawnQuadrantPicker == 0)// west
-		{
-			if (j % 10 == 0)
-			{
-				asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
-						r.nextInt(90) - 45, 50, Math.random() * 0.1,
-						Math.random(), j));
-			}
-		}
-		if (asteroidSpawnQuadrantPicker == 1) // north
-		{
-			if (j % 10 == 0)
-			{
-				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
-						r.nextInt(90) - 135, 50, Math.random() * 0.1,
-						Math.random(), j));
-			}
-		}
-		if (asteroidSpawnQuadrantPicker == 2) // north
-		{
-			if (j % 10 == 0)
-			{
-				asteroidList.add(new Asteroid(widthOfScreen + 50,
-						r.nextInt(heightOfScreen), r.nextInt(90) - 225, 50,
-						Math.random() * 0.1, Math.random(), j));
-			}
-		}
-		if (asteroidSpawnQuadrantPicker == 3) // north
-		{
-			if (j % 10 == 0)
-			{
-				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
-						heightOfScreen + 50, r.nextInt(90) + 45, 50,
-						Math.random() * 0.1, Math.random(), j));
-			}
-		}
+//		if (asteroidSpawnQuadrantPicker == 0)// west
+//		{
+//			if (j % 10 == 0)
+//			{
+//				asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
+//						r.nextInt(90) - 45, 50, Math.random() * 0.1,
+//						Math.random(), j));
+//			}
+//		}
+//		if (asteroidSpawnQuadrantPicker == 1) // north
+//		{
+//			if (j % 10 == 0)
+//			{
+//				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
+//						r.nextInt(90) - 135, 50, Math.random() * 0.1,
+//						Math.random(), j));
+//			}
+//		}
+//		if (asteroidSpawnQuadrantPicker == 2) // north
+//		{
+//			if (j % 10 == 0)
+//			{
+//				asteroidList.add(new Asteroid(widthOfScreen + 50,
+//						r.nextInt(heightOfScreen), r.nextInt(90) - 225, 50,
+//						Math.random() * 0.1, Math.random(), j));
+//			}
+//		}
+//		if (asteroidSpawnQuadrantPicker == 3) // north
+//		{
+//			if (j % 10 == 0)
+//			{
+//				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
+//						heightOfScreen + 50, r.nextInt(90) + 45, 50,
+//						Math.random() * 0.1, Math.random(), j));
+//			}
+//		}
 
 	}
 	@Override
