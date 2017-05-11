@@ -37,7 +37,9 @@ public class Utilities implements KeyListener, ActionListener
 		{
 			AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(getClass().getResource(
-							"270536__littlerobotsoundfactory__laser-09.wav"));
+							"laser sound -10db.wav"
+//							"270536__littlerobotsoundfactory__laser-09.wav"
+							));
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			// FloatControl volume =
