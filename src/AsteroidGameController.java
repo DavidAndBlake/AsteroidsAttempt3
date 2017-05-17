@@ -60,8 +60,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int projectileSpeed = 30;
 	private int addAsteroid;
 	private int asteroidSpeedLimit = 5;
-	private int fastAsteroidIndex;
 	public int fastAsteroidSpeed = 10;
+	public int asteroidNumber = 1;
 
 	public static void main(String[] args)
 	{
@@ -75,8 +75,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		 *********************************************************/
 		for (int j = 0; j < 14; j++)
 		{
-			asteroidSpawner(j);
-			fastAsteroidIndex = j % 20;
+			asteroidSpawner();
 		}
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
@@ -92,24 +91,18 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		util.playMusic();
 	}
 
-	public void asteroidSpawner(int j)
-	{
-		
+	public void asteroidSpawner()
+	{ 
+		asteroidNumber++;
+		System.out.println(asteroidNumber);
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
-			if (fastAsteroidIndex == 0) //fast west asteroid
-			{
-				asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
-						r.nextInt(90) - 45, fastAsteroidSpeed, Math.random() * 0.1,
-						Math.random(), j));
-			} else
-			{
+		
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random(), j));
-			}
+					Math.random() * 0.1, Math.random()));
 			// xpos,
 			// ypos,
 			// course,
@@ -120,47 +113,27 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		}
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
-			if (fastAsteroidIndex == 0)
-			{
-				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
-						r.nextInt(90) - 135, fastAsteroidSpeed, Math.random() * 0.1,
-						Math.random(), j));
-			} else
-			{
+			
 				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
 						r.nextInt(90) - 135,
 						(int) (Math.random() * asteroidSpeedLimit) + 2,
-						Math.random() * 0.1, Math.random(), j));
-			}
+						Math.random() * 0.1, Math.random()));
 		}
 
 		if (asteroidSpawnQuadrantPicker == 2) // east
 		{
-			if (fastAsteroidIndex == 0)
-			{
-				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
-						r.nextInt(90) - 135, fastAsteroidSpeed, Math.random() * 0.1,
-						Math.random(), j));
-			}
 			asteroidList.add(new Asteroid(widthOfScreen + 50,
 					r.nextInt(heightOfScreen), r.nextInt(90) - 225,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random(), j));
+					Math.random() * 0.1, Math.random()));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
-			if (fastAsteroidIndex == 0)
-			{
-				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
-						r.nextInt(90) - 135, fastAsteroidSpeed, Math.random() * 0.1,
-						Math.random(), j));
-			}
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
 					heightOfScreen + 50, r.nextInt(90) + 45,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random(), j));
+					Math.random() * 0.1, Math.random()));
 		}
-
 	}
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -204,7 +177,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					widthOfScreen, heightOfScreen))
 			{
 				asteroidList.remove(i);
-				asteroidSpawner(30);
+				asteroidSpawner(); //find a way to make the program call on the fast asteroid spawner
 			}
 			for (int j = 0; j < projectileList.size(); j++) // checking all
 															// bullets
@@ -225,14 +198,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				{
 					asteroidList.remove(i);
 					projectileList.remove(j);
+					asteroidSpawner();
 					score = score + 1;
-					asteroidSpawner(new Random().nextInt(4));
-					addAsteroid++;
-				}
-				if (addAsteroid > 5)
-				{
-					asteroidSpawner(new Random().nextInt(4));
-					addAsteroid = 0;
 				}
 			}
 			Area leftShipArea = new Area(arwing.shipLeftSide);

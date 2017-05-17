@@ -23,9 +23,10 @@ public class Asteroid
 	private double accumulatedRotation = 0;
 	public Polygon asteroidShape;
 	public int asteroidNumber;
-	public double asteroidSize = Math.random() * 2;
+	public double asteroidSize = Math.random()*1.5 + .5;
+	public int asteroidSpeedIndex;
 	
-	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed, int asteroidNumber) //asteroid constructor
+	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed) //asteroid constructor
 	{
 		this.asteroidXPos = asteroidXPos;
 		this.asteroidYPos = asteroidYPos;
@@ -34,8 +35,12 @@ public class Asteroid
 		this.scaleFactor = scaleFactor;
 		this.rotationSpeed = .025 - Math.random() * .05;//prevent asteroids from becoming too small and stop the fast asteroids from spawning immediately.
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
-		this.asteroidNumber = asteroidNumber;
-//		System.out.println(speed);
+ 		this.asteroidNumber = asteroidNumber++;
+//		if (asteroidNumber % 20 == 0){
+//			speedOfAsteroid = 15;
+//			System.out.println("Fast asteroid" + asteroidNumber);
+//		}
+//		System.out.println(speedOfAsteroid + " " + asteroidNumber);
 	}
 
 	private int sg(double nominalSegmentLength)
