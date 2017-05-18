@@ -60,8 +60,11 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int projectileSpeed = 30;
 	private int addAsteroid;
 	private int asteroidSpeedLimit = 5;
-	public int fastAsteroidSpeed = 10;
-	public int asteroidNumber = 1;
+	private int fastAsteroidSpeed = 15;
+	private int asteroidDestroyedNumber = 1;
+	private int fastAsteroidCounter;
+	private int fastAsteroidInterval = 22;
+	private int gameWinQuota = 100;
 
 	public static void main(String[] args)
 	{
@@ -92,13 +95,13 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	}
 
 	public void asteroidSpawner()
-	{ 
-		asteroidNumber++;
-		System.out.println(asteroidNumber);
+	{
+	
+//		System.out.println(asteroidDestroyedNumber);
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
-		
+
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
@@ -113,11 +116,11 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		}
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
-			
-				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
-						r.nextInt(90) - 135,
-						(int) (Math.random() * asteroidSpeedLimit) + 2,
-						Math.random() * 0.1, Math.random()));
+
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
+					r.nextInt(90) - 135,
+					(int) (Math.random() * asteroidSpeedLimit) + 2,
+					Math.random() * 0.1, Math.random()));
 		}
 
 		if (asteroidSpawnQuadrantPicker == 2) // east
@@ -132,6 +135,50 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
 					heightOfScreen + 50, r.nextInt(90) + 45,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
+					Math.random() * 0.1, Math.random()));
+		}
+	}
+	public void fastAsteroidSpawner()
+	{
+		asteroidDestroyedNumber++;
+		System.out.println(asteroidDestroyedNumber);
+		asteroidSpawnQuadrantPicker = r.nextInt(4);
+		if (asteroidSpawnQuadrantPicker == 0)// west
+		{
+
+			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
+					r.nextInt(90) - 45,
+					(int) (Math.random() * fastAsteroidSpeed) + 6,
+					Math.random() * 0.1, Math.random()));
+			// xpos,
+			// ypos,
+			// course,
+			// speed,
+			// scale factor,
+			// rotation speed
+			// asteroid number
+		}
+		if (asteroidSpawnQuadrantPicker == 1) // north
+		{
+
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
+					r.nextInt(90) - 135,
+					(int) (Math.random() * fastAsteroidSpeed) + 6,
+					Math.random() * 0.1, Math.random()));
+		}
+
+		if (asteroidSpawnQuadrantPicker == 2) // east
+		{
+			asteroidList.add(new Asteroid(widthOfScreen + 50,
+					r.nextInt(heightOfScreen), r.nextInt(90) - 225,
+					(int) (Math.random() * fastAsteroidSpeed) + 6,
+					Math.random() * 0.1, Math.random()));
+		}
+		if (asteroidSpawnQuadrantPicker == 3) // south
+		{
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
+					heightOfScreen + 50, r.nextInt(90) + 45,
+					(int) (Math.random() * fastAsteroidSpeed) + 6,
 					Math.random() * 0.1, Math.random()));
 		}
 	}
@@ -177,7 +224,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					widthOfScreen, heightOfScreen))
 			{
 				asteroidList.remove(i);
-				asteroidSpawner(); //find a way to make the program call on the fast asteroid spawner
+				if (asteroidDestroyedNumber < gameWinQuota){
+					asteroidSpawner();
+				}	// fast asteroid spawner
 			}
 			for (int j = 0; j < projectileList.size(); j++) // checking all
 															// bullets
@@ -198,8 +247,20 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				{
 					asteroidList.remove(i);
 					projectileList.remove(j);
-					asteroidSpawner();
+					asteroidDestroyedNumber++;
+					if (asteroidDestroyedNumber < gameWinQuota){
+						asteroidSpawner();
+					}
+					fastAsteroidCounter++;
+					
+					System.out.println("Fast asteroid counter = " + fastAsteroidCounter);
 					score = score + 1;
+				}
+				if (fastAsteroidCounter >= fastAsteroidInterval)
+				{
+					fastAsteroidCounter = 15;
+					fastAsteroidSpawner();
+					System.out.println("fast asteroid");
 				}
 			}
 			Area leftShipArea = new Area(arwing.shipLeftSide);

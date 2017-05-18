@@ -2,11 +2,17 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.util.Random;
 
 import javax.swing.text.Segment;
 
-public class Asteroid 
+public class Asteroid
+
 {
+	private int randomColor1 = new Random().nextInt(128);
+	private int randomColor2 = new Random().nextInt(55);
+	private int randomColor3 = new Random().nextInt(67);
+	
 	private int[] asteroidXPoints =
 	{ sg(-48), sg(-36), sg(-13), sg(13), sg(36), sg(48), sg(48), sg(36), sg(13), sg(-13), sg(-36), sg(-48)};
 	private int[] asteroidYPoints =
@@ -36,11 +42,6 @@ public class Asteroid
 		this.rotationSpeed = .025 - Math.random() * .05;//prevent asteroids from becoming too small and stop the fast asteroids from spawning immediately.
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
  		this.asteroidNumber = asteroidNumber++;
-//		if (asteroidNumber % 20 == 0){
-//			speedOfAsteroid = 15;
-//			System.out.println("Fast asteroid" + asteroidNumber);
-//		}
-//		System.out.println(speedOfAsteroid + " " + asteroidNumber);
 	}
 
 	private int sg(double nominalSegmentLength)
@@ -62,9 +63,8 @@ public class Asteroid
 		g2.scale(asteroidSize, asteroidSize);
 		accumulatedRotation = accumulatedRotation + rotationSpeed;
 		g2.rotate(accumulatedRotation);
-		g2.setColor(new Color(98,32,12));
+		g2.setColor(new Color (randomColor1, randomColor2, randomColor3));
 		g2.fill(asteroidShape);
-		g2.setColor(Color.white);
 		scaleFactor = scaleFactor * 0.01;
 	}
 
