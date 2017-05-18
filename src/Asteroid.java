@@ -1,5 +1,6 @@
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.util.Random;
@@ -12,6 +13,15 @@ public class Asteroid
 	private int randomColor1 = new Random().nextInt(128);
 	private int randomColor2 = new Random().nextInt(55);
 	private int randomColor3 = new Random().nextInt(67);
+	private int randomColor4 = new Random().nextInt(128);
+	private int randomColor5 = new Random().nextInt(55);
+	private int randomColor6 = new Random().nextInt(67);
+	private int randomOutlineColor1 = new Random().nextInt(255);
+	private int randomOutlineColor2 = new Random().nextInt(255);
+	private int randomOutlineColor3 = new Random().nextInt(255);
+	private int randomOutlineColor4 = new Random().nextInt(255);
+	private int randomOutlineColor5 = new Random().nextInt(255);
+	private int randomOutlineColor6 = new Random().nextInt(255);
 	
 	private int[] asteroidXPoints =
 	{ sg(-48), sg(-36), sg(-13), sg(13), sg(36), sg(48), sg(48), sg(36), sg(13), sg(-13), sg(-36), sg(-48)};
@@ -63,8 +73,12 @@ public class Asteroid
 		g2.scale(asteroidSize, asteroidSize);
 		accumulatedRotation = accumulatedRotation + rotationSpeed;
 		g2.rotate(accumulatedRotation);
-		g2.setColor(new Color (randomColor1, randomColor2, randomColor3));
+		GradientPaint redtowhite = new GradientPaint(34, 63, new Color(randomColor1, randomColor2, randomColor3), 20, 67, new Color( randomColor4, randomColor5, randomColor6));
+		g2.setPaint(redtowhite);
 		g2.fill(asteroidShape);
+		GradientPaint randomOutlines = new GradientPaint(34, 63, new Color(randomOutlineColor1, randomOutlineColor2, randomOutlineColor3), 20, 67, new Color( randomOutlineColor4, randomOutlineColor5, randomOutlineColor6));
+		g2.setPaint(randomOutlines);
+		g2.draw(asteroidShape);
 		scaleFactor = scaleFactor * 0.01;
 	}
 
