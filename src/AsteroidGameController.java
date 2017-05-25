@@ -96,12 +96,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 
 	public void asteroidSpawner()
 	{
-	
-//		System.out.println(asteroidDestroyedNumber);
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
-
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
@@ -114,6 +111,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			// rotation speed
 			// asteroid number
 		}
+		
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
 
@@ -137,6 +135,20 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
 					Math.random() * 0.1, Math.random()));
 		}
+	}
+	
+	public void asteroidPieceCreator(int asteroidXPos, int asteroidYPos, int course, double speed, double scaleFactor)
+	{
+		asteroidList.add(new Asteroid(0, 0,
+				r.nextInt(90) - 45,
+				(int) (Math.random() * asteroidSpeedLimit) + 1,
+				Math.random() * 0.001, Math.random()));
+					// xpos,
+					// ypos,
+					// course,
+					// speed,
+					// scale factor,
+					// rotation speed
 	}
 	public void fastAsteroidSpawner()
 	{
@@ -243,7 +255,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				{
 					projectileList.remove(j);
 				}
-				if (!shotArea.isEmpty())
+				if (!shotArea.isEmpty()) //asteroid Hit
 				{
 					asteroidList.remove(i);
 					projectileList.remove(j);
@@ -252,9 +264,12 @@ public class AsteroidGameController extends JComponent implements ActionListener
 						asteroidSpawner();
 					}
 					fastAsteroidCounter++;
-					
-					System.out.println("Fast asteroid counter = " + fastAsteroidCounter);
 					score = score + 1;
+					for (int k = 0; k < 3; k++)
+					{
+						asteroidPieceCreator(0, 0, 33, Math.random()*asteroidSpeedLimit, .3);
+						
+					}
 				}
 				if (fastAsteroidCounter >= fastAsteroidInterval)
 				{
