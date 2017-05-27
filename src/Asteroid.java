@@ -42,7 +42,7 @@ public class Asteroid
 	public double asteroidSize = Math.random()*1.5 + .5;
 	public int asteroidSpeedIndex;
 	
-	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed, boolean asteroidFragment) //asteroid constructor
+	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed, boolean isAWholePiece) //asteroid constructor
 	{
 		this.asteroidXPos = asteroidXPos;
 		this.asteroidYPos = asteroidYPos;
