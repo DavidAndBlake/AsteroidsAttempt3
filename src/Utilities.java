@@ -241,7 +241,7 @@ public class Utilities implements KeyListener, ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (this.shoot)
+		if (this.shoot && !shipDestroyed)
 		{
 			playShotSound();
 			projectileList.add(new Laser(arwing.getShipXPos(),

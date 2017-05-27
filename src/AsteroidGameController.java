@@ -18,6 +18,7 @@ import java.util.Random;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.Timer;
 
 public class AsteroidGameController extends JComponent implements ActionListener
@@ -102,7 +103,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), true));
 			// xpos,
 			// ypos,
 			// course,
@@ -118,7 +119,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
 					r.nextInt(90) - 135,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), true));
 		}
 
 		if (asteroidSpawnQuadrantPicker == 2) // east
@@ -126,29 +127,29 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(widthOfScreen + 50,
 					r.nextInt(heightOfScreen), r.nextInt(90) - 225,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), true));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
 					heightOfScreen + 50, r.nextInt(90) + 45,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), true));
 		}
 	}
 	
 	public void asteroidPieceCreator(int asteroidXPos, int asteroidYPos, int course, double speed, double scaleFactor)
 	{
-		asteroidList.add(new Asteroid(0, 0,
+		asteroidList.add(new Asteroid(asteroidXPos, asteroidYPos, //make the asteroid pieces small and put a new boolean in the asteroid constructor that determines whether the asteroid will break into more pieces or not
 				r.nextInt(90) - 45,
 				(int) (Math.random() * asteroidSpeedLimit) + 1,
-				Math.random() * 0.001, Math.random()));
-					// xpos,
-					// ypos,
-					// course,
-					// speed,
-					// scale factor,
-					// rotation speed
+				Math.random() * 0.01, Math.random(), false));
+//					 xpos,
+//					 ypos,
+//					 course,
+//					 speed,
+//					 scale factor,
+//					 rotation speed
 	}
 	public void fastAsteroidSpawner()
 	{
@@ -157,11 +158,10 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
-
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45,
 					(int) (Math.random() * fastAsteroidSpeed) + 6,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), true));
 			// xpos,
 			// ypos,
 			// course,
@@ -176,7 +176,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
 					r.nextInt(90) - 135,
 					(int) (Math.random() * fastAsteroidSpeed) + 6,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), true));
 		}
 
 		if (asteroidSpawnQuadrantPicker == 2) // east
@@ -184,14 +184,14 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(widthOfScreen + 50,
 					r.nextInt(heightOfScreen), r.nextInt(90) - 225,
 					(int) (Math.random() * fastAsteroidSpeed) + 6,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), true));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen),
 					heightOfScreen + 50, r.nextInt(90) + 45,
 					(int) (Math.random() * fastAsteroidSpeed) + 6,
-					Math.random() * 0.1, Math.random()));
+					Math.random() * 0.1, Math.random(), true));
 		}
 	}
 	@Override
@@ -206,6 +206,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 
 	public void paint(Graphics g)
 	{
+		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setTransform(identity);
 		g2.scale((double) widthOfScreen / spaceImage.getWidth(this),
@@ -218,6 +219,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 									 * screen the box is
 									 */, widthOfScreen / 14, 35, true);
 		g2.setColor(Color.white);
+		g2.drawString("Arrow keys to move\nHold space to shoot", widthOfScreen / 4, heightOfScreen / 3);
 		g2.setFont(new Font("Sans", Font.PLAIN, 40));
 		g2.drawString("" + score, widthOfScreen / 2, heightOfScreen / 15);
 		g2.setTransform(identity);
@@ -257,6 +259,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				}
 				if (!shotArea.isEmpty()) //asteroid Hit
 				{
+					int iXPos = asteroidList.get(i).asteroidXPos;
+					int iYPos = asteroidList.get(i).asteroidYPos;
 					asteroidList.remove(i);
 					projectileList.remove(j);
 					asteroidDestroyedNumber++;
@@ -267,15 +271,13 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					score = score + 1;
 					for (int k = 0; k < 3; k++)
 					{
-						asteroidPieceCreator(0, 0, 33, Math.random()*asteroidSpeedLimit, .3);
-						
+						asteroidPieceCreator(iXPos, iYPos, 33, Math.random()*asteroidSpeedLimit, .3);
 					}
 				}
 				if (fastAsteroidCounter >= fastAsteroidInterval)
 				{
 					fastAsteroidCounter = 15;
 					fastAsteroidSpawner();
-					System.out.println("fast asteroid");
 				}
 			}
 			Area leftShipArea = new Area(arwing.shipLeftSide);
@@ -295,6 +297,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				util.setShipDestroyed(true);
 				util.playExplosionSound();
 			}
+			
 		}
 		for (int j = 0; j < projectileList.size(); j++) // checking all
 		// bullets
@@ -303,5 +306,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			g2.setTransform(identity);
 			shot.paintProjectile(g2);
 		}
+		
 	}
 }
