@@ -79,7 +79,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		 *********************************************************/
 		for (int j = 0; j < 14; j++)
 		{
-			asteroidSpawner();
+			Spawner();
 		}
 		arwing.setScreenHeight(heightOfScreen);
 		arwing.setScreenWidth(widthOfScreen);
@@ -98,7 +98,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	public void asteroidSpawner()
 	{
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
-		if (asteroidSpawnQuadrantPicker == 0)// west
+		if (asteroidSpawnQuadrantPicker == 0 && isAWholePiece)// west
 		{
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45,
@@ -150,6 +150,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 //					 speed,
 //					 scale factor,
 //					 rotation speed
+//					 fragment
 	}
 	public void fastAsteroidSpawner()
 	{
@@ -169,6 +170,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			// scale factor,
 			// rotation speed
 			// asteroid number
+			// is a whole piece
 		}
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{

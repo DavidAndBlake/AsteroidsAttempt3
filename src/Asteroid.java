@@ -41,6 +41,7 @@ public class Asteroid
 	public int asteroidNumber;
 	public double asteroidSize = Math.random()*1.5 + .5;
 	public int asteroidSpeedIndex;
+	public boolean isAWholePiece;
 	
 	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed, boolean isAWholePiece) //asteroid constructor
 	{
@@ -52,7 +53,7 @@ public class Asteroid
 		this.rotationSpeed = .025 - Math.random() * .05;//prevent asteroids from becoming too small and stop the fast asteroids from spawning immediately.
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
  		this.asteroidNumber = asteroidNumber++;
- 		System.out.println(asteroidXPos + " " + asteroidYPos);
+ 		this.isAWholePiece = isAWholePiece;
 	}
 
 	private int sg(double nominalSegmentLength)
