@@ -33,8 +33,8 @@ public class Asteroid
 	private int deltaX;
 	private int deltaY;
 	private int directionOfAsteroid = 90; // degrees
-	private double speedOfAsteroid = 1;
-	private double scaleFactor = .1;
+	private double speedOfAsteroid = 0;
+	private double scaleFactor;
 	private double rotationSpeed;
 	private double accumulatedRotation = 0;
 	public Polygon asteroidShape;

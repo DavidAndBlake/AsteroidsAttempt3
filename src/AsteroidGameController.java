@@ -66,6 +66,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int fastAsteroidCounter;
 	private int fastAsteroidInterval = 22;
 	private int gameWinQuota = 100;
+	private double asteroidScaleFactor = Math.random() * 0.1;
+	private int asteroidLimit = 14;
 
 	public static void main(String[] args)
 	{
@@ -77,7 +79,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		/*********************************************************
 		 * spawn asteroids
 		 *********************************************************/
-		for (int j = 0; j < 14; j++)
+		for (int j = 0; j < asteroidLimit; j++)
 		{
 			asteroidSpawner();
 		}
@@ -119,7 +121,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
 					r.nextInt(90) - 135,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, 1, true));
+					Math.random() * 0.1, Math.random(), true));
 		}
 
 		if (asteroidSpawnQuadrantPicker == 2) // east
@@ -162,7 +164,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 																	// not
 				r.nextInt(90) - 45,
 				(int) (Math.random() * asteroidSpeedLimit) + 1,
-				Math.random() * 0.01, Math.random(), false));
+				0.01, 0.001, false));
 		// xpos,
 		// ypos,
 		// course,
@@ -181,23 +183,22 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45,
 					(int) (Math.random() * fastAsteroidSpeed) + 6,
-					Math.random() * 0.1, Math.random(), true));
+					asteroidScaleFactor, Math.random(), true));
 			// xpos,
 			// ypos,
 			// course,
 			// speed,
 			// scale factor,
 			// rotation speed
-			// asteroid number
 			// is a whole piece
 		}
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
-
+			if (asteroidScaleFactor > 1)
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
 					r.nextInt(90) - 135,
 					(int) (Math.random() * fastAsteroidSpeed) + 6,
-					Math.random() * 0.1, Math.random(), true));
+					asteroidScaleFactor, Math.random(), true));
 		}
 
 		if (asteroidSpawnQuadrantPicker == 2) // east
