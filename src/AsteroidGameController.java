@@ -105,7 +105,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen),
 					r.nextInt(90) - 45,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random(), true));
+					asteroidScaleFactor, Math.random(), true));
 			// xpos,
 			// ypos,
 			// course,
@@ -121,7 +121,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50,
 					r.nextInt(90) - 135,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random(), true));
+					Math.random(), Math.random(), true));
 		}
 
 		if (asteroidSpawnQuadrantPicker == 2) // east
@@ -129,7 +129,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			asteroidList.add(new Asteroid(widthOfScreen + 50,
 					r.nextInt(heightOfScreen), r.nextInt(90) - 225,
 					(int) (Math.random() * asteroidSpeedLimit) + 2,
-					Math.random() * 0.1, Math.random(), true));
+					Math.random(), Math.random(), true));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
@@ -288,10 +288,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					asteroidList.remove(i);
 					projectileList.remove(j);
 					asteroidDestroyedNumber++;
-					if (asteroidDestroyedNumber < gameWinQuota)
-					{
-						asteroidSpawner();
-					}
 					fastAsteroidCounter++;
 					score = score + 1;
 					if (asteroid.isAWholePiece)

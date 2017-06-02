@@ -32,8 +32,8 @@ public class Asteroid
 	public int asteroidYPos;
 	private int deltaX;
 	private int deltaY;
-	private int directionOfAsteroid = 90; // degrees
-	private double speedOfAsteroid = 0;
+	private int directionOfAsteroid; // degrees
+	private double speedOfAsteroid;
 	private double scaleFactor;
 	private double rotationSpeed;
 	private double accumulatedRotation = 0;
@@ -64,6 +64,7 @@ public class Asteroid
 	
 	public void paintAsteroid(Graphics2D g2)
 	{
+		scaleFactor = asteroidSize;
 		Utilities.convertCourseSpeedToDxDy(directionOfAsteroid, speedOfAsteroid);
 		deltaX = Utilities.getDeltaX();
 		deltaY = Utilities.getDeltaY();
@@ -72,7 +73,7 @@ public class Asteroid
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0F));
 		g2.translate(asteroidXPos, asteroidYPos);
 		g2.rotate(Math.toRadians(-directionOfAsteroid + 90)); //asteroid course
-		g2.scale(asteroidSize, asteroidSize);
+		g2.scale(scaleFactor, scaleFactor); //David from the wintress school recommended multiplying the asteroidSize variable by the scaleFactor in order to make that variable relevant. It didn't work when I tried that because the asteroids became invisible. Try different things to see if you can make it work.
 		accumulatedRotation = accumulatedRotation + rotationSpeed;
 		g2.rotate(accumulatedRotation);
 		GradientPaint redtowhite = new GradientPaint(34, 63, new Color(randomColor1, randomColor2, randomColor3), 20, 67, new Color( randomColor4, randomColor5, randomColor6));
@@ -81,7 +82,7 @@ public class Asteroid
 		GradientPaint randomOutlines = new GradientPaint(34, 63, new Color(randomOutlineColor1, randomOutlineColor2, randomOutlineColor3), 20, 67, new Color( randomOutlineColor4, randomOutlineColor5, randomOutlineColor6));
 		g2.setPaint(randomOutlines);
 		g2.draw(asteroidShape);
-		scaleFactor = scaleFactor * 0.01;
+		scaleFactor = scaleFactor;
 	}
 
 	public void setSpeedOfAsteroid(double speedOfAsteroid)//How fast the ship is going
