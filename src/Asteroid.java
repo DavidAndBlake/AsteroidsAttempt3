@@ -64,7 +64,7 @@ public class Asteroid
 	
 	public void paintAsteroid(Graphics2D g2)
 	{
-		scaleFactor = asteroidSize;
+//		scaleFactor = asteroidSize;
 		Utilities.convertCourseSpeedToDxDy(directionOfAsteroid, speedOfAsteroid);
 		deltaX = Utilities.getDeltaX();
 		deltaY = Utilities.getDeltaY();
@@ -78,9 +78,17 @@ public class Asteroid
 		g2.rotate(accumulatedRotation);
 		GradientPaint redtowhite = new GradientPaint(34, 63, new Color(randomColor1, randomColor2, randomColor3), 20, 67, new Color( randomColor4, randomColor5, randomColor6));
 		g2.setPaint(redtowhite);
-		g2.fill(asteroidShape);
 		GradientPaint randomOutlines = new GradientPaint(34, 63, new Color(randomOutlineColor1, randomOutlineColor2, randomOutlineColor3), 20, 67, new Color( randomOutlineColor4, randomOutlineColor5, randomOutlineColor6));
+		if (!isAWholePiece)
+		{
+			g2.setPaint(new GradientPaint(34, 63, new Color(randomOutlineColor1, randomOutlineColor2, randomOutlineColor3), 20, 67, new Color( randomOutlineColor4, randomOutlineColor5, randomOutlineColor6)));
+		}
+		g2.fill(asteroidShape);
 		g2.setPaint(randomOutlines);
+		if (!isAWholePiece)
+		{
+			g2.setColor(Color.green);
+		}
 		g2.draw(asteroidShape);
 		scaleFactor = scaleFactor;
 	}

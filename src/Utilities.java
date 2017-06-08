@@ -24,7 +24,7 @@ public class Utilities implements KeyListener, ActionListener
 	private boolean turnRight;
 	private boolean slowDown;
 	private boolean shoot;
-	private Ship arwing;
+	private Ship spaceDrone;
 	private AsteroidGameController controller;
 	public ArrayList<Laser> projectileList;
 	private boolean shipDestroyed;
@@ -89,7 +89,7 @@ public class Utilities implements KeyListener, ActionListener
 
 	public Utilities(Ship arwing, ArrayList<Laser> projectileList)
 	{
-		this.arwing = arwing;
+		this.spaceDrone = arwing;
 		this.projectileList = projectileList;
 		// this.projectileSpeed = projectileSpeed;
 	}
@@ -134,38 +134,38 @@ public class Utilities implements KeyListener, ActionListener
 			rotationDegree = -directionOfHeadOfShip + 90;
 			if (this.moveFaster)
 			{
-				arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
+				spaceDrone.setSpeedOfShip(spaceDrone.getSpeedOfShip() + 1);
 			}
 			if (this.turnRight)
 			{
-				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip - 6;
+				spaceDrone.directionOfHeadOfShip = spaceDrone.directionOfHeadOfShip - 6;
 			}
 			if (this.turnLeft)
 			{
-				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip + 6;
+				spaceDrone.directionOfHeadOfShip = spaceDrone.directionOfHeadOfShip + 6;
 			}
 			if (this.slowDown)
 			{
-				arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
+				spaceDrone.setSpeedOfShip(spaceDrone.getSpeedOfShip() - 1);
 			}
 
-			if (arwing.directionOfHeadOfShip > 360)
+			if (spaceDrone.directionOfHeadOfShip > 360)
 			{
-				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip
+				spaceDrone.directionOfHeadOfShip = spaceDrone.directionOfHeadOfShip
 						- 360;
 			}
-			if (arwing.directionOfHeadOfShip < 0)
+			if (spaceDrone.directionOfHeadOfShip < 0)
 			{
-				arwing.directionOfHeadOfShip = arwing.directionOfHeadOfShip
+				spaceDrone.directionOfHeadOfShip = spaceDrone.directionOfHeadOfShip
 						+ 360;
 			}
-			if (arwing.getSpeedOfShip() > arwing.getSpeedLimitOfShip())
+			if (spaceDrone.getSpeedOfShip() > spaceDrone.getSpeedLimitOfShip())
 			{
-				arwing.setSpeedOfShip(arwing.getSpeedOfShip() - 1);
+				spaceDrone.setSpeedOfShip(spaceDrone.getSpeedOfShip() - 1);
 			}
-			if (arwing.getSpeedOfShip() < 0)
+			if (spaceDrone.getSpeedOfShip() < 0)
 			{
-				arwing.setSpeedOfShip(arwing.getSpeedOfShip() + 1);
+				spaceDrone.setSpeedOfShip(spaceDrone.getSpeedOfShip() + 1);
 			}
 			if (rotationDegree > 180)
 			{
@@ -175,9 +175,9 @@ public class Utilities implements KeyListener, ActionListener
 		}
 		if (shipDestroyed)
 		{
-			arwing.setSpeedOfShip(0);
+			spaceDrone.setSpeedOfShip(0);
 		}
-		return arwing;
+		return spaceDrone;
 
 	}
 	@Override
@@ -244,9 +244,9 @@ public class Utilities implements KeyListener, ActionListener
 		if (this.shoot && !shipDestroyed)
 		{
 			playShotSound();
-			projectileList.add(new Laser(arwing.getShipXPos(),
-					arwing.getShipYPos(), arwing.directionOfHeadOfShip,
-					arwing.getSpeedOfShip() + laserSpeed));
+			projectileList.add(new Laser(spaceDrone.getShipXPos(),
+					spaceDrone.getShipYPos(), spaceDrone.directionOfHeadOfShip,
+					spaceDrone.getSpeedOfShip() + laserSpeed));
 
 		}
 	}
