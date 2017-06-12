@@ -48,7 +48,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	public int asteroidSpawnQuadrantPicker;
 	public Ship spaceDrone = new Ship(middleScreenXPos, middleScreenYPos, widthOfScreen, heightOfScreen);
 	public Utilities util = new Utilities(spaceDrone, projectileList);
-	public Timer shotTicker = new Timer(300, util);
+	public Timer shotTicker = new Timer(90, util);
 	private Timer endingDelayTicker = new Timer(300, null);
 	private int score;
 	public URL soundAddress;
@@ -62,6 +62,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int gameWinQuota = 100;
 	private int asteroidLimit = 14;
 	private double asteroidScaleFactor = 1.5;
+	private double asteroidSpeed;
 
 	public static void main(String[] args)
 	{
@@ -73,7 +74,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		/*********************************************************
 		 * spawn asteroids
 		 *********************************************************/
-		JOptionPane.showMessageDialog(space, "Greetings drone pilot! Thank you for accepting this job!\n\nGenericFuturisticIndustries Inc. LTD needs your help in clearing the space around this quadrant of asteroids to prepare for space station construction");
+		JOptionPane.showMessageDialog(space,
+				"Greetings drone pilot! Thank you for accepting this job!\n\nGenericFuturisticIndustries Inc. LTD needs your help in clearing the space around this quadrant of asteroids to prepare for space station construction");
 		for (int j = 0; j < asteroidLimit; j++)
 		{
 			asteroidSpawner();
@@ -92,35 +94,33 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		util.playMusic();
 	}
 
-	public void asteroidSpawner()
+	public void asteroidSpawner() //Try to find a way to combine these commands into one in order to reduce space taken.
 	{
+		
+			asteroidSpeed = (Math.random() * asteroidSpeedLimit) + 2;
+		if (fastAsteroidCounter >= fastAsteroidInterval)
+			{
+				fastAsteroidCounter = 15;
+				asteroidSpeed = (int) (Math.random() * fastAsteroidSpeed) + 6;
+			}
 		asteroidScaleFactor = (asteroidScaleFactor * Math.random()) + .8;
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		if (asteroidSpawnQuadrantPicker == 0)// west
 		{
-			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int) (Math.random() * asteroidSpeedLimit) + 2, asteroidScaleFactor, Math.random(), true));
-			// xpos,
-			// ypos,
-			// course,
-			// speed,
-			// scale factor,
-			// rotation speed
-			// is asteroid a piece
+			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int)asteroidSpeed, asteroidScaleFactor, Math.random(), true));
+			// xpos, ypos, course, speed, scale factor, rotation speed, is asteroid a piece
 		}
-
 		if (asteroidSpawnQuadrantPicker == 1) // north
 		{
-
-			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int) (Math.random() * asteroidSpeedLimit) + 2, asteroidScaleFactor, Math.random(), true));
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int)asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 		}
-
 		if (asteroidSpawnQuadrantPicker == 2) // east
 		{
-			asteroidList.add(new Asteroid(widthOfScreen + 50, r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int) (Math.random() * asteroidSpeedLimit) + 2, asteroidScaleFactor, Math.random(), true));
+			asteroidList.add(new Asteroid(widthOfScreen + 50, r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int)asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 		}
 		if (asteroidSpawnQuadrantPicker == 3) // south
 		{
-			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), heightOfScreen + 50, r.nextInt(90) + 45, (int) (Math.random() * asteroidSpeedLimit) + 2, asteroidScaleFactor, Math.random(), true));
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), heightOfScreen + 50, r.nextInt(90) + 45, (int)asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 		}
 	}
 
@@ -129,30 +129,31 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		asteroidList.add(new Asteroid(asteroidXPos, asteroidYPos, r.nextInt(360) - 45, (int) (Math.random() * asteroidSpeedLimit) + 3, asteroidScaleFactor / 2, 0.001, false));
 		// xpos, ypos, course, speed, scale factor, rotation speed, fragment
 	}
-	public void fastAsteroidSpawner()
-	{
-		asteroidDestroyedNumber++;
-		asteroidSpawnQuadrantPicker = r.nextInt(4);
-		if (asteroidSpawnQuadrantPicker == 0)// west
-		{
-			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int) (Math.random() * fastAsteroidSpeed) + 6, asteroidScaleFactor, Math.random(), true));
-			// xpos, ypos, course, speed, scale factor, rotation speed, is a whole piece
-		}
-		if (asteroidSpawnQuadrantPicker == 1) // north
-		{
-			if (asteroidScaleFactor > 1)
-				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int) (Math.random() * fastAsteroidSpeed) + 6, asteroidScaleFactor, Math.random(), true));
-		}
-
-		if (asteroidSpawnQuadrantPicker == 2) // east
-		{
-			asteroidList.add(new Asteroid(widthOfScreen + 50, r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int) (Math.random() * fastAsteroidSpeed) + 6, asteroidScaleFactor, Math.random(), true));
-		}
-		if (asteroidSpawnQuadrantPicker == 3) // south
-		{
-			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), heightOfScreen + 50, r.nextInt(90) + 45, (int) (Math.random() * fastAsteroidSpeed) + 6, asteroidScaleFactor, Math.random(), true));
-		}
-	}
+//	public void fastAsteroidSpawner()
+//	{
+//		asteroidDestroyedNumber++;
+//		asteroidSpawnQuadrantPicker = r.nextInt(4);
+//		if (asteroidSpawnQuadrantPicker == 0)// west
+//		{
+//			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int) (Math.random() * fastAsteroidSpeed) + 6, asteroidScaleFactor, Math.random(), true));
+//			// xpos, ypos, course, speed, scale factor, rotation speed, is a
+//			// whole piece
+//		}
+//		if (asteroidSpawnQuadrantPicker == 1) // north
+//		{
+//			if (asteroidScaleFactor > 1)
+//				asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int) (Math.random() * fastAsteroidSpeed) + 6, asteroidScaleFactor, Math.random(), true));
+//		}
+//
+//		if (asteroidSpawnQuadrantPicker == 2) // east
+//		{
+//			asteroidList.add(new Asteroid(widthOfScreen + 50, r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int) (Math.random() * fastAsteroidSpeed) + 6, asteroidScaleFactor, Math.random(), true));
+//		}
+//		if (asteroidSpawnQuadrantPicker == 3) // south
+//		{
+//			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), heightOfScreen + 50, r.nextInt(90) + 45, (int) (Math.random() * fastAsteroidSpeed) + 6, asteroidScaleFactor, Math.random(), true));
+//		}
+//	}
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -223,11 +224,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 						}
 					}
 				}
-				if (fastAsteroidCounter >= fastAsteroidInterval)
-				{
-					fastAsteroidCounter = 15;
-					fastAsteroidSpawner();
-				}
 			}
 			Area leftShipArea = new Area(spaceDrone.shipLeftSide);
 			Area rightShipArea = new Area(spaceDrone.shipRightSide);
@@ -245,15 +241,18 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				util.setShipDestroyed(true);
 				util.playExplosionSound();
 				endingDelayTicker.start();
-				if (endingDelayTicker.isRunning()) // CHANGE THIS MECHANIC SO THAT THE MESSAGE IS DELAYED BY THE TIMER
+				if (endingDelayTicker.isRunning()) // CHANGE THIS MECHANIC SO
+													// THAT THE MESSAGE IS
+													// DELAYED BY THE TIMER
 				{
-					JOptionPane.showMessageDialog(null, "You suck");	
+					JOptionPane.showMessageDialog(null, "You suck");
 				}
-				
+
 			}
-			if (asteroidList.size() < 1){
+			if (asteroidList.size() < 1)
+			{
 				JOptionPane.showMessageDialog(null, "Congratulations! Your job is complete!\n\nYou win!");
-							}
+			}
 		}
 		for (int j = 0; j < projectileList.size(); j++) // checking all bullets
 		{
