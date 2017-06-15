@@ -246,8 +246,17 @@ public class AsteroidGameController extends JComponent implements ActionListener
 													// DELAYED BY THE TIMER
 				{
 					JOptionPane.showMessageDialog(null, "You suck");
-					space.dispose();
-					getGoing();
+					int tryAgain = JOptionPane.showConfirmDialog(null, "Would you like to try again?");
+					if (tryAgain == 0)
+					{
+						space.dispose();
+						new AsteroidGameController().getGoing();
+					}
+					if(tryAgain == 2){
+					}
+					if(tryAgain == 1) {
+						System.exit(0);
+					}
 				}
 
 			}
