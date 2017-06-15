@@ -48,7 +48,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	public int asteroidSpawnQuadrantPicker;
 	public Ship spaceDrone = new Ship(middleScreenXPos, middleScreenYPos, widthOfScreen, heightOfScreen);
 	public Utilities util = new Utilities(spaceDrone, projectileList);
-	public Timer shotTicker = new Timer(90, util);
+	public Timer shotTicker = new Timer(450, util);
 	private Timer endingDelayTicker = new Timer(300, null);
 	private int score;
 	public URL soundAddress;
@@ -246,6 +246,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 													// DELAYED BY THE TIMER
 				{
 					JOptionPane.showMessageDialog(null, "You suck");
+					space.dispose();
+					getGoing();
 				}
 
 			}

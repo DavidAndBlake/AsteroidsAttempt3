@@ -73,7 +73,7 @@ public class Asteroid
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0F));
 		g2.translate(asteroidXPos, asteroidYPos);
 		g2.rotate(Math.toRadians(-directionOfAsteroid + 90)); //asteroid course
-		g2.scale(scaleFactor, scaleFactor); //David from the wintress school recommended multiplying the asteroidSize variable by the scaleFactor in order to make that variable relevant. It didn't work when I tried that because the asteroids became invisible. Try different things to see if you can make it work.
+		g2.scale(scaleFactor, scaleFactor); 
 		accumulatedRotation = accumulatedRotation + rotationSpeed;
 		g2.rotate(accumulatedRotation);
 		GradientPaint redtowhite = new GradientPaint(34, 63, new Color(randomColor1, randomColor2, randomColor3), 20, 67, new Color( randomColor4, randomColor5, randomColor6));
@@ -81,13 +81,13 @@ public class Asteroid
 		GradientPaint randomOutlines = new GradientPaint(34, 63, new Color(randomOutlineColor1, randomOutlineColor2, randomOutlineColor3), 20, 67, new Color( randomOutlineColor4, randomOutlineColor5, randomOutlineColor6));
 		if (!isAWholePiece)
 		{
-			g2.setPaint(new GradientPaint(34, 63, new Color(randomOutlineColor1, randomOutlineColor2, randomOutlineColor3), 20, 67, new Color( randomOutlineColor4, randomOutlineColor5, randomOutlineColor6)));
+			g2.setPaint(new GradientPaint(34, 63, new Color(0, 0, 0), 20, 67, new Color(randomColor1, randomColor2, randomColor3)));
 		}
 		g2.fill(asteroidShape);
 		g2.setPaint(randomOutlines);
 		if (!isAWholePiece)
 		{
-			g2.setColor(Color.green);
+			g2.setColor(Color.green); //SUBMIT GAME TO LEAGUE TEACHERS FOR SUGGESTIONS AND REVIEW
 		}
 		g2.draw(asteroidShape);
 		scaleFactor = scaleFactor;
