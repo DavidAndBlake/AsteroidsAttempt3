@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.util.Random;
 
 import javax.swing.text.Segment;
@@ -39,9 +41,10 @@ public class Asteroid
 	private double accumulatedRotation = 0;
 	public Polygon asteroidShape;
 	public int asteroidNumber;
-	public double asteroidSize = Math.random()*1.5 + .5;
+//	public double asteroidSize = Math.random()*1.5 + .5;
 	public int asteroidSpeedIndex;
 	public boolean isAWholePiece;
+	public Area collisionArea;
 	
 	public Asteroid(int asteroidXPos, int asteroidYPos, int course, int speed, double scaleFactor, double rotationSpeed, boolean isAWholePiece) //asteroid constructor
 	{
@@ -54,6 +57,11 @@ public class Asteroid
 		this.asteroidShape = new Polygon(asteroidXPoints,asteroidYPoints, asteroidXPoints.length);
  		this.asteroidNumber = asteroidNumber++;
  		this.isAWholePiece = isAWholePiece;
+ 		AffineTransform transformer = new AffineTransform();
+ 		transformer.scale(scaleFactor, scaleFactor);
+ 		collisionArea = new Area(asteroidShape);
+ 		collisionArea.transform(transformer);
+ 		
 	}
 
 	private int sg(double nominalSegmentLength)

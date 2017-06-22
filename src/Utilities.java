@@ -29,6 +29,7 @@ public class Utilities implements KeyListener, ActionListener
 	public ArrayList<Laser> projectileList;
 	private boolean shipDestroyed;
 	private int laserSpeed = 50;
+	public Clip music;
 	// public Timer shotRegulator = new Timer(400, e);
 
 	public void playShotSound()
@@ -38,13 +39,9 @@ public class Utilities implements KeyListener, ActionListener
 			AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(getClass().getResource(
 							"laser sound -10db.wav"
-//							"270536__littlerobotsoundfactory__laser-09.wav"
 							));
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
-			// FloatControl volume =
-			// (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			// volume.setValue(0.7f); // Reduce volume by 10 decibels.
 			clip.start();
 		} catch (Exception ex)
 		{
@@ -58,15 +55,19 @@ public class Utilities implements KeyListener, ActionListener
 		{
 			AudioInputStream audioInputStream = AudioSystem
 					.getAudioInputStream(getClass().getResource(
-							"195563__jacobalcook__spooky-scifi-fog-44k.wav"));
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioInputStream);
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
+							"Dublin.wav"));
+			music = AudioSystem.getClip();
+			music.open(audioInputStream);
+			music.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (Exception ex)
 		{
 			System.out.println("Error with playing sound.");
 			ex.printStackTrace();
 		}
+	}
+	public void stopMusic()
+	{
+		music.stop();
 	}
 	public void playExplosionSound()
 	{
