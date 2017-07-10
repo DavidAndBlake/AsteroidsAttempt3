@@ -10,14 +10,30 @@ import org.w3c.dom.css.Rect;
 
 public class PowerUp
 {
-	
-	int powerUpXPos = (int)(Math.random()*500);
-	int powerUpYPos = (int)(Math.random()*500); // make the power up move to the right, and have collision detection with the ship
-	AffineTransform powerUpTransform = new AffineTransform(); //Affine Transform sets all the reference frames of the object to their default
-	public void paintPowerUp(Graphics2D g2){
+	private int powerUpXPos;
+	private int powerUpYPos; // make the power up move to the right, and have
+							// collision detection with the ship
+	private double powerUpCourse;
+	private double powerUpRotation;
+	Rectangle2D.Double powerUpShape = new Rectangle2D.Double(0, 0, 40, 40);
+	AffineTransform powerUpTransform = new AffineTransform(); // Unity Transform
+																// (scale = 1,
+																// rotation = 0,
+																// x = 0, y = 0)
+
+	public PowerUp(int powerUpXPos, int powerUpYPos, double course, double rotation)
+	{
+		this.powerUpXPos = powerUpXPos;
+		this.powerUpYPos = powerUpYPos;
+		this.powerUpCourse = course;
+		this.powerUpRotation = rotation;
+	}
+	public void paintPowerUp(Graphics2D g2)
+	{
 		g2.setTransform(powerUpTransform);
 		g2.setColor(Color.white);
-		Rectangle2D powerUpShape = new Rectangle2D (powerUpXPos, powerUpYPos, 50, 50);
-		powerUpXPos = powerUpXPos+5;
+		g2.translate(powerUpXPos, powerUpYPos);
+		g2.fill(powerUpShape);
+
 	}
 }

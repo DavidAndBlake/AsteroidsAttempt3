@@ -63,7 +63,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int asteroidLimit = 14;
 	private double asteroidScaleFactor = 1.5;
 	private double asteroidSpeed;
-	private PowerUp powerUp = new PowerUp(); // use this to make the power up
+	private PowerUp powerUp = new PowerUp(asteroidDestroyedNumber, asteroidDestroyedNumber, asteroidScaleFactor, asteroidScaleFactor); // use this to make the power up
 	public ArrayList<PowerUp> powerUpList = new ArrayList<>();
 
 	public static void main(String[] args)
@@ -95,37 +95,52 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		space.addKeyListener(util);
 		util.playMusic();
 	}
-//TO DO: 
-	//	Add in the power up
-//	Make the asteroid collision radius adjust with the asteroid size
-	
-	public void asteroidSpawner() //Try to find a way to combine these commands into one in order to reduce space taken.
+	// TO DO:
+	// Add in the power up
+	// Make the asteroid collision radius adjust with the asteroid size
+
+	public void asteroidSpawner() // Try to find a way to combine these commands
+									// into one in order to reduce space taken.
 	{
-		
-			asteroidSpeed = (Math.random() * asteroidSpeedLimit) + 2;
+		asteroidSpeed = (Math.random() * asteroidSpeedLimit) + 2;
 		if (fastAsteroidCounter >= fastAsteroidInterval)
-			{
-				fastAsteroidCounter = 15;
-				asteroidSpeed = (int) (Math.random() * fastAsteroidSpeed) + 6;
-			}
+		{
+			fastAsteroidCounter = 15;
+			asteroidSpeed = (int) (Math.random() * fastAsteroidSpeed) + 6;
+		}
 		asteroidScaleFactor = (asteroidScaleFactor * Math.random()) + .8;
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
-		if (asteroidSpawnQuadrantPicker == 0)// west
+		int powerUpQuadrantPicker = r.nextInt(4);
+		switch (asteroidSpawnQuadrantPicker)
 		{
-			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int)asteroidSpeed, asteroidScaleFactor, Math.random(), true));
-			// xpos, ypos, course, speed, scale factor, rotation speed, is asteroid a piece
+		case 0:
+			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
+			break;
+		case 1:
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
+			break;
+		case 2:
+			asteroidList.add(new Asteroid(widthOfScreen + 50, r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
+			break;
+		case 3:
+			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), heightOfScreen + 50, r.nextInt(90) + 45, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
+			break;
 		}
-		if (asteroidSpawnQuadrantPicker == 1) // north
+		
+		switch (powerUpQuadrantPicker) //see if I can figure out why the new positions aren't changing
 		{
-			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int)asteroidSpeed, asteroidScaleFactor, Math.random(), true));
-		}
-		if (asteroidSpawnQuadrantPicker == 2) // east
-		{
-			asteroidList.add(new Asteroid(widthOfScreen + 50, r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int)asteroidSpeed, asteroidScaleFactor, Math.random(), true));
-		}
-		if (asteroidSpawnQuadrantPicker == 3) // south
-		{
-			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), heightOfScreen + 50, r.nextInt(90) + 45, (int)asteroidSpeed, asteroidScaleFactor, Math.random(), true));
+		case 0:
+			new PowerUp(1,11,11,11);
+			break;
+		case 1:
+			new PowerUp(700,101,-11,11);
+			break;
+		case 2:
+			new PowerUp(100,110,-1,11);
+			break;
+		case 3:
+			new PowerUp(571,101,-6,11);
+			break;
 		}
 	}
 
@@ -179,11 +194,12 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			{
 				shot = projectileList.get(j);
 				Area shotArea = new Area(shot.shotShape);
-				Area powerUpArea = new Area(powerUp.powerUpShape);
+				// Area powerUpArea = new Area(powerUp.powerUpShape);
 				AffineTransform shotAT = new AffineTransform();
 				shotAT.setToTranslation(shot.laserXPos, shot.laserYPos);
 				shotArea.transform(shotAT);
-				shotArea.intersect(asteroidArea); //***** Do this for ship area and power up area
+				shotArea.intersect(asteroidArea); // ***** Do this for ship area
+													// and power up area
 
 				if (util.isOffScreen(shot.laserXPos, shot.laserYPos, widthOfScreen, heightOfScreen))
 				{
@@ -214,7 +230,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			leftShipArea.transform(spaceDroneAT);
 			leftShipArea.intersect(asteroidArea);
 			rightShipArea.intersect(asteroidArea);
-			if (!leftShipArea.isEmpty()) //Need help figuring out how to differentiate between asteroid collision and power up collision
+			if (!leftShipArea.isEmpty()) // Need help figuring out how to
+											// differentiate between asteroid
+											// collision and power up collision
 			{
 				spaceDrone.canopy.reset();
 				spaceDrone.shipLeftSide.reset();
@@ -235,9 +253,11 @@ public class AsteroidGameController extends JComponent implements ActionListener
 						util.stopMusic();
 						new AsteroidGameController().getGoing();
 					}
-					if(tryAgain == 2){
+					if (tryAgain == 2)
+					{
 					}
-					if(tryAgain == 1) {
+					if (tryAgain == 1)
+					{
 						System.exit(0);
 					}
 				}
@@ -253,9 +273,11 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					util.stopMusic();
 					new AsteroidGameController().getGoing();
 				}
-				if(tryAgain == 2){
+				if (tryAgain == 2)
+				{
 				}
-				if(tryAgain == 1) {
+				if (tryAgain == 1)
+				{
 					System.exit(0);
 				}
 			}
