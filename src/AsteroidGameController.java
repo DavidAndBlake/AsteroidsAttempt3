@@ -48,7 +48,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	public int asteroidSpawnQuadrantPicker;
 	public Ship spaceDrone = new Ship(middleScreenXPos, middleScreenYPos, widthOfScreen, heightOfScreen);
 	public Utilities util = new Utilities(spaceDrone, projectileList);
-	public Timer shotTicker = new Timer(100, util);
+	public Timer shotTicker = new Timer(300, util);
 	private Timer endingDelayTicker = new Timer(300, null);
 	private int score;
 	public URL soundAddress;
@@ -63,7 +63,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int asteroidLimit = 14;
 	private double asteroidScaleFactor = 1.5;
 	private double asteroidSpeed;
-	private PowerUp powerUp = new PowerUp(asteroidDestroyedNumber, asteroidDestroyedNumber, asteroidScaleFactor, asteroidScaleFactor); // use this to make the power up
+	private PowerUp powerUp = new PowerUp(asteroidDestroyedNumber, asteroidDestroyedNumber, asteroidScaleFactor, asteroidScaleFactor, 8, false, false); // use this to make the power up
 	public ArrayList<PowerUp> powerUpList = new ArrayList<>();
 
 	public static void main(String[] args)
@@ -77,7 +77,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		 * spawn asteroids
 		 *********************************************************/
 		JOptionPane.showMessageDialog(space,
-				"Greetings irish drone pilot! Thank you for accepting this job!\n\nGenericFuturisticIndustries Inc. LTD Ireland needs your help in clearing the space around this quadrant of asteroids to prepare for space station construction");
+				"Greetings untrained third rate drone pilot! Thank you for accepting this job!\nGenericFuturisticIndustries Inc. LTD needs your help in clearing the space around this quadrant of asteroids to prepare for space station construction\n\nPlease enjoy this irish music while you do your job :)");
 		for (int j = 0; j < asteroidLimit; j++)
 		{
 			asteroidSpawner();
@@ -93,7 +93,28 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		space.setBackground(Color.BLACK);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(util);
-		util.playMusic();
+		util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
+		
+		switch (new Random().nextInt(4)) //see if I can figure out why the new positions aren't changing
+		{
+		//powerUpXPos, powerUpYPos, course, speed, rotation, isTouchingShip, isTouchingLaser
+		case 0: //north 
+			powerUp = new PowerUp(new Random().nextInt(widthOfScreen), 11, 11, 11, 3, false, false); 
+			System.out.println("north");
+			break;
+		case 1: //south
+			powerUp = new PowerUp(new Random().nextInt(widthOfScreen), heightOfScreen-10 , -11, 11, 3, false, false); 
+			System.out.println("south");
+			break;
+		case 2: //east
+			powerUp = new PowerUp(widthOfScreen-30, new Random().nextInt(heightOfScreen), -1, 11, 3, false, false);
+			System.out.println("east");
+			break;
+		case 3: //west
+			powerUp = new PowerUp(30,new Random().nextInt(heightOfScreen), -6, 11, 3, false, false);
+			System.out.println("west");
+			break;
+		}
 	}
 	// TO DO:
 	// Add in the power up
@@ -127,21 +148,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			break;
 		}
 		
-		switch (powerUpQuadrantPicker) //see if I can figure out why the new positions aren't changing
-		{
-		case 0:
-			new PowerUp(1,11,11,11);
-			break;
-		case 1:
-			new PowerUp(700,101,-11,11);
-			break;
-		case 2:
-			new PowerUp(100,110,-1,11);
-			break;
-		case 3:
-			new PowerUp(571,101,-6,11);
-			break;
-		}
+		
 	}
 
 	public void asteroidPieceCreator(int asteroidXPos, int asteroidYPos, int course, double speed, double scaleFactor)
@@ -265,7 +272,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			}
 			if (asteroidList.size() < 1)
 			{
-				JOptionPane.showMessageDialog(null, "Congratulations! Your job is complete!\n\nYou win!");
+				JOptionPane.showMessageDialog(null, "Congratulations! Your job is complete!\nYou win!\nMaybe you're not so third rate after all.");
 				int tryAgain = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
 				if (tryAgain == 0)
 				{

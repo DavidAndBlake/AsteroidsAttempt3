@@ -15,25 +15,27 @@ public class PowerUp
 							// collision detection with the ship
 	private double powerUpCourse;
 	private double powerUpRotation;
-	Rectangle2D.Double powerUpShape = new Rectangle2D.Double(0, 0, 40, 40);
+	Rectangle2D.Double powerUpShape;
 	AffineTransform powerUpTransform = new AffineTransform(); // Unity Transform
 																// (scale = 1,
 																// rotation = 0,
 																// x = 0, y = 0)
 
-	public PowerUp(int powerUpXPos, int powerUpYPos, double course, double rotation)
+	public PowerUp(int powerUpXPos, int powerUpYPos, double course, double speed, double rotation, boolean isTouchingShip, boolean isTouchingLaser)
 	{
 		this.powerUpXPos = powerUpXPos;
 		this.powerUpYPos = powerUpYPos;
 		this.powerUpCourse = course;
 		this.powerUpRotation = rotation;
+		powerUpShape = new Rectangle2D.Double(powerUpXPos, powerUpYPos, 40, 40);
 	}
 	public void paintPowerUp(Graphics2D g2)
 	{
 		g2.setTransform(powerUpTransform);
 		g2.setColor(Color.white);
-		g2.translate(powerUpXPos, powerUpYPos);
+//		g2.translate(powerUpXPos, powerUpYPos);
 		g2.fill(powerUpShape);
+		g2.translate(powerUpXPos, powerUpYPos);
 
 	}
 }
