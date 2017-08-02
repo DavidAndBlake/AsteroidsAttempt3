@@ -88,9 +88,9 @@ public class Utilities implements KeyListener, ActionListener
 		}
 	}
 
-	public Utilities(Ship arwing, ArrayList<Laser> projectileList)
+	public Utilities(Ship spaceDrone, ArrayList<Laser> projectileList)
 	{
-		this.spaceDrone = arwing;
+		this.spaceDrone = spaceDrone;
 		this.projectileList = projectileList;
 		// this.projectileSpeed = projectileSpeed;
 	}

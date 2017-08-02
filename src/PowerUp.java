@@ -32,10 +32,9 @@ public class PowerUp
 	public void paintPowerUp(Graphics2D g2)
 	{
 		g2.setTransform(powerUpTransform);
+//		powerUpTransform.transform(powerUpXPos++, powerUpCourse);
 		g2.setColor(Color.white);
-//		g2.translate(powerUpXPos, powerUpYPos);
 		g2.fill(powerUpShape);
 		g2.translate(powerUpXPos, powerUpYPos);
-
 	}
 }

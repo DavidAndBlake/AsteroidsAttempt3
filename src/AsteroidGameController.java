@@ -63,7 +63,13 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int asteroidLimit = 14;
 	private double asteroidScaleFactor = 1.5;
 	private double asteroidSpeed;
-	private PowerUp powerUp = new PowerUp(asteroidDestroyedNumber, asteroidDestroyedNumber, asteroidScaleFactor, asteroidScaleFactor, 8, false, false); // use this to make the power up
+	private PowerUp powerUp = new PowerUp(asteroidDestroyedNumber, asteroidDestroyedNumber, asteroidScaleFactor, asteroidScaleFactor, 8, false, false); // use
+																																						// this
+																																						// to
+																																						// make
+																																						// the
+																																						// power
+																																						// up
 	public ArrayList<PowerUp> powerUpList = new ArrayList<>();
 
 	public static void main(String[] args)
@@ -94,24 +100,26 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(util);
 		util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
-		
-		switch (new Random().nextInt(4)) //see if I can figure out why the new positions aren't changing
+
+		switch (/*new Random().nextInt(4)*/3) // see if I can figure out why the new
+											// positions aren't changing
 		{
-		//powerUpXPos, powerUpYPos, course, speed, rotation, isTouchingShip, isTouchingLaser
-		case 0: //north 
-			powerUp = new PowerUp(new Random().nextInt(widthOfScreen), 11, 11, 11, 3, false, false); 
+		// powerUpXPos, powerUpYPos, course, speed, rotation, isTouchingShip,
+		// isTouchingLaser
+		case 0: // north
+			powerUp = new PowerUp(new Random().nextInt(widthOfScreen), 30, r.nextInt(90) - 135, 11, 3, false, false);
 			System.out.println("north");
 			break;
-		case 1: //south
-			powerUp = new PowerUp(new Random().nextInt(widthOfScreen), heightOfScreen-10 , -11, 11, 3, false, false); 
+		case 1: // south
+			powerUp = new PowerUp(new Random().nextInt(widthOfScreen), (heightOfScreen * 80)/100, r.nextInt(90) + 45, 11, 3, false, false);
 			System.out.println("south");
 			break;
-		case 2: //east
-			powerUp = new PowerUp(widthOfScreen-30, new Random().nextInt(heightOfScreen), -1, 11, 3, false, false);
+		case 2: // east
+			powerUp = new PowerUp((widthOfScreen * 96)/100, new Random().nextInt(heightOfScreen), r.nextInt(90) - 225, 11, 3, false, false);
 			System.out.println("east");
 			break;
-		case 3: //west
-			powerUp = new PowerUp(30,new Random().nextInt(heightOfScreen), -6, 11, 3, false, false);
+		case 3: // west
+			powerUp = new PowerUp(30, new Random().nextInt(heightOfScreen), r.nextInt(90) - 45, 11, 3, false, false);
 			System.out.println("west");
 			break;
 		}
@@ -131,24 +139,21 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		}
 		asteroidScaleFactor = (asteroidScaleFactor * Math.random()) + .8;
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
-		int powerUpQuadrantPicker = r.nextInt(4);
 		switch (asteroidSpawnQuadrantPicker)
 		{
-		case 0:
+		case 0: //west
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
-		case 1:
+		case 1: //narth
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
-		case 2:
+		case 2: //east
 			asteroidList.add(new Asteroid(widthOfScreen + 50, r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
-		case 3:
+		case 3: //south
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), heightOfScreen + 50, r.nextInt(90) + 45, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
 		}
-		
-		
 	}
 
 	public void asteroidPieceCreator(int asteroidXPos, int asteroidYPos, int course, double speed, double scaleFactor)
