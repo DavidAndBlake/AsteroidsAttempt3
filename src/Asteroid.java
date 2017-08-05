@@ -61,7 +61,6 @@ public class Asteroid
  		transformer.scale(scaleFactor, scaleFactor);
  		collisionArea = new Area(asteroidShape);
  		collisionArea.transform(transformer);
- 		
 	}
 
 	private int sg(double nominalSegmentLength)
@@ -72,7 +71,6 @@ public class Asteroid
 	
 	public void paintAsteroid(Graphics2D g2)
 	{
-//		scaleFactor = asteroidSize;
 		Utilities.convertCourseSpeedToDxDy(directionOfAsteroid, speedOfAsteroid);
 		deltaX = Utilities.getDeltaX();
 		deltaY = Utilities.getDeltaY();
