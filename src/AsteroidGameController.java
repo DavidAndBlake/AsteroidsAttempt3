@@ -113,7 +113,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			System.out.println("east");
 			break;
 		case 3: // west
-			powerUp = new PowerUp(30, new Random().nextInt(heightOfScreen), r.nextInt(90) - 45, 3, 3, false, false);
+//			powerUp = new PowerUp(30, new Random().nextInt(heightOfScreen), r.nextInt(90) - 45, 3, 3, false, false);
 			System.out.println("west");
 			break;
 		}
@@ -177,7 +177,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		g2.drawString("" + score, (widthOfScreen / 2), heightOfScreen / 4);
 		g2.setTransform(identity);
 		spaceDrone.paintShip(g2);
-		powerUp.paintPowerUp(g2);
+//		powerUp.paintPowerUp(g2);
 		for (int i = 0; i < asteroidList.size(); i++)
 		{
 			g2.setTransform(identity); // cleans up screen
