@@ -48,7 +48,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	public int asteroidSpawnQuadrantPicker;
 	public Ship spaceDrone = new Ship(middleScreenXPos, middleScreenYPos, widthOfScreen, heightOfScreen);
 	public Utilities util = new Utilities(spaceDrone, projectileList);
-	public Timer shotTicker = new Timer(300, util);
+	private int firingRateDelay = (100);
+	public Timer shotTicker = new Timer(firingRateDelay, util);
+	private Timer powerUpTimeLimit = new Timer(100, util);
 	private Timer endingDelayTicker = new Timer(300, null);
 	private int score;
 	public URL soundAddress;
@@ -59,12 +61,13 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int asteroidDestroyedNumber = 1;
 	private int fastAsteroidCounter;
 	private int fastAsteroidInterval = 22;
+	private int powerUpCounter;
+	private int powerUpInterval = 20;
 	private int gameWinQuota = 100;
 	private int asteroidLimit = 14;
 	private double asteroidScaleFactor = 1.5;
 	private double asteroidSpeed;
-	private PowerUp powerUp; 
-	
+	private PowerUp powerUp = new PowerUp(-1000, -1000, r.nextInt(90), 0, 3, false, false);
 	public ArrayList<PowerUp> powerUpList = new ArrayList<>();
 
 	public static void main(String[] args)
@@ -85,7 +88,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		}
 		spaceDrone.setScreenHeight(heightOfScreen);
 		spaceDrone.setScreenWidth(widthOfScreen);
-		ticker.start();
+		ticker.start();// repainting timer
 		shotTicker.start();
 		space.setSize(widthOfScreen, heightOfScreen);
 		space.setVisible(true);
@@ -94,30 +97,44 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		space.setBackground(Color.BLACK);
 		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 		space.addKeyListener(util);
-		util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
+//		util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
 
-		switch (/*new Random().nextInt(4)*/3) 
+	}
+	public void powerUpSpawner()
+	{
+		if (powerUpCounter > (powerUpInterval + r.nextInt(20)))
 		{
-		// powerUpXPos, powerUpYPos, course, speed, rotation, isTouchingShip,
-		// isTouchingLaser
-		case 0: // north
-			powerUp = new PowerUp(new Random().nextInt(widthOfScreen), 30, r.nextInt(90) - 135, 1, 3, false, false);
-			System.out.println("north");
-			break;
-		case 1: // south
-			powerUp = new PowerUp(new Random().nextInt(widthOfScreen), (heightOfScreen * 80)/100, r.nextInt(90) + 45, 3, 3, false, false);
-			System.out.println("south");
-			break;
-		case 2: // east
-			powerUp = new PowerUp((widthOfScreen * 96)/100, new Random().nextInt(heightOfScreen), r.nextInt(90) - 225, 3, 3, false, false);
-			System.out.println("east");
-			break;
-		case 3: // west
-//			powerUp = new PowerUp(30, new Random().nextInt(heightOfScreen), r.nextInt(90) - 45, 3, 3, false, false);
-			System.out.println("west");
-			break;
+			switch (2)//new Random().nextInt(4))
+			{
+			// powerUpXPos, powerUpYPos, course, speed, rotation,
+			// isTouchingShip,
+			// isTouchingLaser
+			case 0: // north
+				powerUp = new PowerUp(r.nextInt(widthOfScreen), 30, r.nextInt(90) - 135, 5, 3, false, false);
+				System.out.println("north");
+				break;
+			case 1: // south
+				powerUp = new PowerUp(r.nextInt(widthOfScreen), 400, r.nextInt(90) + 45, 5, 3, false, false);
+				System.out.println("south");
+				break;
+			case 2: // east
+				powerUp = new PowerUp(widthOfScreen-1000, r.nextInt(heightOfScreen)-500, r.nextInt(90) - 225, 10, 3, false, false);
+				System.out.println("east");
+//				System.out.println("width = " + widthOfScreen + "\nheight = " + heightOfScreen);
+				break;
+			case 3: // west
+				powerUp = new PowerUp(200, 200, r.nextInt(100) - 50, 5, 3, false, false);
+				System.out.println("west");
+				break;
+			}
+			powerUpCounter = 0;
+		}
+		// if (Area powerUpArea = new Area(powerUp.collisionArea))
+		{
+
 		}
 	}
+
 	// TO DO:
 	// Add in the power up
 	// Make the asteroid collision radius adjust with the asteroid size
@@ -130,21 +147,22 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		{
 			fastAsteroidCounter = 15;
 			asteroidSpeed = (int) (Math.random() * fastAsteroidSpeed) + 6;
+			powerUpSpawner();
 		}
 		asteroidScaleFactor = (asteroidScaleFactor * Math.random()) + .8;
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
 		switch (asteroidSpawnQuadrantPicker)
 		{
-		case 0: //west
+		case 0: // west
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
-		case 1: //narth
+		case 1: // narth
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
-		case 2: //east
+		case 2: // east
 			asteroidList.add(new Asteroid(widthOfScreen + 50, r.nextInt(heightOfScreen), r.nextInt(90) - 225, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
-		case 3: //south
+		case 3: // south
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), heightOfScreen + 50, r.nextInt(90) + 45, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
 		}
@@ -160,7 +178,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	{
 		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
 		spaceDrone = util.shipMovementRegulator(rotationDegree, directionOfHeadOfShip, speedOfShip, speedLimitOfShip, colorChangeController);
-		repaint();
+		repaint();// calls on paint
 	}
 
 	public void paint(Graphics g)
@@ -177,7 +195,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		g2.drawString("" + score, (widthOfScreen / 2), heightOfScreen / 4);
 		g2.setTransform(identity);
 		spaceDrone.paintShip(g2);
-//		powerUp.paintPowerUp(g2);
+		powerUp.paintPowerUp(g2);
 		for (int i = 0; i < asteroidList.size(); i++)
 		{
 			g2.setTransform(identity); // cleans up screen
@@ -219,6 +237,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					projectileList.remove(j);
 					asteroidDestroyedNumber++;
 					fastAsteroidCounter++;
+					powerUpCounter++;
+					System.out.println(powerUpCounter);
 					score = score + 1;
 					if (asteroid.isAWholePiece)
 					{
@@ -256,7 +276,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					if (tryAgain == 0)
 					{
 						space.dispose();
-						util.stopMusic();
+//						util.stopMusic();
 						new AsteroidGameController().getGoing();
 					}
 					if (tryAgain == 2)
@@ -269,14 +289,29 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				}
 
 			}
+			if (!leftShipArea.isEmpty())
+			{
+//				if (power.isEmpty())
+//				{
+//					
+//					powerUpTimeLimit.start();
+//					firingRateDelay = 100;
+//					System.out.println("collision");
+//				}
+			}
+			// if (powerUpTimeLimit > firingRateDelay)
+			// {
+			//
+			// }
 			if (asteroidList.size() < 1)
 			{
+				util.gameComplete = true;
 				JOptionPane.showMessageDialog(null, "Congratulations! Your job is complete!\nYou win!\nMaybe you're not so third rate after all.");
 				int tryAgain = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
 				if (tryAgain == 0)
 				{
 					space.dispose();
-					util.stopMusic();
+//					util.stopMusic();
 					new AsteroidGameController().getGoing();
 				}
 				if (tryAgain == 2)

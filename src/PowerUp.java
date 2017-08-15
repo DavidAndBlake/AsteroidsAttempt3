@@ -17,12 +17,13 @@ public class PowerUp
 	private double powerUpSpeed;
 	private double powerUpRotation;
 	Rectangle2D.Double powerUpShape;
-	AffineTransform powerUpTransform = new AffineTransform(); // Unity Transform
+	AffineTransform powerUpTransform = new AffineTransform(); // Identity Transform
 																// (scale = 1,
 																// rotation = 0,
 																// x = 0, y = 0)
 	private int deltaX;
 	private int deltaY;
+	public Area collisionArea;
 
 	public PowerUp(int powerUpXPos, int powerUpYPos, int course, double speed, double rotation, boolean isTouchingShip, boolean isTouchingLaser)
 	{
@@ -32,19 +33,19 @@ public class PowerUp
 		this.powerUpRotation = rotation;
 		this.powerUpSpeed = speed;
 		powerUpShape = new Rectangle2D.Double(powerUpXPos, powerUpYPos, 40, 40);
+		collisionArea = new Area(powerUpShape);
+ 		collisionArea.transform(powerUpTransform);
 	}
 	public void paintPowerUp(Graphics2D g2)
 	{
+		 g2.setTransform(powerUpTransform); 
 		 Utilities.convertCourseSpeedToDxDy(powerUpCourse, powerUpSpeed);
-//		 g2.setTransform(powerUpTransform);
-//		 powerUpTransform.translate(powerUpXPos, powerUpYPos);
-//		 powerUpXPos ++;
-//		 deltaX = Utilities.getDeltaX();
-//		 deltaY = Utilities.getDeltaY();
-//		 powerUpXPos = (int) (powerUpXPos + deltaX);
-//		 powerUpYPos = (int) (powerUpXPos + deltaY);;
-//		 g2.setColor(Color.white);
-//		 g2.fill(powerUpShape);
-//		 g2.translate(powerUpXPos, powerUpYPos);
+		 deltaX = Utilities.getDeltaX();
+		 deltaY = Utilities.getDeltaY();
+		 powerUpXPos += deltaX;
+		 powerUpYPos += deltaY;
+		 g2.translate(powerUpXPos, powerUpYPos);
+		 g2.setColor(Color.white);
+		 g2.fill(powerUpShape);
 	}
 }

@@ -31,6 +31,7 @@ public class Utilities implements KeyListener, ActionListener
 	private int laserSpeed = 50;
 	public Clip music;
 	// public Timer shotRegulator = new Timer(400, e);
+	public boolean gameComplete = false;
 
 	public void playShotSound()
 	{
@@ -49,26 +50,26 @@ public class Utilities implements KeyListener, ActionListener
 			ex.printStackTrace();
 		}
 	}
-	public void playMusic()
-	{
-		try
-		{
-			AudioInputStream audioInputStream = AudioSystem
-					.getAudioInputStream(getClass().getResource(
-							"Dublin.wav"));
-			music = AudioSystem.getClip();
-			music.open(audioInputStream);
-			music.loop(Clip.LOOP_CONTINUOUSLY);
-		} catch (Exception ex)
-		{
-			System.out.println("Error with playing sound.");
-			ex.printStackTrace();
-		}
-	}
-	public void stopMusic()
-	{
-		music.stop();
-	}
+//	public void playMusic()
+//	{
+//		try
+//		{
+//			AudioInputStream audioInputStream = AudioSystem
+//					.getAudioInputStream(getClass().getResource(
+//							"Dublin.wav"));
+//			music = AudioSystem.getClip();
+//			music.open(audioInputStream);
+//			music.loop(Clip.LOOP_CONTINUOUSLY);
+//		} catch (Exception ex)
+//		{
+//			System.out.println("Error with playing sound.");
+//			ex.printStackTrace();
+//		}
+//	}
+//	public void stopMusic()
+//	{
+//		music.stop();
+//	}
 	public void playExplosionSound()
 	{
 		try
@@ -208,6 +209,10 @@ public class Utilities implements KeyListener, ActionListener
 		if (e.getKeyCode() == KeyEvent.VK_SPACE)
 		{
 			shoot = true;
+		}
+		if (gameComplete == true)
+		{
+			shoot = false;
 		}
 	}
 
