@@ -20,9 +20,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-public class AsteroidGameController extends JComponent implements ActionListener
+public class AsteroidGameController extends JComponent implements ActionListener, Runnable
 {
 	public JFrame space = new JFrame();
 	private int widthOfScreen = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -62,7 +63,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int fastAsteroidCounter;
 	private int fastAsteroidInterval = 22;
 	private int powerUpCounter;
-	private int powerUpInterval = 20;
+	private int powerUpInterval = 1;
 	private int gameWinQuota = 100;
 	private int asteroidLimit = 14;
 	private double asteroidScaleFactor = 1.5;
@@ -72,10 +73,10 @@ public class AsteroidGameController extends JComponent implements ActionListener
 
 	public static void main(String[] args)
 	{
-		new AsteroidGameController().getGoing();
+		SwingUtilities.invokeLater(new AsteroidGameController());
 	}
 
-	void getGoing()
+	public void run()
 	{
 		/*********************************************************
 		 * spawn asteroids
@@ -102,7 +103,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	}
 	public void powerUpSpawner()
 	{
-		if (powerUpCounter > (powerUpInterval + r.nextInt(20)))
+		if (powerUpCounter > (powerUpInterval + r.nextInt(2)))
 		{
 			switch (2)//new Random().nextInt(4))
 			{
@@ -118,7 +119,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				System.out.println("south");
 				break;
 			case 2: // east
-				powerUp = new PowerUp(widthOfScreen-1000, r.nextInt(heightOfScreen)-500, r.nextInt(90) - 225, 10, 3, false, false);
+				powerUp = new PowerUp(widthOfScreen/2, /*r.nextInt(heightOfScreen)*/heightOfScreen/2, /*r.nextInt(90) - 225*/180, 10, 3, false, false);
 				System.out.println("east");
 //				System.out.println("width = " + widthOfScreen + "\nheight = " + heightOfScreen);
 				break;
@@ -277,7 +278,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					{
 						space.dispose();
 //						util.stopMusic();
-						new AsteroidGameController().getGoing();
+						new AsteroidGameController().run();
 					}
 					if (tryAgain == 2)
 					{
@@ -312,7 +313,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				{
 					space.dispose();
 //					util.stopMusic();
-					new AsteroidGameController().getGoing();
+					new AsteroidGameController().run();
 				}
 				if (tryAgain == 2)
 				{
