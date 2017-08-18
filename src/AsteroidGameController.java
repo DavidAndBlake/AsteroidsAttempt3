@@ -63,7 +63,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int fastAsteroidCounter;
 	private int fastAsteroidInterval = 22;
 	private int powerUpCounter;
-	private int powerUpInterval = 1;
+	private int powerUpInterval = 20;
 	private int gameWinQuota = 100;
 	private int asteroidLimit = 14;
 	private double asteroidScaleFactor = 1.5;
@@ -103,33 +103,25 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	}
 	public void powerUpSpawner()
 	{
-		if (powerUpCounter > (powerUpInterval + r.nextInt(2)))
-		{
-			switch (2)//new Random().nextInt(4))
+			switch (new Random().nextInt(4))
 			{
 			// powerUpXPos, powerUpYPos, course, speed, rotation,
 			// isTouchingShip,
 			// isTouchingLaser
 			case 0: // north
-				powerUp = new PowerUp(r.nextInt(widthOfScreen), 30, r.nextInt(90) - 135, 5, 3, false, false);
-				System.out.println("north");
+				powerUp = new PowerUp(r.nextInt(widthOfScreen), 0, r.nextInt(90) - 135, 5, 3, false, false);
 				break;
 			case 1: // south
-				powerUp = new PowerUp(r.nextInt(widthOfScreen), 400, r.nextInt(90) + 45, 5, 3, false, false);
-				System.out.println("south");
+				powerUp = new PowerUp(r.nextInt(widthOfScreen), heightOfScreen, r.nextInt(90) + 45, 5, 3, false, false);
 				break;
 			case 2: // east
-				powerUp = new PowerUp(widthOfScreen/2, /*r.nextInt(heightOfScreen)*/heightOfScreen/2, /*r.nextInt(90) - 225*/180, 10, 3, false, false);
-				System.out.println("east");
-//				System.out.println("width = " + widthOfScreen + "\nheight = " + heightOfScreen);
+				powerUp = new PowerUp(widthOfScreen, r.nextInt(heightOfScreen), r.nextInt(90) - 225, 10, 3, false, false);
 				break;
 			case 3: // west
-				powerUp = new PowerUp(200, 200, r.nextInt(100) - 50, 5, 3, false, false);
-				System.out.println("west");
+				powerUp = new PowerUp(0, r.nextInt(heightOfScreen), r.nextInt(100) - 50, 5, 3, false, false);
 				break;
 			}
 			powerUpCounter = 0;
-		}
 		// if (Area powerUpArea = new Area(powerUp.collisionArea))
 		{
 
@@ -148,7 +140,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		{
 			fastAsteroidCounter = 15;
 			asteroidSpeed = (int) (Math.random() * fastAsteroidSpeed) + 6;
-			powerUpSpawner();
 		}
 		asteroidScaleFactor = (asteroidScaleFactor * Math.random()) + .8;
 		asteroidSpawnQuadrantPicker = r.nextInt(4);
@@ -195,6 +186,11 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		g2.setFont(new Font("Sans", Font.PLAIN, 40));
 		g2.drawString("" + score, (widthOfScreen / 2), heightOfScreen / 4);
 		g2.setTransform(identity);
+		if (powerUpCounter > (powerUpInterval + r.nextInt(20)) && powerUp.getIsPowerUpOnScreen() == false)
+		{
+			powerUpSpawner();
+			System.out.println(powerUpInterval + r.nextInt(20));
+		}
 		spaceDrone.paintShip(g2);
 		powerUp.paintPowerUp(g2);
 		for (int i = 0; i < asteroidList.size(); i++)
@@ -219,7 +215,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			{
 				shot = projectileList.get(j);
 				Area shotArea = new Area(shot.shotShape);
-				// Area powerUpArea = new Area(powerUp.powerUpShape);
 				AffineTransform shotAT = new AffineTransform();
 				shotAT.setToTranslation(shot.laserXPos, shot.laserYPos);
 				shotArea.transform(shotAT);
@@ -239,7 +234,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					asteroidDestroyedNumber++;
 					fastAsteroidCounter++;
 					powerUpCounter++;
-					System.out.println(powerUpCounter);
 					score = score + 1;
 					if (asteroid.isAWholePiece)
 					{
