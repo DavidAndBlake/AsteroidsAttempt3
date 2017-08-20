@@ -83,45 +83,56 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		 *********************************************************/
 		JOptionPane.showMessageDialog(space,
 				"Greetings untrained third rate drone pilot! Thank you for accepting this job!\nGenericFuturisticIndustries Inc. LTD needs your help in clearing the space around this quadrant of asteroids to prepare for space station construction\n\nPlease enjoy this irish music while you do your job :)");
-		for (int j = 0; j < asteroidLimit; j++)
-		{
-			asteroidSpawner();
-		}
-		spaceDrone.setScreenHeight(heightOfScreen);
-		spaceDrone.setScreenWidth(widthOfScreen);
-		ticker.start();// repainting timer
-		shotTicker.start();
-		space.setSize(widthOfScreen, heightOfScreen);
-		space.setVisible(true);
-		space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
-		space.add(this);
-		space.setBackground(Color.BLACK);
-		space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
-		space.addKeyListener(util);
-//		util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
+		String ok = JOptionPane.showInputDialog("Press arrow keys to move, and space to shoot. Say \"got it!\" if you understand");
 
+		if (ok.equalsIgnoreCase("got it!"))
+		{
+
+			for (int j = 0; j < asteroidLimit; j++)
+			{
+				asteroidSpawner();
+			}
+			spaceDrone.setScreenHeight(heightOfScreen);
+			spaceDrone.setScreenWidth(widthOfScreen);
+			ticker.start();// repainting timer
+			shotTicker.start();
+			space.setSize(widthOfScreen, heightOfScreen);
+			space.setVisible(true);
+			space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
+			space.add(this);
+			space.setBackground(Color.BLACK);
+			space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
+			space.addKeyListener(util);
+			// util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
+		} 
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Sorry you didn't type it in right. Try again");
+			run();
+		}
 	}
+
 	public void powerUpSpawner()
 	{
-			switch (new Random().nextInt(4))
-			{
-			// powerUpXPos, powerUpYPos, course, speed, rotation,
-			// isTouchingShip,
-			// isTouchingLaser
-			case 0: // north
-				powerUp = new PowerUp(r.nextInt(widthOfScreen), 0, r.nextInt(90) - 135, 5, 3, false, false);
-				break;
-			case 1: // south
-				powerUp = new PowerUp(r.nextInt(widthOfScreen), heightOfScreen, r.nextInt(90) + 45, 5, 3, false, false);
-				break;
-			case 2: // east
-				powerUp = new PowerUp(widthOfScreen, r.nextInt(heightOfScreen), r.nextInt(90) - 225, 10, 3, false, false);
-				break;
-			case 3: // west
-				powerUp = new PowerUp(0, r.nextInt(heightOfScreen), r.nextInt(100) - 50, 5, 3, false, false);
-				break;
-			}
-			powerUpCounter = 0;
+		switch (new Random().nextInt(4))
+		{
+		// powerUpXPos, powerUpYPos, course, speed, rotation,
+		// isTouchingShip,
+		// isTouchingLaser
+		case 0: // north
+			powerUp = new PowerUp(r.nextInt(widthOfScreen), 0, r.nextInt(90) - 135, 5, 3, false, false);
+			break;
+		case 1: // south
+			powerUp = new PowerUp(r.nextInt(widthOfScreen), heightOfScreen, r.nextInt(90) + 45, 5, 3, false, false);
+			break;
+		case 2: // east
+			powerUp = new PowerUp(widthOfScreen, r.nextInt(heightOfScreen), r.nextInt(90) - 225, 10, 3, false, false);
+			break;
+		case 3: // west
+			powerUp = new PowerUp(0, r.nextInt(heightOfScreen), r.nextInt(100) - 50, 5, 3, false, false);
+			break;
+		}
+		powerUpCounter = 0;
 		// if (Area powerUpArea = new Area(powerUp.collisionArea))
 		{
 
@@ -147,8 +158,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		{
 		case 0: // west
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
-			break;
-		case 1: // narth
+			break; 
+		case 1: // north
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
 		case 2: // east
@@ -175,21 +186,10 @@ public class AsteroidGameController extends JComponent implements ActionListener
 
 	public void paint(Graphics g)
 	{
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setTransform(identity);
-		g2.scale((double) widthOfScreen / spaceImage.getWidth(this), (double) heightOfScreen / spaceImage.getHeight(this));
-		g2.drawImage(spaceImage, 0, 0, null, null);
-		g2.setColor(Color.green);
-		g2.drawRect(widthOfScreen / 2, heightOfScreen / 4 - 50, 80, 50);
-		g2.setColor(Color.white);
-		g2.drawString("Arrow keys to move\nHold space to shoot", widthOfScreen / 4, heightOfScreen / 3);
-		g2.setFont(new Font("Sans", Font.PLAIN, 40));
-		g2.drawString("" + score, (widthOfScreen / 2), heightOfScreen / 4);
-		g2.setTransform(identity);
+		Graphics2D g2 = drawInitialScreenSetup(g);
 		if (powerUpCounter > (powerUpInterval + r.nextInt(20)) && powerUp.getIsPowerUpOnScreen() == false)
 		{
 			powerUpSpawner();
-			System.out.println(powerUpInterval + r.nextInt(20));
 		}
 		spaceDrone.paintShip(g2);
 		powerUp.paintPowerUp(g2);
@@ -271,7 +271,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					if (tryAgain == 0)
 					{
 						space.dispose();
-//						util.stopMusic();
+						// util.stopMusic();
 						new AsteroidGameController().run();
 					}
 					if (tryAgain == 2)
@@ -286,13 +286,13 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			}
 			if (!leftShipArea.isEmpty())
 			{
-//				if (power.isEmpty())
-//				{
-//					
-//					powerUpTimeLimit.start();
-//					firingRateDelay = 100;
-//					System.out.println("collision");
-//				}
+				// if (power.isEmpty())
+				// {
+				//
+				// powerUpTimeLimit.start();
+				// firingRateDelay = 100;
+				// System.out.println("collision");
+				// }
 			}
 			// if (powerUpTimeLimit > firingRateDelay)
 			// {
@@ -301,12 +301,14 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			if (asteroidList.size() < 1)
 			{
 				util.gameComplete = true;
+				ticker.stop();
+				shotTicker.stop();
 				JOptionPane.showMessageDialog(null, "Congratulations! Your job is complete!\nYou win!\nMaybe you're not so third rate after all.");
 				int tryAgain = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
 				if (tryAgain == 0)
 				{
 					space.dispose();
-//					util.stopMusic();
+					// util.stopMusic();
 					new AsteroidGameController().run();
 				}
 				if (tryAgain == 2)
@@ -325,4 +327,26 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			shot.paintProjectile(g2);
 		}
 	}
+
+	public Graphics2D drawInitialScreenSetup(Graphics g)
+	{
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setTransform(identity);
+		g2.scale((double) widthOfScreen / spaceImage.getWidth(this), (double) heightOfScreen / spaceImage.getHeight(this));
+		g2.drawImage(spaceImage, 0, 0, null, null);
+		g2.setColor(Color.green);
+		g2.drawRect(widthOfScreen / 2, heightOfScreen / 4 - 50, 80, 50);
+		g2.setColor(Color.white);
+		g2.setFont(new Font("Sans", Font.PLAIN, 40));
+		g2.drawString("" + score, (widthOfScreen / 2), heightOfScreen / 4);
+		g2.setTransform(identity);
+		return g2;
+	}
+//	public boolean collisionDetector(Area area1, Area area2)
+//	{
+//		AffineTransform shotAT = new AffineTransform();
+//		shotAT.setToTranslation(shot.laserXPos, shot.laserYPos);
+//		shotArea.transform(shotAT);
+//		shotArea.intersect(asteroidArea); // ***** Do this for ship area
+//	}
 }

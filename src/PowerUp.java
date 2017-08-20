@@ -23,7 +23,7 @@ public class PowerUp
 																// x = 0, y = 0)
 	private int deltaX;
 	private int deltaY;
-	public Area collisionArea;
+	public Area powerUpArea;
 	private boolean isPowerUpOnScreen = true;
 
 	public PowerUp(int powerUpXPos, int powerUpYPos, int course, double speed, double rotation, boolean isTouchingShip, boolean isTouchingLaser)
@@ -34,8 +34,7 @@ public class PowerUp
 		this.powerUpRotation = rotation;
 		this.powerUpSpeed = speed;
 		powerUpShape = new Rectangle2D.Double(0, 0, 40, 40);
-		collisionArea = new Area(powerUpShape);
- 		collisionArea.transform(powerUpTransform);
+		powerUpArea = new Area(powerUpShape);
 	}
 
 	public void paintPowerUp(Graphics2D g2)
