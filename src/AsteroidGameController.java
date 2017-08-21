@@ -104,8 +104,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 			space.addKeyListener(util);
 			// util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
-		} 
-		else
+		} else
 		{
 			JOptionPane.showMessageDialog(null, "Sorry you didn't type it in right. Try again");
 			run();
@@ -158,7 +157,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		{
 		case 0: // west
 			asteroidList.add(new Asteroid(-50, r.nextInt(heightOfScreen), r.nextInt(90) - 45, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
-			break; 
+			break;
 		case 1: // north
 			asteroidList.add(new Asteroid(r.nextInt(widthOfScreen), -50, r.nextInt(90) - 135, (int) asteroidSpeed, asteroidScaleFactor, Math.random(), true));
 			break;
@@ -193,6 +192,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		}
 		spaceDrone.paintShip(g2);
 		powerUp.paintPowerUp(g2);
+//		Area spaceDroneArea = new Area(spaceDrone.getShipAffineTransform());
+//		System.out.println(spaceDrone.getShipAffineTransform());
+		
 		for (int i = 0; i < asteroidList.size(); i++)
 		{
 			g2.setTransform(identity); // cleans up screen
@@ -225,7 +227,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				{
 					projectileList.remove(j);
 				}
-				if (!shotArea.isEmpty()) // asteroid Hit
+				if (isCollision(asteroidArea, shotArea))
 				{
 					int iXPos = asteroidList.get(i).asteroidXPos;
 					int iYPos = asteroidList.get(i).asteroidYPos;
@@ -251,9 +253,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			leftShipArea.transform(spaceDroneAT);
 			leftShipArea.intersect(asteroidArea);
 			rightShipArea.intersect(asteroidArea);
-			if (!leftShipArea.isEmpty()) // Need help figuring out how to
-											// differentiate between asteroid
-											// collision and power up collision
+			if (isCollision(leftShipArea, asteroidArea))
 			{
 				spaceDrone.canopy.reset();
 				spaceDrone.shipLeftSide.reset();
@@ -262,9 +262,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				util.setShipDestroyed(true);
 				util.playExplosionSound();
 				endingDelayTicker.start();
-				if (endingDelayTicker.isRunning()) // CHANGE THIS MECHANIC SO
-													// THAT THE MESSAGE IS
-													// DELAYED BY THE TIMER
+				if (endingDelayTicker.isRunning()) // CHANGE THIS MECHANIC SO THAT THE MESSAGE IS DELAYED BY THE TIMER
 				{
 					JOptionPane.showMessageDialog(null, "You suck");
 					int tryAgain = JOptionPane.showConfirmDialog(null, "Would you like to try again?");
@@ -284,8 +282,10 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				}
 
 			}
-			if (!leftShipArea.isEmpty())
+//			System.out.println(powerUpr);
+			if (isCollision(leftShipArea, powerUp.getPowerUpArea()))
 			{
+				System.out.println("Power Up!");
 				// if (power.isEmpty())
 				// {
 				//
@@ -326,6 +326,13 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			g2.setTransform(identity);
 			shot.paintProjectile(g2);
 		}
+		// if (area1.getBounds2D().intersects(area2.getBounds2D())){
+		// collision = true;
+		// }
+		// else
+		// {
+		// collision = false;
+		// }
 	}
 
 	public Graphics2D drawInitialScreenSetup(Graphics g)
@@ -342,11 +349,16 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		g2.setTransform(identity);
 		return g2;
 	}
-//	public boolean collisionDetector(Area area1, Area area2)
-//	{
-//		AffineTransform shotAT = new AffineTransform();
-//		shotAT.setToTranslation(shot.laserXPos, shot.laserYPos);
-//		shotArea.transform(shotAT);
-//		shotArea.intersect(asteroidArea); // ***** Do this for ship area
-//	}
+	public boolean isCollision(Area a1, Area a2)
+	{
+		Area a1Clone = (Area) a1.clone();
+		a1Clone.intersect(a2);
+		if (!a1Clone.isEmpty())
+		{
+			return true;
+		} else
+		{
+			return false;
+		}
+	}
 }

@@ -50,7 +50,7 @@ public class Ship implements ActionListener
 	private Timer ticker = new Timer(100, this);
 	private Graphics2D g2;
 	private int colorChanger = 0;
-
+	
 
 	public Ship(int shipXPos, int shipYPos, int screenWidth, int screenHeight) // ship
 	// constructor

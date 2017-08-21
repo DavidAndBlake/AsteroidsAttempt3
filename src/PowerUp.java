@@ -23,7 +23,7 @@ public class PowerUp
 																// x = 0, y = 0)
 	private int deltaX;
 	private int deltaY;
-	public Area powerUpArea;
+	private Area powerUpArea;
 	private boolean isPowerUpOnScreen = true;
 
 	public PowerUp(int powerUpXPos, int powerUpYPos, int course, double speed, double rotation, boolean isTouchingShip, boolean isTouchingLaser)
@@ -34,7 +34,7 @@ public class PowerUp
 		this.powerUpRotation = rotation;
 		this.powerUpSpeed = speed;
 		powerUpShape = new Rectangle2D.Double(0, 0, 40, 40);
-		powerUpArea = new Area(powerUpShape);
+		setPowerUpArea(new Area(powerUpShape));
 	}
 
 	public void paintPowerUp(Graphics2D g2)
@@ -48,6 +48,7 @@ public class PowerUp
 		 g2.translate(powerUpXPos, powerUpYPos);
 		 g2.setColor(Color.white);
 		 g2.fill(powerUpShape);
+		 getPowerUpArea().transform(powerUpTransform);
 		 if (powerUpXPos > -10 && powerUpXPos < 2000 && powerUpYPos > -10 && powerUpYPos < 1000)
 		 {
 			 isPowerUpOnScreen = true;
@@ -59,5 +60,15 @@ public class PowerUp
 	public boolean getIsPowerUpOnScreen()
 	{
 		return isPowerUpOnScreen;
+	}
+
+	public Area getPowerUpArea()
+	{
+		return powerUpArea;
+	}
+
+	public void setPowerUpArea(Area powerUpArea)
+	{
+		this.powerUpArea = powerUpArea;
 	}
 }
