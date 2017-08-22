@@ -14,6 +14,7 @@ import java.awt.geom.Area;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.CancellationException;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -70,6 +71,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private double asteroidSpeed;
 	private PowerUp powerUp = new PowerUp(-1000, -1000, r.nextInt(90), 0, 3, false, false);
 	public ArrayList<PowerUp> powerUpList = new ArrayList<>();
+//	private Area powerUpArea = new Area(powerUp.getPowerUpArea());
 
 	public static void main(String[] args)
 	{
@@ -83,11 +85,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		 *********************************************************/
 		JOptionPane.showMessageDialog(space,
 				"Greetings untrained third rate drone pilot! Thank you for accepting this job!\nGenericFuturisticIndustries Inc. LTD needs your help in clearing the space around this quadrant of asteroids to prepare for space station construction\n\nPlease enjoy this irish music while you do your job :)");
-		String ok = JOptionPane.showInputDialog("Press arrow keys to move, and space to shoot. Say \"got it!\" if you understand");
-
-		if (ok.equalsIgnoreCase("got it!"))
+		String ok = JOptionPane.showInputDialog("Press arrow keys to move, and hold space to shoot. Say \"ok\" if you understand");
+		if (ok.equalsIgnoreCase("ok"))
 		{
-
 			for (int j = 0; j < asteroidLimit; j++)
 			{
 				asteroidSpawner();
@@ -104,11 +104,18 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 			space.addKeyListener(util);
 			// util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
-		} else
+		} 
+		if (Integer.parseInt(ok) == 0)
+		{
+			System.out.println("hj");
+			System.exit(0);
+		}
+		else
 		{
 			JOptionPane.showMessageDialog(null, "Sorry you didn't type it in right. Try again");
 			run();
 		}
+		
 	}
 
 	public void powerUpSpawner()
@@ -220,8 +227,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				AffineTransform shotAT = new AffineTransform();
 				shotAT.setToTranslation(shot.laserXPos, shot.laserYPos);
 				shotArea.transform(shotAT);
-				shotArea.intersect(asteroidArea); // ***** Do this for ship area
-													// and power up area
 
 				if (util.isOffScreen(shot.laserXPos, shot.laserYPos, widthOfScreen, heightOfScreen))
 				{
@@ -247,12 +252,11 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				}
 			}
 			Area leftShipArea = new Area(spaceDrone.shipLeftSide);
-			Area rightShipArea = new Area(spaceDrone.shipRightSide);
+//			Area rightShipArea = new Area(spaceDrone.shipRightSide);
 			AffineTransform spaceDroneAT = new AffineTransform();
 			spaceDroneAT.setToTranslation(spaceDrone.getShipXPos(), spaceDrone.getShipYPos());
 			leftShipArea.transform(spaceDroneAT);
-			leftShipArea.intersect(asteroidArea);
-			rightShipArea.intersect(asteroidArea);
+			Area powerUpArea = new Area(powerUp.powerUpShape);
 			if (isCollision(leftShipArea, asteroidArea))
 			{
 				spaceDrone.canopy.reset();
@@ -283,7 +287,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 
 			}
 //			System.out.println(powerUpr);
-			if (isCollision(leftShipArea, powerUp.getPowerUpArea()))
+			if (isCollision(leftShipArea, powerUpArea))
 			{
 				System.out.println("Power Up!");
 				// if (power.isEmpty())
