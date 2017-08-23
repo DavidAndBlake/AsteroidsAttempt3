@@ -62,6 +62,21 @@ public class PowerUp
 	{
 		return powerUpArea;
 	}
+	
+	public int getPowerUpXPos()
+	{
+		return powerUpXPos;
+	}
+	
+	public int getPowerUpYPos()
+	{
+		return powerUpYPos;
+	}
+	
+	public Rectangle2D.Double getPowerUpShape()
+	{
+		return powerUpShape;
+	}
 
 	public void setPowerUpArea(Area powerUpArea)
 	{
