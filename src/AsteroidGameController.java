@@ -71,7 +71,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private double asteroidSpeed;
 	private PowerUp powerUp = new PowerUp(-1000, -1000, r.nextInt(90), 0, 3, false, false);
 	public ArrayList<PowerUp> powerUpList = new ArrayList<>();
-//	private Area powerUpArea = new Area(powerUp.getPowerUpArea());
+	// private Area powerUpArea = new Area(powerUp.getPowerUpArea());
 	private Area powerUpArea;
 
 	public static void main(String[] args)
@@ -105,18 +105,18 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
 			space.addKeyListener(util);
 			// util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
-		} 
-//		if (Integer.parseInt(ok) == 0)
-//		{
-//			System.out.println("hj");
-//			System.exit(0);
-//		}
+		}
+		// if (Integer.parseInt(ok) == 0)
+		// {
+		// System.out.println("hj");
+		// System.exit(0);
+		// }
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Sorry you didn't type it in right. Try again");
 			run();
 		}
-		
+
 	}
 
 	public void powerUpSpawner()
@@ -200,9 +200,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		}
 		spaceDrone.paintShip(g2);
 		powerUp.paintPowerUp(g2);
-//		Area spaceDroneArea = new Area(spaceDrone.getShipAffineTransform());
-//		System.out.println(spaceDrone.getShipAffineTransform());
-		
+		// Area spaceDroneArea = new Area(spaceDrone.getShipAffineTransform());
+		// System.out.println(spaceDrone.getShipAffineTransform());
+
 		for (int i = 0; i < asteroidList.size(); i++)
 		{
 			g2.setTransform(identity); // cleans up screen
@@ -262,15 +262,16 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			powerUpArea.transform(powerUpTransform);
 			if (isCollision(leftShipArea, powerUpArea))
 			{
-//				System.out.println("Power Up!");
+				// System.out.println("Power Up!");
 				// if (power.isEmpty())
 				// {
 				//
 				// powerUpTimeLimit.start();
-				 firingRateDelay = 100;
-				 System.out.println(firingRateDelay);
+				firingRateDelay = 100;
+				shotTicker = new Timer(firingRateDelay, util);
+				System.out.println(firingRateDelay);
 
-				 // System.out.println("collision");
+				// System.out.println("collision");
 				// }
 			}
 			if (isCollision(leftShipArea, asteroidArea))
@@ -282,7 +283,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				util.setShipDestroyed(true);
 				util.playExplosionSound();
 				endingDelayTicker.start();
-				if (endingDelayTicker.isRunning()) // CHANGE THIS MECHANIC SO THAT THE MESSAGE IS DELAYED BY THE TIMER
+				if (endingDelayTicker.isRunning()) // CHANGE THIS MECHANIC SO
+													// THAT THE MESSAGE IS
+													// DELAYED BY THE TIMER
 				{
 					JOptionPane.showMessageDialog(null, "You suck");
 					int tryAgain = JOptionPane.showConfirmDialog(null, "Would you like to try again?");
@@ -302,8 +305,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				}
 
 			}
-//			System.out.println(powerUpr);
-			
+			// System.out.println(powerUpr);
+
 			// if (powerUpTimeLimit > firingRateDelay)
 			// {
 			//
