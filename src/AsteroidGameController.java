@@ -50,9 +50,10 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	public int asteroidSpawnQuadrantPicker;
 	public Ship spaceDrone = new Ship(middleScreenXPos, middleScreenYPos, widthOfScreen, heightOfScreen);
 	public Utilities util = new Utilities(spaceDrone, projectileList);
-	private int firingRateDelay = (200);
+	private int firingRateDelay = 200;
+	private int fastFiringLimit = 500;
 	public Timer shotTicker = new Timer(firingRateDelay, util);
-	private Timer powerUpTimeLimit = new Timer(100, util);
+	private Timer powerUpTimeLimitTicker = new Timer(10000, util);
 	private Timer endingDelayTicker = new Timer(300, null);
 	private int score;
 	public URL soundAddress;
@@ -262,17 +263,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			powerUpArea.transform(powerUpTransform);
 			if (isCollision(leftShipArea, powerUpArea))
 			{
-				// System.out.println("Power Up!");
-				// if (power.isEmpty())
-				// {
-				//
-				// powerUpTimeLimit.start();
-				firingRateDelay = 100;
-				shotTicker = new Timer(firingRateDelay, util);
-				System.out.println(firingRateDelay);
-
-				// System.out.println("collision");
-				// }
+				powerUpTimeLimitTicker.start();
+				shotTicker.setDelay(100);
+				
 			}
 			if (isCollision(leftShipArea, asteroidArea))
 			{
@@ -303,14 +296,18 @@ public class AsteroidGameController extends JComponent implements ActionListener
 						System.exit(0);
 					}
 				}
-
 			}
-			// System.out.println(powerUpr);
-
-			// if (powerUpTimeLimit > firingRateDelay)
-			// {
-			//
-			// }
+//			if (powerUpTimeLimitTicker.is)
+//			{
+//				System.out.println("repeat");
+//				fastFiringLimit ++;
+//			}
+			if (fastFiringLimit > 1000)
+			{
+				powerUpTimeLimitTicker.stop();
+				fastFiringLimit = 0;
+				shotTicker.setDelay(300);
+			}
 			if (asteroidList.size() < 1)
 			{
 				util.gameComplete = true;
@@ -324,9 +321,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					// util.stopMusic();
 					new AsteroidGameController().run();
 				}
-				if (tryAgain == 2)
-				{
-				}
 				if (tryAgain == 1)
 				{
 					System.exit(0);
@@ -339,13 +333,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			g2.setTransform(identity);
 			shot.paintProjectile(g2);
 		}
-		// if (area1.getBounds2D().intersects(area2.getBounds2D())){
-		// collision = true;
-		// }
-		// else
-		// {
-		// collision = false;
-		// }
 	}
 
 	public Graphics2D drawInitialScreenSetup(Graphics g)
