@@ -30,7 +30,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int widthOfScreen = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
 	private int heightOfScreen = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
 	private Image spaceImage = Toolkit.getDefaultToolkit().createImage(getClass().getResource("spacePicture.jpg"));
-	public Timer ticker = new Timer(30, this);// THIS IS THE TIMER
+	public Timer repaintTicker = new Timer(30, this);
 	public int[] asteroid1XPoints =
 	{ 21, 16, 20, 15, 0, -19, -17, -21, -15 };
 	public int[] asteroid1YPoints =
@@ -53,7 +53,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private int firingRateDelay = 200;
 	private int fastFiringLimit = 500;
 	public Timer shotTicker = new Timer(firingRateDelay, util);
-	private Timer powerUpTimeLimitTicker = new Timer(10000, util);
+	public Timer powerUpTimeLimitTicker = new Timer(1000, this);
 	private Timer endingDelayTicker = new Timer(300, null);
 	private int score;
 	public URL soundAddress;
@@ -72,7 +72,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 	private double asteroidSpeed;
 	private PowerUp powerUp = new PowerUp(-1000, -1000, r.nextInt(90), 0, 3, false, false);
 	public ArrayList<PowerUp> powerUpList = new ArrayList<>();
-	// private Area powerUpArea = new Area(powerUp.getPowerUpArea());
 	private Area powerUpArea;
 
 	public static void main(String[] args)
@@ -96,7 +95,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			}
 			spaceDrone.setScreenHeight(heightOfScreen);
 			spaceDrone.setScreenWidth(widthOfScreen);
-			ticker.start();// repainting timer
+			repaintTicker.start();// repainting timer
 			shotTicker.start();
 			space.setSize(widthOfScreen, heightOfScreen);
 			space.setVisible(true);
@@ -105,6 +104,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			space.setBackground(Color.BLACK);
 			space.setTitle("Why are you looking at this title? You have a game to win! Look out for the asteroids!");
 			space.addKeyListener(util);
+			powerUpTimeLimitTicker.start();
 //			util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
 		} else
 		{
@@ -165,13 +165,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		asteroidList.add(new Asteroid(asteroidXPos, asteroidYPos, r.nextInt(360) - 45, (int) (Math.random() * asteroidSpeedLimit) + 3, asteroidScaleFactor / 2, 0.001, false));
 		// xpos, ypos, course, speed, scale factor, rotation speed, fragment
 	}
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
-		spaceDrone = util.shipMovementRegulator(rotationDegree, directionOfHeadOfShip, speedOfShip, speedLimitOfShip, colorChangeController);
-		repaint();// calls on paint
-	}
+	
 
 	public void paint(Graphics g)
 	{
@@ -291,7 +285,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			if (asteroidList.size() < 1)
 			{
 				util.gameComplete = true;
-				ticker.stop();
+				repaintTicker.stop();
 				shotTicker.stop();
 				JOptionPane.showMessageDialog(null, "Congratulations! Your job is complete!\nYou win!\nMaybe you're not so third rate after all.");
 				int tryAgain = JOptionPane.showConfirmDialog(null, "Would you like to play again?");
@@ -340,5 +334,16 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		{
 			return false;
 		}
+	}
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		if (e.equals(powerUpTimeLimitTicker))
+		{
+			System.out.println("Time up");
+		}
+		double rotationDegree = Math.toRadians(directionOfHeadOfShip);
+		spaceDrone = util.shipMovementRegulator(rotationDegree, directionOfHeadOfShip, speedOfShip, speedLimitOfShip, colorChangeController);
+		repaint();// calls on paint
 	}
 }
