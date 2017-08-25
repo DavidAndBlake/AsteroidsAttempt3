@@ -253,8 +253,6 @@ public class Utilities implements KeyListener, ActionListener
 			projectileList.add(new Laser(spaceDrone.getShipXPos(),
 					spaceDrone.getShipYPos(), spaceDrone.directionOfHeadOfShip,
 					spaceDrone.getSpeedOfShip() + laserSpeed));
-			System.out.println("ss");
-
 		}
 	}
 }

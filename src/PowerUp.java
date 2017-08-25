@@ -11,8 +11,7 @@ import org.w3c.dom.css.Rect;
 public class PowerUp
 {
 	private int powerUpXPos;
-	private int powerUpYPos; // make the power up move to the right, and have
-								// collision detection with the ship
+	private int powerUpYPos; // make the power up move to the right, and have collision detection with the ship
 	private int powerUpCourse;
 	private double powerUpSpeed;
 	private double powerUpRotation;

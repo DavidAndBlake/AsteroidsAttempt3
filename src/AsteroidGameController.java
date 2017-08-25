@@ -103,30 +103,20 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			space.setDefaultCloseOperation(space.EXIT_ON_CLOSE);
 			space.add(this);
 			space.setBackground(Color.BLACK);
-			space.setTitle("HEY! GUESS WHAT? I'M A TITLE!");
+			space.setTitle("Why are you looking at this title? You have a game to win! Look out for the asteroids!");
 			space.addKeyListener(util);
-			// util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
-		}
-		// if (Integer.parseInt(ok) == 0)
-		// {
-		// System.out.println("hj");
-		// System.exit(0);
-		// }
-		else
+//			util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
+		} else
 		{
 			JOptionPane.showMessageDialog(null, "Sorry you didn't type it in right. Try again");
 			run();
 		}
-
 	}
 
 	public void powerUpSpawner()
 	{
 		switch (new Random().nextInt(4))
-		{
-		// powerUpXPos, powerUpYPos, course, speed, rotation,
-		// isTouchingShip,
-		// isTouchingLaser
+		{ // powerUpXPos, powerUpYPos, course, speed, rotation, isTouchingShip, isTouchingLaser
 		case 0: // north
 			powerUp = new PowerUp(r.nextInt(widthOfScreen), 0, r.nextInt(90) - 135, 5, 3, false, false);
 			break;
@@ -141,18 +131,9 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			break;
 		}
 		powerUpCounter = 0;
-		// if (Area powerUpArea = new Area(powerUp.collisionArea))
-		{
-
-		}
 	}
 
-	// TO DO:
-	// Add in the power up
-	// Make the asteroid collision radius adjust with the asteroid size
-
-	public void asteroidSpawner() // Try to find a way to combine these commands
-									// into one in order to reduce space taken.
+	public void asteroidSpawner() // Try to find a way to combine these commands into one in order to reduce space taken.
 	{
 		asteroidSpeed = (Math.random() * asteroidSpeedLimit) + 2;
 		if (fastAsteroidCounter >= fastAsteroidInterval)
@@ -201,9 +182,6 @@ public class AsteroidGameController extends JComponent implements ActionListener
 		}
 		spaceDrone.paintShip(g2);
 		powerUp.paintPowerUp(g2);
-		// Area spaceDroneArea = new Area(spaceDrone.getShipAffineTransform());
-		// System.out.println(spaceDrone.getShipAffineTransform());
-
 		for (int i = 0; i < asteroidList.size(); i++)
 		{
 			g2.setTransform(identity); // cleans up screen
@@ -265,10 +243,12 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			{
 				powerUpTimeLimitTicker.start();
 				shotTicker.setDelay(100);
-				
+				space.setTitle("Man, the power ups in this game are totally broken. Funny story, the creator of this game meant to make a time limit for the duration of the fast firing rate, but he ran out of time LOL!");
 			}
 			if (isCollision(leftShipArea, asteroidArea))
 			{
+				space.setTitle("Eh, you probably don't suck THAT much. Try moving slower and shooting more often.");
+				
 				spaceDrone.canopy.reset();
 				spaceDrone.shipLeftSide.reset();
 				spaceDrone.shipRightSide.reset();
@@ -276,8 +256,8 @@ public class AsteroidGameController extends JComponent implements ActionListener
 				util.setShipDestroyed(true);
 				util.playExplosionSound();
 				endingDelayTicker.start();
-				if (endingDelayTicker.isRunning()) // CHANGE THIS MECHANIC SO
-													// THAT THE MESSAGE IS
+				if (endingDelayTicker.isRunning()) // TODO: CHANGE THIS MECHANIC
+													// SO THAT THE MESSAGE IS
 													// DELAYED BY THE TIMER
 				{
 					JOptionPane.showMessageDialog(null, "You suck");
@@ -297,11 +277,11 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					}
 				}
 			}
-//			if (powerUpTimeLimitTicker.is)
-//			{
-//				System.out.println("repeat");
-//				fastFiringLimit ++;
-//			}
+			// if (powerUpTimeLimitTicker.is)
+			// {
+			// System.out.println("repeat");
+			// fastFiringLimit ++;
+			// }
 			if (fastFiringLimit > 1000)
 			{
 				powerUpTimeLimitTicker.stop();
