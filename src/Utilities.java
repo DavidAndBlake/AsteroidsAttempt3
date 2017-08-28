@@ -50,26 +50,26 @@ public class Utilities implements KeyListener, ActionListener
 			ex.printStackTrace();
 		}
 	}
-//	public void playMusic()
-//	{
-//		try
-//		{
-//			AudioInputStream audioInputStream = AudioSystem
-//					.getAudioInputStream(getClass().getResource(
-//							"Dublin.wav"));
-//			music = AudioSystem.getClip();
-//			music.open(audioInputStream);
-//			music.loop(Clip.LOOP_CONTINUOUSLY);
-//		} catch (Exception ex)
-//		{
-//			System.out.println("Error with playing sound.");
-//			ex.printStackTrace();
-//		}
-//	}
-//	public void stopMusic()
-//	{
-//		music.stop();
-//	}
+	public void playMusic()
+	{
+		try
+		{
+			AudioInputStream audioInputStream = AudioSystem
+					.getAudioInputStream(getClass().getResource(
+							"Dublin.wav"));
+			music = AudioSystem.getClip();
+			music.open(audioInputStream);
+			music.loop(Clip.LOOP_CONTINUOUSLY);
+		} catch (Exception ex)
+		{
+			System.out.println("Error with playing sound.");
+			ex.printStackTrace();
+		}
+	}
+	public void stopMusic()
+	{
+		music.stop();
+	}
 	public void playExplosionSound()
 	{
 		try

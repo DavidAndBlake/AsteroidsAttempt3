@@ -105,7 +105,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 			space.setTitle("Why are you looking at this title? You have a game to win! Look out for the asteroids!");
 			space.addKeyListener(util);
 			powerUpTimeLimitTicker.start();
-//			util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
+			util.playMusic(); // TURN THIS ON TO ALLOW MUSIC TO BE PLAYED
 		} else
 		{
 			JOptionPane.showMessageDialog(null, "Sorry you didn't type it in right. Try again");
@@ -259,7 +259,7 @@ public class AsteroidGameController extends JComponent implements ActionListener
 					if (tryAgain == 0)
 					{
 						space.dispose();
-						// util.stopMusic();
+						 util.stopMusic();
 						new AsteroidGameController().run();
 					}
 					if (tryAgain == 2)
